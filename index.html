@@ -4,163 +4,350 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080b12">
-<title>Termux Hub</title>
+
+<title>Termux Hub 2.0</title>
+
+<!-- QR CODE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
-    --bg: #080b12;
-    --panel: #101621;
-    --panel2: #151d2b;
-    --text: #f4f7fb;
-    --muted: #8b96a8;
+    --bg: #070a10;
+    --bg2: #0d121c;
+    --card: rgba(17, 24, 39, .78);
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: rgba(255,255,255,.09);
     --accent: #00e5ff;
-    --accent2: #7c3aed;
-    --border: rgba(255,255,255,.08);
+    --accent2: #8b5cf6;
+    --success: #22c55e;
+    --shadow: rgba(0,0,0,.35);
+}
+
+body.light {
+    --bg: #f4f7fb;
+    --bg2: #ffffff;
+    --card: rgba(255,255,255,.85);
+    --text: #111827;
+    --muted: #64748b;
+    --border: rgba(15,23,42,.1);
+    --shadow: rgba(15,23,42,.12);
 }
 
 body {
     min-height: 100vh;
-    font-family: Arial, sans-serif;
-    color: var(--text);
     background:
-        radial-gradient(circle at 15% 20%, rgba(0,229,255,.12), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(124,58,237,.15), transparent 30%),
+        radial-gradient(circle at 10% 10%, rgba(0,229,255,.12), transparent 28%),
+        radial-gradient(circle at 90% 80%, rgba(139,92,246,.14), transparent 30%),
         var(--bg);
+
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background .3s, color .3s;
 }
 
-.container {
-    width: min(1100px, 92%);
-    margin: auto;
-}
+/* =========================
+   NAVIGATION
+========================= */
 
-header {
-    padding: 25px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    backdrop-filter: blur(18px);
+    background: rgba(7,10,16,.75);
+
     border-bottom: 1px solid var(--border);
 }
 
+body.light nav {
+    background: rgba(255,255,255,.75);
+}
+
+.nav-container {
+    width: min(1150px, 92%);
+    margin: auto;
+
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .logo {
-    font-size: 24px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -1px;
 }
 
 .logo span {
     color: var(--accent);
 }
 
-.status {
-    color: #55efc4;
-    font-size: 14px;
+.nav-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
 }
 
+.nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.nav-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+    border: 1px solid var(--border);
+
+    background: var(--card);
+    color: var(--text);
+
+    cursor: pointer;
+    font-size: 18px;
+
+    display: grid;
+    place-items: center;
+}
+
+.menu-button {
+    display: none;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+.container {
+    width: min(1150px, 92%);
+    margin: auto;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.section-description {
+    color: var(--muted);
+    margin-bottom: 35px;
+}
+
+/* =========================
+   HERO
+========================= */
+
 .hero {
-    padding: 70px 0 45px;
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+    align-items: center;
 }
 
 .badge {
     display: inline-block;
+
     padding: 8px 14px;
+
     border: 1px solid rgba(0,229,255,.3);
     background: rgba(0,229,255,.07);
-    border-radius: 50px;
+
     color: var(--accent);
+
+    border-radius: 999px;
+
     font-size: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
-h1 {
-    font-size: clamp(42px, 8vw, 82px);
-    line-height: .95;
+.hero h1 {
     max-width: 850px;
+
+    font-size: clamp(45px, 8vw, 90px);
+
+    line-height: .95;
+    letter-spacing: -4px;
 }
 
 .gradient {
-    background: linear-gradient(90deg, var(--accent), #8b5cf6);
+    background: linear-gradient(
+        90deg,
+        var(--accent),
+        var(--accent2)
+    );
+
     -webkit-background-clip: text;
     color: transparent;
 }
 
-.hero p {
+.hero-text {
+    max-width: 680px;
+
     margin-top: 25px;
-    max-width: 650px;
+
     color: var(--muted);
+
     font-size: 18px;
     line-height: 1.7;
 }
 
+/* =========================
+   TERMINAL
+========================= */
+
 .terminal {
-    margin-top: 35px;
+    margin-top: 40px;
+
     background: #05070b;
-    border: 1px solid var(--border);
-    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 16px;
+
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
 }
 
-.terminal-top {
-    padding: 12px 15px;
+.terminal-header {
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 15px;
+
     background: #11151d;
+
+    border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
 .dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
+
     border-radius: 50%;
-    margin-right: 6px;
+
     background: #555;
+
+    margin-right: 7px;
+}
+
+.terminal-title {
+    margin-left: auto;
+    margin-right: auto;
+
+    font-family: monospace;
+
+    color: #777;
+
+    font-size: 12px;
 }
 
 .terminal-body {
-    padding: 22px;
+    padding: 25px;
+
+    min-height: 180px;
+
     font-family: monospace;
+
+    color: #cbd5e1;
+
     line-height: 1.8;
-    color: #b9c3d2;
 }
 
-.green {
+.prompt {
     color: #55efc4;
 }
 
-.cyan {
+.command {
     color: var(--accent);
 }
 
-.tools {
-    padding: 35px 0 70px;
+.cursor {
+    display: inline-block;
+
+    width: 8px;
+    height: 17px;
+
+    background: var(--accent);
+
+    vertical-align: middle;
+
+    animation: blink 1s infinite;
 }
 
-.section-title {
-    font-size: 28px;
-    margin-bottom: 25px;
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
+
+/* =========================
+   TOOLS
+========================= */
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+
     gap: 18px;
 }
 
 .card {
-    padding: 24px;
-    background: rgba(16,22,33,.85);
+    padding: 25px;
+
+    background: var(--card);
+
     border: 1px solid var(--border);
-    border-radius: 18px;
-    transition: .25s;
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(14px);
+
+    transition: transform .25s, border .25s;
+
+    box-shadow: 0 15px 45px var(--shadow);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(0,229,255,.4);
-    box-shadow: 0 15px 40px rgba(0,0,0,.25);
+    transform: translateY(-6px);
+
+    border-color:
+        rgba(0,229,255,.35);
 }
 
 .icon {
@@ -174,241 +361,851 @@ h1 {
 
 .card p {
     color: var(--muted);
+
     font-size: 14px;
+
     line-height: 1.6;
 }
 
-button {
-    margin-top: 18px;
+input,
+textarea {
     width: 100%;
-    border: 0;
-    padding: 12px;
+
+    margin-top: 12px;
+
+    padding: 13px;
+
     border-radius: 10px;
-    background: linear-gradient(90deg, var(--accent), #0ea5e9);
+
+    border: 1px solid var(--border);
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    outline: none;
+
+    font-family: inherit;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--accent);
+}
+
+button {
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            #0ea5e9
+        );
+
     color: #001018;
-    font-weight: bold;
+
+    font-weight: 800;
+
     cursor: pointer;
+
+    transition: .2s;
 }
 
 button:hover {
+    transform: translateY(-2px);
+
     filter: brightness(1.1);
 }
 
-input {
-    width: 100%;
-    margin-top: 15px;
-    padding: 12px;
-    border-radius: 10px;
+.secondary {
+    background: transparent;
+
     border: 1px solid var(--border);
-    background: #080b12;
-    color: white;
-    outline: none;
+
+    color: var(--text);
 }
 
 .result {
     margin-top: 12px;
-    min-height: 22px;
+
+    min-height: 24px;
+
     color: var(--accent);
+
     font-family: monospace;
-    word-break: break-all;
+
+    word-break: break-word;
 }
 
 .clock {
-    font-size: 30px;
-    font-weight: bold;
     margin-top: 12px;
+
     color: var(--accent);
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    font-family: monospace;
 }
 
+/* =========================
+   QR
+========================= */
+
+.qr-container {
+    margin-top: 18px;
+
+    min-height: 210px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+#qrcode {
+    padding: 10px;
+
+    background: white;
+
+    border-radius: 10px;
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact {
+    max-width: 750px;
+}
+
+.contact-form {
+    display: grid;
+
+    gap: 5px;
+}
+
+.form-status {
+    margin-top: 15px;
+
+    color: var(--success);
+
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
 footer {
-    padding: 30px 0;
+    padding: 35px 0;
+
     border-top: 1px solid var(--border);
+
     color: var(--muted);
+
     text-align: center;
+
     font-size: 13px;
 }
 
-@media(max-width:600px) {
-    header {
-        padding: 18px 0;
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 750px) {
+
+    .nav-links {
+        position: absolute;
+
+        top: 70px;
+        left: 0;
+        right: 0;
+
+        padding: 25px;
+
+        flex-direction: column;
+
+        background: var(--bg2);
+
+        border-bottom: 1px solid var(--border);
+
+        display: none;
     }
 
-    .hero {
-        padding-top: 45px;
+    .nav-links.active {
+        display: flex;
     }
 
-    .terminal-body {
-        font-size: 12px;
+    .menu-button {
+        display: grid;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    section {
+        padding: 60px 0;
     }
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     NAV
+========================= -->
+
+<nav>
+
+<div class="nav-container">
+
+    <div class="logo">
+        TERMUX<span>HUB</span>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+
+        <li>
+            <a href="#home">Start</a>
+        </li>
+
+        <li>
+            <a href="#tools">Narzędzia</a>
+        </li>
+
+        <li>
+            <a href="#contact">Kontakt</a>
+        </li>
+
+    </ul>
+
+    <div class="nav-actions">
+
+        <button
+            class="icon-button"
+            onclick="toggleTheme()"
+            title="Zmień motyw"
+        >
+            🌙
+        </button>
+
+        <button
+            class="icon-button menu-button"
+            onclick="toggleMenu()"
+        >
+            ☰
+        </button>
+
+    </div>
+
+</div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<main>
+
+<section class="hero" id="home">
+
 <div class="container">
 
-<header>
-    <div class="logo">TERMUX<span>HUB</span></div>
-    <div class="status">● ONLINE</div>
-</header>
-
-<section class="hero">
-
-    <div class="badge">⚡ Powered by HTML / CSS / JS</div>
+    <div class="badge">
+        ⚡ TERMUX HUB 2.0
+    </div>
 
     <h1>
         Your personal
-        <span class="gradient">web toolbox.</span>
+        <span class="gradient">
+            web toolbox.
+        </span>
     </h1>
 
-    <p>
-        Mały, szybki i nowoczesny panel z przydatnymi narzędziami.
-        Stworzony w Termuxie i gotowy do uruchomienia w sieci.
+    <p class="hero-text">
+        Nowoczesny panel narzędzi stworzony w HTML,
+        CSS i JavaScript. Działa bez własnego backendu
+        i jest gotowy do wdrożenia na Render.
     </p>
+
 
     <div class="terminal">
 
-        <div class="terminal-top">
+        <div class="terminal-header">
+
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
+
+            <span class="terminal-title">
+                termux@hub
+            </span>
+
         </div>
 
         <div class="terminal-body">
-            <div><span class="green">user@termux</span>:~$ ./start</div>
-            <div>Loading Termux Hub...</div>
-            <div>Initializing tools...</div>
-            <div class="cyan">✓ System ready.</div>
-            <div><span class="green">user@termux</span>:~$</div>
+
+            <div>
+                <span class="prompt">
+                    filip@termux
+                </span>:~$
+                <span
+                    id="terminalCommand"
+                    class="command"
+                ></span>
+                <span class="cursor"></span>
+            </div>
+
+            <div id="terminalOutput"></div>
+
         </div>
 
-    </div>
-
-</section>
-
-<section class="tools">
-
-<h2 class="section-title">Narzędzia</h2>
-
-<div class="grid">
-
-    <!-- PASSWORD -->
-    <div class="card">
-        <div class="icon">🔐</div>
-        <h3>Generator haseł</h3>
-        <p>Generuj losowe, mocne hasła.</p>
-
-        <button onclick="generatePassword()">
-            Generuj
-        </button>
-
-        <div class="result" id="password">
-            Kliknij „Generuj”
-        </div>
-    </div>
-
-    <!-- RANDOM -->
-    <div class="card">
-        <div class="icon">🎲</div>
-        <h3>Losowanie</h3>
-        <p>Wylosuj liczbę z wybranego zakresu.</p>
-
-        <input id="min" type="number" placeholder="Minimum">
-        <input id="max" type="number" placeholder="Maximum">
-
-        <button onclick="randomNumber()">
-            Losuj
-        </button>
-
-        <div class="result" id="random">
-        </div>
-    </div>
-
-    <!-- CALCULATOR -->
-    <div class="card">
-        <div class="icon">🧮</div>
-        <h3>Kalkulator</h3>
-        <p>Prosty kalkulator matematyczny.</p>
-
-        <input id="calc" placeholder="np. 25 * 4 + 10">
-
-        <button onclick="calculate()">
-            Oblicz
-        </button>
-
-        <div class="result" id="calcResult">
-        </div>
-    </div>
-
-    <!-- CLOCK -->
-    <div class="card">
-        <div class="icon">⏱️</div>
-        <h3>Zegar</h3>
-        <p>Aktualny czas Twojego urządzenia.</p>
-
-        <div class="clock" id="clock">
-            00:00:00
-        </div>
     </div>
 
 </div>
 
 </section>
+
+
+<!-- =========================
+     TOOLS
+========================= -->
+
+<section id="tools">
+
+<div class="container">
+
+    <h2 class="section-title">
+        Narzędzia
+    </h2>
+
+    <p class="section-description">
+        Przydatne funkcje dostępne bezpośrednio w przeglądarce.
+    </p>
+
+
+    <div class="grid">
+
+
+        <!-- PASSWORD -->
+
+        <div class="card">
+
+            <div class="icon">🔐</div>
+
+            <h3>
+                Generator haseł
+            </h3>
+
+            <p>
+                Twórz losowe, mocne hasła.
+            </p>
+
+            <button onclick="generatePassword()">
+                Generuj hasło
+            </button>
+
+            <div
+                class="result"
+                id="password"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <!-- RANDOM -->
+
+        <div class="card">
+
+            <div class="icon">🎲</div>
+
+            <h3>
+                Losowanie
+            </h3>
+
+            <p>
+                Wylosuj liczbę z wybranego zakresu.
+            </p>
+
+            <input
+                id="min"
+                type="number"
+                placeholder="Minimum"
+            >
+
+            <input
+                id="max"
+                type="number"
+                placeholder="Maximum"
+            >
+
+            <button onclick="randomNumber()">
+                Losuj
+            </button>
+
+            <div
+                class="result"
+                id="random"
+            ></div>
+
+        </div>
+
+
+        <!-- CALCULATOR -->
+
+        <div class="card">
+
+            <div class="icon">🧮</div>
+
+            <h3>
+                Kalkulator
+            </h3>
+
+            <p>
+                Oblicz podstawowe działania.
+            </p>
+
+            <input
+                id="calc"
+                placeholder="np. 25 * 4 + 10"
+            >
+
+            <button onclick="calculate()">
+                Oblicz
+            </button>
+
+            <div
+                class="result"
+                id="calcResult"
+            ></div>
+
+        </div>
+
+
+        <!-- CLOCK -->
+
+        <div class="card">
+
+            <div class="icon">⏰</div>
+
+            <h3>
+                Zegar
+            </h3>
+
+            <p>
+                Aktualny czas urządzenia.
+            </p>
+
+            <div
+                class="clock"
+                id="clock"
+            >
+                00:00:00
+            </div>
+
+        </div>
+
+
+        <!-- QR -->
+
+        <div class="card">
+
+            <div class="icon">📱</div>
+
+            <h3>
+                Generator QR
+            </h3>
+
+            <p>
+                Zamień tekst lub link w kod QR.
+            </p>
+
+            <input
+                id="qrText"
+                placeholder="https://example.com"
+            >
+
+            <button onclick="generateQR()">
+                Generuj QR
+            </button>
+
+            <div
+                class="qr-container"
+                id="qrContainer"
+            ></div>
+
+        </div>
+
+
+        <!-- INFO -->
+
+        <div class="card">
+
+            <div class="icon">⚡</div>
+
+            <h3>
+                System
+            </h3>
+
+            <p>
+                Narzędzia działają lokalnie
+                w Twojej przeglądarce.
+            </p>
+
+            <button
+                class="secondary"
+                onclick="showSystemInfo()"
+            >
+                Sprawdź
+            </button>
+
+            <div
+                class="result"
+                id="systemInfo"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section id="contact">
+
+<div class="container">
+
+<div class="contact">
+
+    <h2 class="section-title">
+        Kontakt
+    </h2>
+
+    <p class="section-description">
+        Masz pytanie? Wyślij wiadomość.
+    </p>
+
+
+    <!--
+    FORMULARZ
+
+    Zmień adres w "action" na swój adres e-mail.
+
+    Przykład:
+    https://formsubmit.co/filipnajman2522@gmail.com
+
+    -->
+
+    <form
+        class="contact-form"
+        action="https://formsubmit.co/TWOJ_EMAIL"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Twoje imię"
+            required
+        >
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Twój e-mail"
+            required
+        >
+
+        <textarea
+            name="message"
+            placeholder="Twoja wiadomość..."
+            required
+        ></textarea>
+
+
+        <!-- FormSubmit settings -->
+
+        <input
+            type="hidden"
+            name="_subject"
+            value="Nowa wiadomość z Termux Hub"
+        >
+
+        <input
+            type="hidden"
+            name="_captcha"
+            value="false"
+        >
+
+        <input
+            type="hidden"
+            name="_template"
+            value="table"
+        >
+
+
+        <button type="submit">
+            Wyślij wiadomość
+        </button>
+
+    </form>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
-    TERMUX HUB • Zbudowane w Termuxie 🚀
-</footer>
+
+<div class="container">
+
+    TERMUX HUB 2.0
+    <br><br>
+    Zbudowane w Termuxie 🚀
 
 </div>
+
+</footer>
+
 
 <script>
 
-/* PASSWORD GENERATOR */
+/* =========================
+   MOBILE MENU
+========================= */
+
+function toggleMenu() {
+
+    document
+        .getElementById("navLinks")
+        .classList.toggle("active");
+
+}
+
+
+/* =========================
+   THEME
+========================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const light =
+        document.body.classList.contains("light");
+
+    localStorage.setItem(
+        "theme",
+        light ? "light" : "dark"
+    );
+
+}
+
+
+/* Load saved theme */
+
+if(localStorage.getItem("theme") === "light") {
+
+    document.body.classList.add("light");
+
+}
+
+
+/* =========================
+   TERMINAL ANIMATION
+========================= */
+
+const commands = [
+    "npm start",
+    "git status",
+    "git push origin main",
+    "render deploy",
+    "termux-hub --start"
+];
+
+let commandIndex = 0;
+
+function terminalAnimation() {
+
+    const commandElement =
+        document.getElementById("terminalCommand");
+
+    const output =
+        document.getElementById("terminalOutput");
+
+    const command =
+        commands[commandIndex];
+
+    let i = 0;
+
+    commandElement.textContent = "";
+
+    const typing =
+        setInterval(() => {
+
+            commandElement.textContent +=
+                command[i];
+
+            i++;
+
+            if(i >= command.length) {
+
+                clearInterval(typing);
+
+                setTimeout(() => {
+
+                    output.innerHTML =
+                        '<div class="prompt">✓ System ready.</div>' +
+                        '<div>→ Running command...</div>' +
+                        '<div class="command">' +
+                        command +
+                        '</div>';
+
+                setTimeout(() => {
+
+                    commandIndex =
+                        (commandIndex + 1)
+                        % commands.length;
+
+                    terminalAnimation();
+
+                }, 2500);
+
+            }
+
+        }, 65);
+
+}
+
+terminalAnimation();
+
+
+/* =========================
+   PASSWORD
+========================= */
 
 function generatePassword() {
 
     const chars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "abcdefghijklmnopqrstuvwxyz" +
+        "0123456789!@#$%^&*()_+-=";
 
     let password = "";
 
-    for(let i = 0; i < 18; i++) {
-        password += chars[Math.floor(Math.random() * chars.length)];
+    for(let i = 0; i < 20; i++) {
+
+        password +=
+            chars[
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            ];
+
     }
 
-    document.getElementById("password").textContent = password;
+    document
+        .getElementById("password")
+        .textContent = password;
+
 }
 
 
-/* RANDOM NUMBER */
+/* =========================
+   RANDOM
+========================= */
 
 function randomNumber() {
 
-    const min = Number(document.getElementById("min").value);
-    const max = Number(document.getElementById("max").value);
+    const min =
+        Number(
+            document.getElementById("min").value
+        );
 
-    if(!Number.isFinite(min) || !Number.isFinite(max)) {
-        document.getElementById("random").textContent =
-            "Podaj zakres.";
-        return;
-    }
-
-    if(min > max) {
-        document.getElementById("random").textContent =
-            "Minimum musi być mniejsze od maksimum.";
-        return;
-    }
+    const max =
+        Number(
+            document.getElementById("max").value
+        );
 
     const result =
-        Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById("random");
 
-    document.getElementById("random").textContent =
-        "Wynik: " + result;
+
+    if(!Number.isFinite(min) ||
+       !Number.isFinite(max)) {
+
+        result.textContent =
+            "Podaj zakres.";
+
+        return;
+
+    }
+
+
+    if(min > max) {
+
+        result.textContent =
+            "Minimum > maksimum.";
+
+        return;
+
+    }
+
+
+    const number =
+        Math.floor(
+            Math.random() *
+            (max - min + 1)
+        ) + min;
+
+
+    result.textContent =
+        "Wynik: " + number;
+
 }
 
 
-/* CALCULATOR */
+/* =========================
+   CALCULATOR
+========================= */
 
 function calculate() {
 
@@ -418,54 +1215,91 @@ function calculate() {
     const result =
         document.getElementById("calcResult");
 
+
     if(!expression) {
-        result.textContent = "Wpisz działanie.";
+
+        result.textContent =
+            "Wpisz działanie.";
+
         return;
+
     }
 
+
     /*
-       Prosty kalkulator dla podstawowych działań.
+       Akceptujemy tylko cyfry
+       i podstawowe operatory.
     */
 
     if(!/^[0-9+\-*/().%\s]+$/.test(expression)) {
-        result.textContent = "Niedozwolone znaki.";
+
+        result.textContent =
+            "Niedozwolone znaki.";
+
         return;
+
     }
+
 
     try {
 
-        const answer = Function(
-            '"use strict"; return (' + expression + ')'
-        )();
+        const answer =
+            Function(
+                '"use strict"; return (' +
+                expression +
+                ')'
+            )();
 
-        result.textContent = "Wynik: " + answer;
+        result.textContent =
+            "Wynik: " + answer;
 
     } catch {
 
-        result.textContent = "Nieprawidłowe działanie.";
+        result.textContent =
+            "Błąd działania.";
 
     }
+
 }
 
 
-/* CLOCK */
+/* =========================
+   CLOCK
+========================= */
 
 function updateClock() {
 
     const now = new Date();
 
-    const time =
+    document
+        .getElementById("clock")
+        .textContent =
         now.toLocaleTimeString("pl-PL");
 
-    document.getElementById("clock")
-        .textContent = time;
 }
 
 setInterval(updateClock, 1000);
 
 updateClock();
 
-</script>
 
-</body>
-</html>
+/* =========================
+   QR GENERATOR
+========================= */
+
+function generateQR() {
+
+    const text =
+        document.getElementById("qrText").value.trim();
+
+    const container =
+        document.getElementById("qrContainer");
+
+
+    container.innerHTML = "";
+
+
+    if(!text) {
+
+        container.innerHTML =
+            "<span 
