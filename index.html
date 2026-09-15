@@ -2,911 +2,679 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070a12">
-<title>TERMUX HUB 4.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Termux Hub 4.0</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
 :root{
-    --bg:#060811;
-    --panel:#0d1220;
-    --panel2:#111827;
-    --text:#f8fafc;
-    --muted:#8b9bb4;
-    --green:#00ff9d;
-    --cyan:#00d9ff;
-    --purple:#9b5cff;
-    --red:#ff5577;
-    --yellow:#ffd166;
-    --border:rgba(255,255,255,.09);
-    --shadow:0 20px 70px rgba(0,0,0,.4);
+ --bg:#050810;
+ --card:#0d1422;
+ --text:#f5f7ff;
+ --muted:#8fa0b8;
+ --green:#00ff9d;
+ --cyan:#00d9ff;
+ --purple:#9b5cff;
+ --border:#1d2939;
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-html{
-    scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
-    font-family:Inter,Arial,sans-serif;
-    color:var(--text);
-    background:
-        radial-gradient(circle at 10% 10%,rgba(0,255,157,.09),transparent 25%),
-        radial-gradient(circle at 90% 20%,rgba(0,217,255,.08),transparent 25%),
-        radial-gradient(circle at 50% 100%,rgba(155,92,255,.1),transparent 35%),
-        var(--bg);
-    min-height:100vh;
-    overflow-x:hidden;
+ font-family:Arial,sans-serif;
+ background:
+ radial-gradient(circle at 10% 10%,#00ff9d18,transparent 25%),
+ radial-gradient(circle at 90% 20%,#9b5cff18,transparent 25%),
+ var(--bg);
+ color:var(--text);
+ min-height:100vh;
 }
 
 body.light{
-    --bg:#eef3ff;
-    --panel:rgba(255,255,255,.8);
-    --panel2:#fff;
-    --text:#111827;
-    --muted:#64748b;
-    --border:rgba(0,0,0,.08);
+ --bg:#eef2ff;
+ --card:#ffffff;
+ --text:#111827;
+ --muted:#667085;
+ --border:#d8deea;
 }
-
-body:before{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-    background-size:45px 45px;
-    mask-image:linear-gradient(to bottom,black,transparent);
-    z-index:-2;
-}
-
-.orb{
-    position:fixed;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    filter:blur(80px);
-    opacity:.16;
-    pointer-events:none;
-    z-index:-1;
-    animation:float 10s infinite alternate ease-in-out;
-}
-
-.orb1{
-    background:var(--green);
-    top:15%;
-    left:-100px;
-}
-
-.orb2{
-    background:var(--purple);
-    right:-100px;
-    top:60%;
-    animation-delay:2s;
-}
-
-@keyframes float{
-    to{
-        transform:translate(70px,50px);
-    }
-}
-
-/* NAV */
 
 nav{
-    position:sticky;
-    top:0;
-    z-index:100;
-    backdrop-filter:blur(20px);
-    background:rgba(6,8,17,.75);
-    border-bottom:1px solid var(--border);
+ position:sticky;
+ top:0;
+ z-index:10;
+ background:#050810dd;
+ backdrop-filter:blur(15px);
+ border-bottom:1px solid var(--border);
 }
 
-body.light nav{
-    background:rgba(255,255,255,.75);
-}
+body.light nav{background:#ffffffdd}
 
 .nav{
-    max-width:1200px;
-    margin:auto;
-    min-height:65px;
-    padding:0 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+ max-width:1100px;
+ margin:auto;
+ padding:15px 20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
 }
 
 .logo{
-    font-size:21px;
-    font-weight:900;
-    letter-spacing:1px;
+ font-size:21px;
+ font-weight:bold;
 }
 
-.logo span{
-    color:var(--green);
+.logo span{color:var(--green)}
+
+.links{
+ display:flex;
+ gap:8px;
 }
 
-.navlinks{
-    display:flex;
-    align-items:center;
-    gap:5px;
+.links a,.links button{
+ color:var(--text);
+ text-decoration:none;
+ background:transparent;
+ border:0;
+ padding:9px 12px;
+ border-radius:8px;
+ cursor:pointer;
 }
 
-.navlinks a,
-.navlinks button{
-    color:var(--text);
-    background:transparent;
-    border:0;
-    padding:9px 12px;
-    border-radius:10px;
-    text-decoration:none;
-    cursor:pointer;
-}
-
-.navlinks a:hover,
-.navlinks button:hover{
-    background:rgba(255,255,255,.07);
+.links a:hover,.links button:hover{
+ background:#ffffff12;
 }
 
 .menu{
-    display:none;
-    background:none;
-    border:0;
-    color:var(--text);
-    font-size:25px;
+ display:none;
+ background:none;
+ border:0;
+ color:var(--text);
+ font-size:25px;
 }
 
-/* HERO */
-
 .hero{
-    max-width:1200px;
-    margin:auto;
-    padding:75px 20px 45px;
-    text-align:center;
+ max-width:1100px;
+ margin:auto;
+ padding:70px 20px 40px;
+ text-align:center;
 }
 
 .badge{
-    display:inline-block;
-    padding:8px 14px;
-    border-radius:999px;
-    border:1px solid rgba(0,255,157,.3);
-    background:rgba(0,255,157,.06);
-    color:var(--green);
-    font-size:13px;
-    margin-bottom:20px;
+ display:inline-block;
+ color:var(--green);
+ border:1px solid #00ff9d55;
+ background:#00ff9d0d;
+ border-radius:50px;
+ padding:8px 14px;
+ margin-bottom:20px;
 }
 
-.hero h1{
-    font-size:clamp(48px,9vw,92px);
-    line-height:.92;
-    margin-bottom:22px;
+h1{
+ font-size:clamp(45px,8vw,80px);
+ line-height:.95;
+ margin-bottom:20px;
 }
 
 .gradient{
-    background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));
-    -webkit-background-clip:text;
-    color:transparent;
+ background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));
+ -webkit-background-clip:text;
+ color:transparent;
 }
 
 .hero p{
-    max-width:700px;
-    margin:auto;
-    color:var(--muted);
-    line-height:1.7;
+ max-width:650px;
+ margin:auto;
+ color:var(--muted);
+ line-height:1.7;
 }
-
-/* TERMINAL */
 
 .terminal{
-    max-width:900px;
-    margin:35px auto 0;
-    background:#05080e;
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-    text-align:left;
-    box-shadow:var(--shadow);
+ max-width:850px;
+ margin:35px auto 0;
+ background:#03060b;
+ border:1px solid var(--border);
+ border-radius:15px;
+ overflow:hidden;
+ text-align:left;
 }
 
-.terminalbar{
-    padding:12px 15px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    display:flex;
-    align-items:center;
-    gap:7px;
+.term-top{
+ padding:12px;
+ border-bottom:1px solid var(--border);
 }
 
 .dot{
-    width:11px;
-    height:11px;
-    border-radius:50%;
-    background:#ff5f56;
+ display:inline-block;
+ width:11px;
+ height:11px;
+ border-radius:50%;
+ background:#ff5f56;
+ margin-right:5px;
 }
 
 .dot:nth-child(2){background:#ffbd2e}
 .dot:nth-child(3){background:#27c93f}
 
-.terminalbody{
-    padding:22px;
-    min-height:180px;
-    font:14px/1.8 monospace;
-    color:#d1fae5;
+.term-body{
+ padding:22px;
+ min-height:130px;
+ font-family:monospace;
+ line-height:1.8;
+ color:#d1fae5;
 }
 
-.prompt{
-    color:var(--green);
-}
-
-.cursor{
-    display:inline-block;
-    width:8px;
-    height:17px;
-    background:var(--green);
-    vertical-align:middle;
-    animation:blink .8s infinite;
-}
-
-@keyframes blink{
-    50%{opacity:0}
-}
+.prompt{color:var(--green)}
 
 .clock{
-    color:var(--cyan);
-    margin-top:20px;
-    font:18px monospace;
+ color:var(--cyan);
+ font-family:monospace;
+ margin-top:20px;
 }
 
-/* DASHBOARD */
-
 section{
-    max-width:1200px;
-    margin:auto;
-    padding:65px 20px;
+ max-width:1100px;
+ margin:auto;
+ padding:60px 20px;
 }
 
 .title{
-    text-align:center;
-    margin-bottom:32px;
+ text-align:center;
+ margin-bottom:30px;
 }
 
 .title h2{
-    font-size:35px;
-    margin-bottom:8px;
+ font-size:32px;
+ margin-bottom:8px;
 }
 
-.title p{
-    color:var(--muted);
-}
-
-/* STATS */
+.title p{color:var(--muted)}
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+ margin-bottom:20px;
 }
 
-.stat{
-    padding:20px;
-    border:1px solid var(--border);
-    background:var(--panel);
-    border-radius:17px;
-    box-shadow:var(--shadow);
+.stat,.card{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:20px;
 }
 
-.stat small{
-    color:var(--muted);
-}
+.stat small{color:var(--muted)}
 
 .stat strong{
-    display:block;
-    font-size:30px;
-    margin-top:8px;
+ display:block;
+ font-size:30px;
+ margin-top:8px;
 }
 
 .green{color:var(--green)}
 .cyan{color:var(--cyan)}
 .purple{color:var(--purple)}
-.yellow{color:var(--yellow)}
-
-/* GRID */
+.yellow{color:#ffd166}
 
 .grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:18px;
 }
 
 .card{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:23px;
-    box-shadow:var(--shadow);
-    backdrop-filter:blur(15px);
-    transition:.25s;
+ box-shadow:0 15px 50px #0003;
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    border-color:rgba(0,255,157,.3);
+ border-color:#00ff9d55;
 }
 
 .icon{
-    font-size:30px;
-    margin-bottom:10px;
+ font-size:30px;
+ margin-bottom:10px;
 }
 
-.card h3{
-    margin-bottom:8px;
-}
+.card h3{margin-bottom:8px}
 
 .card p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-    margin-bottom:15px;
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.5;
+ margin-bottom:15px;
 }
 
-/* FORM */
-
-input,
-textarea{
-    width:100%;
-    padding:13px;
-    margin-bottom:10px;
-    border-radius:11px;
-    border:1px solid var(--border);
-    background:rgba(0,0,0,.2);
-    color:var(--text);
-    outline:none;
+input,textarea{
+ width:100%;
+ padding:12px;
+ margin-bottom:10px;
+ border-radius:9px;
+ border:1px solid var(--border);
+ background:#0004;
+ color:var(--text);
+ outline:none;
 }
 
 body.light input,
 body.light textarea{
-    background:rgba(255,255,255,.7);
+ background:#fff;
 }
 
-input:focus,
-textarea:focus{
-    border-color:var(--green);
+button{
+ cursor:pointer;
 }
 
 .btn{
-    padding:11px 15px;
-    border-radius:10px;
-    border:0;
-    cursor:pointer;
-    font-weight:800;
-    background:linear-gradient(135deg,var(--green),var(--cyan));
-    color:#00120b;
-    transition:.2s;
+ border:0;
+ padding:11px 15px;
+ border-radius:9px;
+ background:linear-gradient(135deg,var(--green),var(--cyan));
+ color:#00120b;
+ font-weight:bold;
+ margin:3px;
 }
 
 .btn:hover{
-    transform:translateY(-2px);
+ transform:translateY(-1px);
 }
 
-.btn2{
-    background:rgba(255,255,255,.07);
-    color:var(--text);
-    border:1px solid var(--border);
+.btn-dark{
+ background:#ffffff12;
+ color:var(--text);
+ border:1px solid var(--border);
 }
 
 .result{
-    margin-top:12px;
-    min-height:44px;
-    padding:12px;
-    border-radius:10px;
-    background:rgba(0,0,0,.2);
-    font-family:monospace;
-    word-break:break-word;
+ margin-top:10px;
+ padding:12px;
+ min-height:42px;
+ border-radius:9px;
+ background:#0004;
+ font-family:monospace;
+ word-break:break-word;
 }
 
-/* XP */
-
-.xpbar{
-    height:14px;
-    background:rgba(255,255,255,.08);
-    border-radius:999px;
-    overflow:hidden;
-    margin:12px 0;
+.xp{
+ height:13px;
+ background:#ffffff12;
+ border-radius:20px;
+ overflow:hidden;
+ margin:12px 0;
 }
 
-.xpfill{
-    width:64%;
-    height:100%;
-    background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));
-    border-radius:999px;
-    transition:width .5s;
+.xp-bar{
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,var(--green),var(--cyan));
+ transition:.4s;
 }
-
-/* ACHIEVEMENTS */
 
 .achievements{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:10px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
 }
 
 .achievement{
-    padding:13px;
-    border-radius:12px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.025);
-    opacity:.4;
+ padding:13px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ opacity:.35;
 }
 
-.achievement.unlocked{
-    opacity:1;
-    border-color:rgba(0,255,157,.3);
+.achievement.active{
+ opacity:1;
+ border-color:#00ff9d66;
 }
 
-/* GAME */
-
-.gamebox{
-    text-align:center;
+.calc{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:6px;
 }
 
-#gameArea{
-    height:180px;
-    position:relative;
-    border-radius:15px;
-    border:1px solid var(--border);
-    background:#070b12;
-    overflow:hidden;
-    margin-top:15px;
+.calc button{
+ padding:14px 5px;
+ background:#ffffff0d;
+ color:var(--text);
+ border:1px solid var(--border);
+ border-radius:8px;
+}
+
+.calc button:hover{
+ background:#00ff9d22;
+}
+
+.chat{
+ height:200px;
+ overflow:auto;
+ padding:10px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ margin-bottom:10px;
+}
+
+.message{
+ padding:8px;
+ margin-bottom:6px;
+ border-radius:8px;
+ background:#00ff9d0d;
+}
+
+.message b{color:var(--green)}
+
+.game{
+ position:relative;
+ height:200px;
+ margin-top:15px;
+ background:#03060b;
+ border:1px solid var(--border);
+ border-radius:12px;
+ overflow:hidden;
 }
 
 .target{
-    position:absolute;
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 25px var(--green);
-    cursor:pointer;
-    display:none;
+ display:none;
+ position:absolute;
+ width:45px;
+ height:45px;
+ border-radius:50%;
+ background:var(--green);
+ box-shadow:0 0 25px var(--green);
 }
-
-/* CHAT */
-
-.chat{
-    height:230px;
-    overflow:auto;
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:12px;
-    background:rgba(0,0,0,.15);
-    margin-bottom:10px;
-}
-
-.msg{
-    padding:9px 11px;
-    border-radius:10px;
-    background:rgba(0,255,157,.07);
-    margin-bottom:7px;
-    font-size:13px;
-}
-
-.msg b{
-    color:var(--green);
-}
-
-/* CALCULATOR */
-
-.calcdisplay{
-    font-size:24px;
-    text-align:right;
-}
-
-.calcgrid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:7px;
-}
-
-.calcgrid button{
-    padding:14px 5px;
-    border:0;
-    border-radius:9px;
-    color:var(--text);
-    background:rgba(255,255,255,.07);
-    cursor:pointer;
-}
-
-.calcgrid button:hover{
-    background:rgba(0,255,157,.15);
-}
-
-/* QR */
 
 #qrcode{
-    display:flex;
-    justify-content:center;
-    margin-top:15px;
+ display:flex;
+ justify-content:center;
+ margin-top:15px;
 }
 
 #qrcode img{
-    background:white;
-    padding:8px;
-    border-radius:8px;
+ background:white;
+ padding:8px;
+ border-radius:7px;
 }
-
-/* INFO */
 
 .info{
-    display:flex;
-    justify-content:space-between;
-    padding:11px 0;
-    border-bottom:1px solid var(--border);
-    font-size:13px;
+ display:flex;
+ justify-content:space-between;
+ padding:10px 0;
+ border-bottom:1px solid var(--border);
 }
 
-.info span:last-child{
-    color:var(--green);
-}
-
-/* TOAST */
+.info span:last-child{color:var(--green)}
 
 .toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    padding:13px 17px;
-    border-radius:12px;
-    background:#111827;
-    border:1px solid var(--border);
-    color:white;
-    transform:translateY(100px);
-    opacity:0;
-    transition:.3s;
-    z-index:500;
+ position:fixed;
+ right:20px;
+ bottom:20px;
+ background:#111827;
+ color:white;
+ padding:13px 17px;
+ border-radius:10px;
+ opacity:0;
+ transform:translateY(80px);
+ transition:.3s;
+ z-index:100;
 }
 
 .toast.show{
-    transform:translateY(0);
-    opacity:1;
+ opacity:1;
+ transform:translateY(0);
 }
-
-/* FOOTER */
 
 footer{
-    text-align:center;
-    padding:35px 20px;
-    color:var(--muted);
-    border-top:1px solid var(--border);
+ text-align:center;
+ padding:35px;
+ border-top:1px solid var(--border);
+ color:var(--muted);
 }
 
-footer span{
-    color:var(--green);
+footer span{color:var(--green)}
+
+@media(max-width:800px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
 }
 
-/* MOBILE */
+@media(max-width:600px){
+ .menu{display:block}
 
-@media(max-width:850px){
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+ .links{
+  display:none;
+  position:absolute;
+  top:65px;
+  left:10px;
+  right:10px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px;
+  flex-direction:column;
+ }
 
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
+ .links.open{display:flex}
 
-@media(max-width:650px){
+ .links a,.links button{
+  width:100%;
+ }
 
-    .menu{
-        display:block;
-    }
+ .grid{grid-template-columns:1fr}
 
-    .navlinks{
-        display:none;
-        position:absolute;
-        top:65px;
-        left:12px;
-        right:12px;
-        padding:10px;
-        flex-direction:column;
-        background:var(--panel2);
-        border:1px solid var(--border);
-        border-radius:15px;
-    }
+ .stats{grid-template-columns:1fr 1fr}
 
-    .navlinks.open{
-        display:flex;
-    }
-
-    .navlinks a,
-    .navlinks button{
-        width:100%;
-        text-align:center;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .hero{
-        padding-top:50px;
-    }
-
-    section{
-        padding:45px 15px;
-    }
+ section{padding:45px 15px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-
-<!-- NAV -->
-
 <nav>
 <div class="nav">
 
-    <div class="logo">
-        TERMUX<span>HUB</span> 4.0
-    </div>
+<div class="logo">
+TERMUX<span>HUB</span> 4.0
+</div>
 
-    <button class="menu" onclick="toggleMenu()">☰</button>
+<button class="menu" onclick="toggleMenu()">☰</button>
 
-    <div class="navlinks" id="navlinks">
-        <a href="#dashboard">Dashboard</a>
-        <a href="#narzedzia">Narzędzia</a>
-        <a href="#gry">Gry</a>
-        <a href="#terminal">Terminal</a>
-        <button onclick="toggleTheme()">🌓</button>
-    </div>
+<div class="links" id="links">
+<a href="#dashboard">Dashboard</a>
+<a href="#tools">Narzędzia</a>
+<a href="#terminal">Terminal</a>
+<a href="#games">Gry</a>
+<button onclick="toggleTheme()">🌓</button>
+</div>
 
 </div>
 </nav>
 
-<!-- HERO -->
-
 <header class="hero">
 
-    <div class="badge">
-        ⚡ SYSTEM ONLINE • TERMUX HUB 4.0
-    </div>
+<div class="badge">
+⚡ SYSTEM ONLINE
+</div>
 
-    <h1>
-        Welcome to<br>
-        <span class="gradient">TERMUX HUB</span>
-    </h1>
+<h1>
+TERMUX<br>
+<span class="gradient">HUB 4.0</span>
+</h1>
 
-    <p>
-        Narzędzia, terminal, gry, XP, osiągnięcia
-        i mały cyfrowy dashboard — wszystko w jednej stronie.
-    </p>
+<p>
+Nowoczesny panel narzędzi, terminal, XP,
+osiągnięcia i mini-gry.
+</p>
 
-    <div class="terminal">
+<div class="terminal">
 
-        <div class="terminalbar">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
+<div class="term-top">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
 
-        <div class="terminalbody">
+<div class="term-body">
+<div>
+<span class="prompt">user@termux</span>:~$
+<span id="typing"></span>
+</div>
 
-            <div>
-                <span class="prompt">root@termux</span>:~$
-                <span id="typing"></span>
-                <span class="cursor"></span>
-            </div>
+<div id="termOutput">
+System gotowy.
+</div>
 
-            <div id="terminalOutput">
-                System initialized...
-            </div>
+<div>
+<span class="prompt">STATUS:</span>
+<span class="green"> ONLINE</span>
+</div>
+</div>
 
-            <div>
-                <span class="prompt">STATUS:</span>
-                <span class="green"> ONLINE</span>
-            </div>
+</div>
 
-            <div>
-                <span class="prompt">VERSION:</span>
-                4.0
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="clock" id="clock"></div>
+<div class="clock" id="clock"></div>
 
 </header>
-
-<!-- DASHBOARD -->
 
 <section id="dashboard">
 
 <div class="title">
-    <h2>📊 Dashboard</h2>
-    <p>Twój lokalny profil i postęp.</p>
+<h2>📊 Dashboard</h2>
+<p>Twój lokalny profil.</p>
 </div>
 
 <div class="stats">
 
-    <div class="stat">
-        <small>Poziom</small>
-        <strong class="green" id="level">7</strong>
-    </div>
+<div class="stat">
+<small>Poziom</small>
+<strong class="green" id="level">1</strong>
+</div>
 
-    <div class="stat">
-        <small>XP</small>
-        <strong class="cyan" id="xp">640</strong>
-    </div>
+<div class="stat">
+<small>XP</small>
+<strong class="cyan" id="xp">0</strong>
+</div>
 
-    <div class="stat">
-        <small>Osiągnięcia</small>
-        <strong class="purple" id="achievementCount">0</strong>
-    </div>
+<div class="stat">
+<small>Osiągnięcia</small>
+<strong class="purple" id="achievements">0</strong>
+</div>
 
-    <div class="stat">
-        <small>Sesja</small>
-        <strong class="yellow" id="sessionTime">0m</strong>
-    </div>
+<div class="stat">
+<small>Status</small>
+<strong class="yellow">ONLINE</strong>
+</div>
 
 </div>
 
 <div class="card">
 
-    <h3>👤 Profil</h3>
+<h3>👤 Profil</h3>
 
-    <input
-        id="username"
-        placeholder="Wpisz swoją nazwę..."
-    >
+<input id="username" placeholder="Twoja nazwa">
 
-    <button class="btn" onclick="saveProfile()">
-        Zapisz profil
-    </button>
+<button class="btn" onclick="saveProfile()">
+Zapisz
+</button>
 
-    <div class="result" id="profileResult">
-        Brak profilu.
-    </div>
+<div class="result" id="profile">
+Brak profilu.
+</div>
 
-    <div class="xpbar">
-        <div class="xpfill" id="xpfill"></div>
-    </div>
-
-    <small>
-        XP do następnego poziomu:
-        <span id="nextXP">360</span>
-    </small>
+<div class="xp">
+<div class="xp-bar" id="xpbar"></div>
+</div>
 
 </div>
 
 </section>
 
-<!-- TOOLS -->
-
-<section id="narzedzia">
+<section id="tools">
 
 <div class="title">
-    <h2>🧰 Narzędzia</h2>
-    <p>Przydatne rzeczy pod ręką.</p>
+<h2>🧰 Narzędzia</h2>
+<p>Wszystko w jednym miejscu.</p>
 </div>
 
 <div class="grid">
 
-<!-- PASSWORD -->
-
 <div class="card">
 
 <div class="icon">🔐</div>
-
 <h3>Generator haseł</h3>
 
-<p>
-Generuj losowe mocne hasła.
-</p>
+<p>Wygeneruj losowe hasło.</p>
 
 <input
-    type="number"
-    id="passLength"
-    value="18"
-    min="6"
-    max="60"
+id="passLength"
+type="number"
+value="16"
+min="6"
+max="50"
 >
 
 <button class="btn" onclick="generatePassword()">
-    Generuj
+Generuj
 </button>
 
-<button class="btn btn2" onclick="copyPassword()">
-    Kopiuj
+<button class="btn btn-dark" onclick="copyPassword()">
+Kopiuj
 </button>
 
 <div class="result" id="password">
-    ---
+---
 </div>
 
 </div>
-
-<!-- RANDOM -->
 
 <div class="card">
 
 <div class="icon">🎲</div>
+<h3>Losowanie</h3>
 
-<h3>Generator liczb</h3>
+<input id="min" type="number" value="1">
 
-<input
-    type="number"
-    id="min"
-    value="1"
-    placeholder="Minimum"
->
-
-<input
-    type="number"
-    id="max"
-    value="100"
-    placeholder="Maximum"
->
+<input id="max" type="number" value="100">
 
 <button class="btn" onclick="randomNumber()">
-    Losuj
+Losuj
 </button>
 
 <div class="result" id="random">
-    ?
+?
 </div>
 
 </div>
-
-<!-- CALCULATOR -->
 
 <div class="card">
 
 <div class="icon">🧮</div>
-
 <h3>Kalkulator</h3>
 
-<input
-    class="calcdisplay"
-    id="calc"
-    readonly
->
+<input id="calcDisplay" readonly>
 
-<div class="calcgrid">
+<div class="calc">
 
-<button onclick="addCalc('7')">7</button>
-<button onclick="addCalc('8')">8</button>
-<button onclick="addCalc('9')">9</button>
-<button onclick="addCalc('/')">÷</button>
+<button onclick="calc('7')">7</button>
+<button onclick="calc('8')">8</button>
+<button onclick="calc('9')">9</button>
+<button onclick="calc('/')">÷</button>
 
-<button onclick="addCalc('4')">4</button>
-<button onclick="addCalc('5')">5</button>
-<button onclick="addCalc('6')">6</button>
-<button onclick="addCalc('*')">×</button>
+<button onclick="calc('4')">4</button>
+<button onclick="calc('5')">5</button>
+<button onclick="calc('6')">6</button>
+<button onclick="calc('*')">×</button>
 
-<button onclick="addCalc('1')">1</button>
-<button onclick="addCalc('2')">2</button>
-<button onclick="addCalc('3')">3</button>
-<button onclick="addCalc('-')">−</button>
+<button onclick="calc('1')">1</button>
+<button onclick="calc('2')">2</button>
+<button onclick="calc('3')">3</button>
+<button onclick="calc('-')">−</button>
 
-<button onclick="addCalc('0')">0</button>
-<button onclick="addCalc('.')">.</button>
+<button onclick="calc('0')">0</button>
+<button onclick="calc('.')">.</button>
 <button onclick="clearCalc()">C</button>
 <button onclick="calculate()">=</button>
 
@@ -914,80 +682,68 @@ Generuj losowe mocne hasła.
 
 </div>
 
-<!-- QR -->
-
 <div class="card">
 
 <div class="icon">📱</div>
-
-<h3>QR Generator</h3>
+<h3>Generator QR</h3>
 
 <input
-    id="qrText"
-    placeholder="Wpisz tekst lub link..."
+id="qrText"
+placeholder="Wpisz tekst lub link"
 >
 
 <button class="btn" onclick="makeQR()">
-    Generuj QR
+Generuj
 </button>
 
 <div id="qrcode"></div>
 
 </div>
 
-<!-- BASE64 -->
-
 <div class="card">
 
 <div class="icon">🔑</div>
-
 <h3>Base64</h3>
 
-<input
-    id="base"
-    placeholder="Tekst..."
->
+<input id="baseText" placeholder="Tekst">
 
-<button class="btn" onclick="encodeBase()">
-    Koduj
+<button class="btn" onclick="encodeBase64()">
+Koduj
 </button>
 
-<button class="btn btn2" onclick="decodeBase()">
-    Dekoduj
+<button class="btn btn-dark" onclick="decodeBase64()">
+Dekoduj
 </button>
 
 <div class="result" id="baseResult">
-    ---
+---
 </div>
 
 </div>
-
-<!-- DEVICE -->
 
 <div class="card">
 
 <div class="icon">📱</div>
-
-<h3>Urządzenie</h3>
+<h3>Informacje</h3>
 
 <div class="info">
-    <span>System</span>
-    <span id="platform">---</span>
+<span>System</span>
+<span id="system">---</span>
 </div>
 
 <div class="info">
-    <span>Język</span>
-    <span id="language">---</span>
+<span>Język</span>
+<span id="lang">---</span>
 </div>
 
 <div class="info">
-    <span>Ekran</span>
-    <span id="screen">---</span>
+<span>Ekran</span>
+<span id="screen">---</span>
 </div>
 
 <div class="info">
-    <span>Online</span>
-    <span id="online">---</span>
+<span>Online</span>
+<span id="online">---</span>
 </div>
 
 </div>
@@ -995,60 +751,12 @@ Generuj losowe mocne hasła.
 </div>
 
 </section>
-
-<!-- TERMINAL -->
-
-<section id="terminal">
-
-<div class="title">
-
-<h2>🖥️ Interaktywny terminal</h2>
-
-<p>
-Spróbuj wpisać komendy.
-</p>
-
-</div>
-
-<div class="card">
-
-<div
-    class="terminalbody"
-    id="fakeTerminal"
-    style="height:300px;overflow:auto"
->
-
-<div>
-    <span class="prompt">user@termux</span>:~$
-    <span id="terminalHistory">
-    Witaj w Termux Hub Terminal.
-    </span>
-</div>
-
-</div>
-
-<input
-    id="command"
-    placeholder="help"
-    onkeydown="handleCommand(event)"
->
-
-</div>
-
-</section>
-
-<!-- ACHIEVEMENTS -->
 
 <section>
 
 <div class="title">
-
 <h2>🏆 Osiągnięcia</h2>
-
-<p>
-Odblokuj wszystkie.
-</p>
-
+<p>Odblokuj wszystkie.</p>
 </div>
 
 <div class="card">
@@ -1056,19 +764,19 @@ Odblokuj wszystkie.
 <div class="achievements">
 
 <div class="achievement" id="achProfile">
-👤 Profil — ustaw swoją nazwę
+👤 Profil
 </div>
 
 <div class="achievement" id="achPassword">
-🔐 Hacker — wygeneruj hasło
+🔐 Hacker
 </div>
 
 <div class="achievement" id="achQR">
-📱 QR Master — wygeneruj QR
+📱 QR Master
 </div>
 
 <div class="achievement" id="achGame">
-🎯 Reflex — zdobądź 3 punkty
+🎯 Reflex Master
 </div>
 
 </div>
@@ -1077,63 +785,82 @@ Odblokuj wszystkie.
 
 </section>
 
-<!-- GAME -->
-
-<section id="gry">
+<section id="terminal">
 
 <div class="title">
+<h2>🖥️ Terminal</h2>
+<p>Spróbuj komendy <b>help</b>.</p>
+</div>
 
-<h2>🎮 Reflex Game</h2>
+<div class="card">
 
-<p>
-Kliknij zielone koło tak szybko jak potrafisz.
-</p>
+<div
+id="fakeTerminal"
+style="
+height:220px;
+overflow:auto;
+background:#03060b;
+padding:15px;
+font-family:monospace;
+line-height:1.7;
+border-radius:10px;
+margin-bottom:10px;
+"
+>
+<span class="prompt">user@termux</span>:~$ Witaj!
+</div>
+
+<input
+id="command"
+placeholder="help"
+onkeydown="terminalCommand(event)"
+>
 
 </div>
 
-<div class="card gamebox">
+</section>
+
+<section id="games">
+
+<div class="title">
+<h2>🎮 Reflex Game</h2>
+<p>Kliknij zielone koło.</p>
+</div>
+
+<div class="card">
 
 <h3>
-Wynik:
-<span id="score">0</span>
+Wynik: <span id="score">0</span>
 </h3>
-
-<br>
 
 <button class="btn" onclick="startGame()">
 START
 </button>
 
-<div id="gameArea">
+<div class="game" id="game">
 
 <div
-    class="target"
-    id="target"
-    onclick="hitTarget()"
-></div>
+class="target"
+id="target"
+onclick="hitTarget()"
+>
+</div>
 
 </div>
 
 <p id="gameMessage">
-Gotowy?
+Kliknij START.
 </p>
 
 </div>
 
 </section>
 
-<!-- CHAT -->
-
 <section>
 
 <div class="title">
-
 <h2>💬 Mini Chat</h2>
-
-<p>
-Lokalny chat zapisany w przeglądarce.
-</p>
-
+<p>Chat zapisany lokalnie w przeglądarce.</p>
 </div>
 
 <div class="card">
@@ -1141,16 +868,16 @@ Lokalny chat zapisany w przeglądarce.
 <div class="chat" id="chat"></div>
 
 <input
-    id="chatInput"
-    placeholder="Napisz wiadomość..."
-    onkeydown="chatEnter(event)"
+id="chatInput"
+placeholder="Napisz wiadomość..."
+onkeydown="chatEnter(event)"
 >
 
 <button class="btn" onclick="sendMessage()">
 Wyślij
 </button>
 
-<button class="btn btn2" onclick="clearChat()">
+<button class="btn btn-dark" onclick="clearChat()">
 Wyczyść
 </button>
 
@@ -1158,60 +885,52 @@ Wyczyść
 
 </section>
 
-<!-- CONTACT -->
-
 <section>
 
 <div class="title">
-
 <h2>📩 Kontakt</h2>
-
-<p>
-Formularz kontaktowy.
-</p>
-
 </div>
 
 <div class="card">
 
 <form
-    action="https://formsubmit.co/TWOJ_EMAIL"
-    method="POST"
+action="https://formsubmit.co/TWOJ_EMAIL"
+method="POST"
 >
 
 <input
-    name="name"
-    placeholder="Imię"
-    required
+name="name"
+placeholder="Imię"
+required
 >
 
 <input
-    type="email"
-    name="email"
-    placeholder="E-mail"
-    required
+name="email"
+type="email"
+placeholder="E-mail"
+required
 >
 
 <textarea
-    name="message"
-    placeholder="Wiadomość..."
-    style="height:140px"
-    required
+name="message"
+placeholder="Wiadomość"
+style="height:130px"
+required
 ></textarea>
 
 <input
-    type="hidden"
-    name="_subject"
-    value="Wiadomość z Termux Hub 4.0"
+type="hidden"
+name="_subject"
+value="Termux Hub 4.0"
 >
 
 <input
-    type="hidden"
-    name="_captcha"
-    value="false"
+type="hidden"
+name="_captcha"
+value="false"
 >
 
-<button class="btn">
+<button class="btn" type="submit">
 Wyślij 🚀
 </button>
 
@@ -1223,13 +942,11 @@ Wyślij 🚀
 
 <footer>
 
-<p>
 TERMUX <span>HUB 4.0</span>
-</p>
 
-<p style="margin-top:8px">
+<br><br>
+
 Built with ❤️ + Termux + GitHub + Render
-</p>
 
 </footer>
 
@@ -1239,64 +956,438 @@ Gotowe!
 
 <script>
 
-/* =========================
-   GLOBAL STATE
-========================= */
-
-let xp = Number(localStorage.getItem("xp") || 640);
-
-let achievements =
-JSON.parse(
-    localStorage.getItem("achievements") || "[]"
-);
-
-let sessionSeconds = 0;
-
-let gameScore = 0;
-
-let gameRunning = false;
-
-/* =========================
-   MENU
-========================= */
+/* MENU */
 
 function toggleMenu(){
-
-    document
-        .getElementById("navlinks")
-        .classList.toggle("open");
-
+ document.getElementById("links").classList.toggle("open");
 }
 
-/* =========================
-   THEME
-========================= */
+/* THEME */
 
 function toggleTheme(){
+ document.body.classList.toggle("light");
 
-    document.body.classList.toggle("light");
-
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("light")
-        ? "light"
-        : "dark"
-    );
-
+ localStorage.setItem(
+  "theme",
+  document.body.classList.contains("light")
+  ? "light"
+  : "dark"
+ );
 }
 
 if(localStorage.getItem("theme")==="light"){
-    document.body.classList.add("light");
+ document.body.classList.add("light");
 }
 
-/* =========================
-   CLOCK
-========================= */
+/* CLOCK */
 
-function clock(){
+function updateClock(){
 
-    const now = new Date();
+ const now=new Date();
 
-    document.getElementById("clock").textContent =
-        now.toLocaleDateString("pl-PL")
- 
+ document.getElementById("clock").textContent=
+ now.toLocaleDateString("pl-PL")
+ +" • "+
+ now.toLocaleTimeString("pl-PL");
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* XP */
+
+let xp=Number(localStorage.getItem("xp")||0);
+
+function updateXP(){
+
+ let level=Math.floor(xp/100)+1;
+ let progress=xp%100;
+
+ document.getElementById("xp").textContent=xp;
+ document.getElementById("level").textContent=level;
+ document.getElementById("xpbar").style.width=progress+"%";
+
+}
+
+function addXP(amount){
+
+ xp+=amount;
+
+ localStorage.setItem("xp",xp);
+
+ updateXP();
+
+}
+
+updateXP();
+
+/* PROFILE */
+
+function saveProfile(){
+
+ let name=document.getElementById("username").value.trim();
+
+ if(name===""){
+  showToast("Wpisz nazwę!");
+  return;
+ }
+
+ localStorage.setItem("username",name);
+
+ document.getElementById("profile").textContent=
+ "👋 Witaj, "+name+"!";
+
+ unlock("profile");
+
+ addXP(10);
+
+}
+
+let savedName=localStorage.getItem("username");
+
+if(savedName){
+
+ document.getElementById("username").value=savedName;
+
+ document.getElementById("profile").textContent=
+ "👋 Witaj ponownie, "+savedName+"!";
+
+}
+
+/* PASSWORD */
+
+function generatePassword(){
+
+ let length=Number(
+  document.getElementById("passLength").value
+ );
+
+ let chars=
+ "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
+ let password="";
+
+ for(let i=0;i<length;i++){
+
+  password+=chars.charAt(
+   Math.floor(Math.random()*chars.length)
+  );
+
+ }
+
+ document.getElementById("password").textContent=password;
+
+ unlock("password");
+
+ addXP(10);
+
+}
+
+function copyPassword(){
+
+ let password=
+ document.getElementById("password").textContent;
+
+ if(password==="---")return;
+
+ navigator.clipboard.writeText(password);
+
+ showToast("Skopiowano!");
+
+}
+
+/* RANDOM */
+
+function randomNumber(){
+
+ let min=Number(document.getElementById("min").value);
+ let max=Number(document.getElementById("max").value);
+
+ if(min>max){
+
+  document.getElementById("random").textContent=
+   "Błędny zakres";
+
+  return;
+ }
+
+ let number=
+ Math.floor(Math.random()*(max-min+1))+min;
+
+ document.getElementById("random").textContent=number;
+
+ addXP(2);
+
+}
+
+/* CALCULATOR */
+
+function calc(value){
+
+ document.getElementById("calcDisplay").value+=value;
+
+}
+
+function clearCalc(){
+
+ document.getElementById("calcDisplay").value="";
+
+}
+
+function calculate(){
+
+ let display=document.getElementById("calcDisplay");
+
+ try{
+
+  display.value=Function(
+   "return "+display.value
+  )();
+
+ }catch(e){
+
+  display.value="Błąd";
+
+ }
+
+}
+
+/* QR */
+
+function makeQR(){
+
+ let text=document.getElementById("qrText").value.trim();
+
+ let box=document.getElementById("qrcode");
+
+ box.innerHTML="";
+
+ if(text===""){
+
+  showToast("Wpisz tekst!");
+
+  return;
+ }
+
+ if(typeof QRCode==="undefined"){
+
+  showToast("QR jeszcze się ładuje!");
+
+  return;
+ }
+
+ new QRCode(box,{
+  text:text,
+  width:160,
+  height:160
+ });
+
+ unlock("qr");
+
+ addXP(10);
+
+}
+
+/* BASE64 */
+
+function encodeBase64(){
+
+ let text=document.getElementById("baseText").value;
+
+ if(text==="")return;
+
+ try{
+
+  document.getElementById("baseResult").textContent=
+   btoa(unescape(encodeURIComponent(text)));
+
+ }catch(e){
+
+  document.getElementById("baseResult").textContent=
+   "Błąd";
+
+ }
+
+}
+
+function decodeBase64(){
+
+ let text=document.getElementById("baseText").value;
+
+ if(text==="")return;
+
+ try{
+
+  document.getElementById("baseResult").textContent=
+   decodeURIComponent(
+    escape(atob(text))
+   );
+
+ }catch(e){
+
+  document.getElementById("baseResult").textContent=
+   "Nieprawidłowy Base64";
+
+ }
+
+}
+
+/* DEVICE */
+
+document.getElementById("system").textContent=
+ navigator.platform;
+
+document.getElementById("lang").textContent=
+ navigator.language;
+
+document.getElementById("screen").textContent=
+ screen.width+" × "+screen.height;
+
+document.getElementById("online").textContent=
+ navigator.onLine ? "ONLINE" : "OFFLINE";
+
+/* TERMINAL */
+
+function terminalCommand(event){
+
+ if(event.key!=="Enter")return;
+
+ let input=document.getElementById("command");
+ let command=input.value.trim().toLowerCase();
+
+ if(command==="")return;
+
+ let terminal=document.getElementById("fakeTerminal");
+
+ let output="";
+
+ if(command==="help"){
+
+  output="help | date | whoami | ls | pwd | about | xp | clear";
+
+ }else if(command==="date"){
+
+  output=new Date().toString();
+
+ }else if(command==="whoami"){
+
+  output=localStorage.getItem("username")||"guest";
+
+ }else if(command==="ls"){
+
+  output="index.html tools games dashboard";
+
+ }else if(command==="pwd"){
+
+  output="/home/termux-hub";
+
+ }else if(command==="about"){
+
+  output="TERMUX HUB 4.0";
+
+ }else if(command==="xp"){
+
+  output="XP: "+xp;
+
+ }else if(command==="clear"){
+
+  terminal.innerHTML="";
+  input.value="";
+  return;
+
+ }else{
+
+  output="command not found: "+command;
+
+ }
+
+ terminal.innerHTML+=
+ "<div><span class='prompt'>user@termux</span>:~$ "
+ +command+
+ "</div><div>"+output+"</div>";
+
+ terminal.scrollTop=terminal.scrollHeight;
+
+ input.value="";
+
+ addXP(1);
+
+}
+
+/* ACHIEVEMENTS */
+
+let achievements=
+ JSON.parse(
+  localStorage.getItem("achievements")||"[]"
+ );
+
+function unlock(type){
+
+ if(achievements.indexOf(type)!==-1)return;
+
+ achievements.push(type);
+
+ localStorage.setItem(
+  "achievements",
+  JSON.stringify(achievements)
+ );
+
+ let ids={
+  profile:"achProfile",
+  password:"achPassword",
+  qr:"achQR",
+  game:"achGame"
+ };
+
+ let element=document.getElementById(ids[type]);
+
+ if(element){
+  element.classList.add("active");
+ }
+
+ document.getElementById("achievements").textContent=
+  achievements.length;
+
+ showToast("🏆 Osiągnięcie!");
+
+}
+
+function loadAchievements(){
+
+ let ids={
+  profile:"achProfile",
+  password:"achPassword",
+  qr:"achQR",
+  game:"achGame"
+ };
+
+ for(let i=0;i<achievements.length;i++){
+
+  let element=
+   document.getElementById(ids[achievements[i]]);
+
+  if(element){
+   element.classList.add("active");
+  }
+
+ }
+
+ document.getElementById("achievements").textContent=
+  achievements.length;
+
+}
+
+loadAchievements();
+
+/* GAME */
+
+let score=0;
+let gameRunning=false;
+
+function startGame(){
+
+ score=0;
+ gameRunning=true;
+
+ documen
