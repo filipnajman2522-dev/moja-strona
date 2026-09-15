@@ -1390,4 +1390,295 @@ function startGame(){
  score=0;
  gameRunning=true;
 
- documen
+ document.getElementById("gameText").textContent = "Kliknij STOP!";
+document.getElementById("gameBtn").textContent = "STOP";
+
+const gameArea = document.getElementById("gameArea");
+if (gameArea) {
+  gameArea.onclick = function () {
+    if (!gameRunning) return;
+
+    score++;
+    document.getElementById("score").textContent = score;
+
+    if (score >= 10) {
+      gameRunning = false;
+      document.getElementById("gameText").textContent = "🏆 WYGRAŁEŚ!";
+      document.getElementById("gameBtn").textContent = "START";
+      addXP(50);
+      unlockAchievement("game");
+    }
+  };
+}
+
+}
+
+function toggleGame() {
+  if (gameRunning) {
+    gameRunning = false;
+    document.getElementById("gameText").textContent = "Gra zatrzymana";
+    document.getElementById("gameBtn").textContent = "START";
+  } else {
+    startGame();
+  }
+}
+
+
+/* CHAT */
+
+function sendChat() {
+  const input = document.getElementById("chatInput");
+  const chat = document.getElementById("chat");
+
+  if (!input || !chat) return;
+
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const msg = document.createElement("div");
+  msg.className = "chat-message";
+  msg.textContent = "👤 Ty: " + text;
+
+  chat.appendChild(msg);
+
+  input.value = "";
+
+  localStorage.setItem("chat", chat.innerHTML);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function loadChat() {
+  const chat = document.getElementById("chat");
+
+  if (!chat) return;
+
+  const saved = localStorage.getItem("chat");
+
+  if (saved) {
+    chat.innerHTML = saved;
+  }
+}
+
+
+/* TOAST */
+
+function toast(message) {
+  const box = document.getElementById("toast");
+
+  if (!box) {
+    alert(message);
+    return;
+  }
+
+  box.textContent = message;
+  box.classList.add("show");
+
+  setTimeout(function () {
+    box.classList.remove("show");
+  }, 2500);
+}
+
+
+/* PROFILE */
+
+function saveProfile() {
+  const name = document.getElementById("profileName").value.trim();
+
+  if (!name) {
+    toast("Wpisz nazwę profilu!");
+    return;
+  }
+
+  localStorage.setItem("profileName", name);
+
+  const nameElement = document.getElementById("userName");
+
+  if (nameElement) {
+    nameElement.textContent = name;
+  }
+
+  addXP(10);
+  unlockAchievement("profile");
+
+  toast("Profil zapisany!");
+}
+
+function loadProfile() {
+  const name = localStorage.getItem("profileName");
+
+  if (!name) return;
+
+  const input = document.getElementById("profileName");
+  const display = document.getElementById("userName");
+
+  if (input) input.value = name;
+  if (display) display.textContent = name;
+}
+
+
+/* THEME */
+
+function toggleTheme() {
+  document.body.classList.toggle("light");
+
+  const light = document.body.classList.contains("light");
+
+  localStorage.setItem("theme", light ? "light" : "dark");
+
+  toast(light ? "☀️ Tryb jasny" : "🌙 Tryb ciemny");
+}
+
+function loadTheme() {
+  const theme = localStorage.getItem("theme");
+
+  if (theme === "light") {
+    document.body.classList.add("light");
+  }
+}
+
+
+/* TERMINAL */
+
+function terminalCommand() {
+  const input = document.getElementById("terminalInput");
+  const output = document.getElementById("terminalOutput");
+
+  if (!input || !output) return;
+
+  const command = input.value.trim().toLowerCase();
+
+  if (!command) return;
+
+  let result = "";
+
+  switch (command) {
+    case "help":
+      result =
+        "Dostępne komendy: help, date, whoami, ls, pwd, about, xp, clear";
+      break;
+
+    case "date":
+      result = new Date().toLocaleString("pl-PL");
+      break;
+
+    case "whoami":
+      result = localStorage.getItem("profileName") || "guest";
+      break;
+
+    case "ls":
+      result = "index.html  terminal  games  tools  profile";
+      break;
+
+    case "pwd":
+      result = "/home/termux-hub";
+      break;
+
+    case "about":
+      result = "Termux Hub 4.0 — webowy panel narzędzi.";
+      break;
+
+    case "xp":
+      result = "XP: " + xp;
+      break;
+
+    case "clear":
+      output.innerHTML = "";
+      input.value = "";
+      return;
+
+    default:
+      result = "Nieznana komenda. Wpisz: help";
+  }
+
+  output.innerHTML +=
+    "<div><span>$</span> " +
+    escapeHTML(command) +
+    "</div><div>" +
+    escapeHTML(result) +
+    "</div>";
+
+  output.scrollTop = output.scrollHeight;
+
+  input.value = "";
+}
+
+function escapeHTML(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+
+/* QR */
+
+function generateQR() {
+  const text = document.getElementById("qrText").value.trim();
+  const box = document.getElementById("qrcode");
+
+  if (!text) {
+    toast("Wpisz tekst lub link!");
+    return;
+  }
+
+  box.innerHTML = "";
+
+  if (typeof QRCode === "undefined") {
+    toast("Biblioteka QR się nie załadowała.");
+    return;
+  }
+
+  new QRCode(box, {
+    text: text,
+    width: 200,
+    height: 200
+  });
+
+  addXP(10);
+  unlockAchievement("qr");
+}
+
+
+/* BASE64 */
+
+function encodeBase64() {
+  const input = document.getElementById("base64Input");
+  const output = document.getElementById("base64Output");
+
+  try {
+    output.value = btoa(unescape(encodeURIComponent(input.value)));
+  } catch (error) {
+    output.value = "Błąd kodowania";
+  }
+}
+
+function decodeBase64() {
+  const input = document.getElementById("base64Input");
+  const output = document.getElementById("base64Output");
+
+  try {
+    output.value = decodeURIComponent(
+      escape(atob(input.value))
+    );
+  } catch (error) {
+    output.value = "Nieprawidłowy Base64";
+  }
+}
+
+
+/* INIT */
+
+loadProfile();
+loadChat();
+loadTheme();
+updateXP();
+
+setInterval(updateClock, 1000);
+
+updateClock();
+
+</script>
+
+</body>
+</html>
