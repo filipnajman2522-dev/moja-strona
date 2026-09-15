@@ -1,692 +1,1435 @@
-<!DOCTYPE html>
+6<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Termux Hub 4.0</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<title>Termux Hub 5.0</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root{
+  --bg:#070b12;
+  --panel:rgba(15,23,35,.78);
+  --panel2:#111b2b;
+  --border:rgba(255,255,255,.08);
+  --text:#f5f7fa;
+  --muted:#8b98aa;
+  --green:#00ff88;
+  --green2:#00c96b;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-font-family:Arial,sans-serif;
-background:#080b12;
-color:#fff;
-transition:.3s;
+  min-height:100vh;
+  font-family:Inter,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(0,255,136,.10),transparent 28%),
+    radial-gradient(circle at 85% 20%,rgba(0,180,255,.08),transparent 30%),
+    var(--bg);
+  overflow-x:hidden;
 }
 
-body.light{
-background:#f1f5f9;
-color:#111;
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.25;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:linear-gradient(to bottom,black,transparent);
 }
 
-header{
-background:#111827;
-padding:18px;
-position:sticky;
-top:0;
-z-index:10;
-}
-
-nav{
-max-width:1100px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-size:24px;
-font-weight:bold;
-color:#00ff88;
-}
-
-nav button{
-background:#00ff88;
-color:#000;
-border:0;
-padding:10px 15px;
-border-radius:8px;
-font-weight:bold;
-}
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-.hero{
-padding:50px 10px;
-text-align:center;
-}
-
-.hero h1{
-font-size:42px;
-color:#00ff88;
-margin-bottom:15px;
-}
-
-.hero p{
-color:#aaa;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:18px;
-}
-
-.card{
-background:#111827;
-padding:20px;
-border-radius:15px;
-border:1px solid #263244;
-box-shadow:0 0 15px rgba(0,255,136,.08);
-}
-
-body.light .card{
-background:#fff;
-border-color:#ddd;
-}
-
-.card h2{
-margin-bottom:15px;
-color:#00ff88;
-}
-
+button,
 input,
-textarea,
-select{
-width:100%;
-padding:12px;
-margin:7px 0;
-border-radius:8px;
-border:1px solid #374151;
-background:#080b12;
-color:#fff;
-}
-
-body.light input,
-body.light textarea{
-background:#fff;
-color:#111;
+textarea{
+  font:inherit;
 }
 
 button{
-cursor:pointer;
+  cursor:pointer;
 }
 
-.action{
-background:#00ff88;
-color:#000;
-padding:11px 15px;
-border-radius:8px;
-font-weight:bold;
-margin-top:6px;
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
-.output{
-margin-top:12px;
-padding:12px;
-background:#05070b;
-border-radius:8px;
-min-height:35px;
-word-break:break-word;
+/* SIDEBAR */
+
+.sidebar{
+  width:250px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:22px 16px;
+  background:rgba(7,11,18,.88);
+  backdrop-filter:blur(18px);
+  border-right:1px solid var(--border);
+  z-index:50;
 }
 
-.terminal{
-background:#05070b;
-border-radius:10px;
-padding:15px;
-font-family:monospace;
-color:#00ff88;
-min-height:160px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:8px 10px 25px;
 }
 
-.terminal-output{
-height:100px;
-overflow:auto;
-margin-bottom:10px;
+.brand-icon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  color:#00150b;
+  background:var(--green);
+  box-shadow:0 0 25px rgba(0,255,136,.25);
+  font-size:20px;
+  font-weight:800;
 }
 
-.terminal input{
-background:#000;
-color:#00ff88;
-font-family:monospace;
+.brand-text{
+  font-size:19px;
+  font-weight:800;
 }
 
-.stat{
-font-size:32px;
-color:#00ff88;
-font-weight:bold;
+.brand-text span{
+  color:var(--green);
 }
 
-#qrcode{
-margin-top:15px;
-background:#fff;
-padding:10px;
-width:max-content;
+.profile-mini{
+  padding:14px;
+  margin-bottom:20px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(255,255,255,.035);
+  display:flex;
+  align-items:center;
+  gap:11px;
 }
 
-.chat{
-height:180px;
-overflow:auto;
-background:#05070b;
-padding:10px;
-border-radius:8px;
-margin-bottom:10px;
+.avatar{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#172235;
+  border:2px solid rgba(0,255,136,.45);
 }
 
-.chat-message{
-padding:7px;
-border-bottom:1px solid #222;
+.profile-mini-name{
+  min-width:0;
 }
 
-.game-area{
-height:120px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#05070b;
-border-radius:10px;
-margin-top:10px;
-cursor:pointer;
-color:#00ff88;
-font-size:22px;
+.profile-mini-name strong{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.achievement{
-padding:8px;
-margin:5px 0;
-background:#05070b;
-border-radius:7px;
-opacity:.35;
+.profile-mini-name small{
+  color:var(--muted);
 }
 
-.achievement.active{
-opacity:1;
-color:#00ff88;
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
+
+.menu button{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  color:var(--muted);
+  text-align:left;
+  transition:.2s;
+}
+
+.menu button:hover,
+.menu button.active{
+  color:var(--text);
+  background:rgba(0,255,136,.08);
+  border-color:rgba(0,255,136,.12);
+}
+
+.menu button.active{
+  color:var(--green);
+}
+
+.sidebar-bottom{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:20px;
+}
+
+/* MAIN */
+
+.main{
+  width:calc(100% - 250px);
+  margin-left:250px;
+  padding:25px;
+}
+
+.topbar{
+  max-width:1250px;
+  margin:0 auto 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.theme-btn{
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+  padding:11px 14px;
+  border-radius:12px;
+}
+
+.page{
+  display:none;
+  max-width:1250px;
+  margin:auto;
+  animation:fade .3s ease;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* DASHBOARD */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:32px;
+  border:1px solid var(--border);
+  border-radius:26px;
+  background:
+    linear-gradient(135deg,rgba(0,255,136,.10),rgba(0,130,255,.06)),
+    var(--panel);
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:230px;
+  height:230px;
+  border-radius:50%;
+  background:rgba(0,255,136,.08);
+  filter:blur(40px);
+  right:-70px;
+  top:-90px;
+}
+
+.eyebrow{
+  color:var(--green);
+  font-family:"JetBrains Mono",monospace;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.hero h1{
+  font-size:clamp(30px,5vw,52px);
+  line-height:1.05;
+  margin-bottom:12px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:650px;
+  line-height:1.7;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:24px;
+}
+
+.stat-card{
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(255,255,255,.035);
+}
+
+.stat-card span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.stat-card strong{
+  display:block;
+  font-size:28px;
+  margin-top:7px;
+}
+
+/* CARDS */
+
+.section-title{
+  margin:28px 0 14px;
+  font-size:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.card{
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+  background:var(--panel);
+  backdrop-filter:blur(15px);
+  box-shadow:0 12px 40px rgba(0,0,0,.18);
+}
+
+.card:hover{
+  border-color:rgba(0,255,136,.18);
+}
+
+.card h2{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.card-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:18px;
+}
+
+/* INPUTS */
+
+.input{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  outline:none;
+  color:var(--text);
+  background:#080e18;
+}
+
+.input:focus{
+  border-color:rgba(0,255,136,.5);
+  box-shadow:0 0 0 3px rgba(0,255,136,.06);
+}
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:12px 15px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn-primary{
+  color:#00150b;
+  background:var(--green);
+}
+
+.btn-primary:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 25px rgba(0,255,136,.2);
+}
+
+.btn-secondary{
+  color:var(--text);
+  background:#172235;
+  border:1px solid var(--border);
+}
+
+.row{
+  display:flex;
+  gap:9px;
+}
+
+.row>*{
+  flex:1;
+}
+
+/* PASSWORD */
+
+.password-output{
+  margin-top:15px;
+  padding:15px;
+  border-radius:13px;
+  background:#050a11;
+  border:1px solid var(--border);
+  font-family:"JetBrains Mono",monospace;
+  word-break:break-all;
+  min-height:48px;
+}
+
+.range-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:14px 0;
+}
+
+.range{
+  flex:1;
+  accent-color:var(--green);
+}
+
+.length-value{
+  min-width:38px;
+  text-align:center;
+  color:var(--green);
+  font-weight:800;
+}
+
+.checks{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.check{
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.check input{
+  accent-color:var(--green);
+  margin-right:6px;
+}
+
+/* STRENGTH */
+
+.strength{
+  margin-top:12px;
+}
+
+.strength-top{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.strength-bar{
+  height:7px;
+  border-radius:10px;
+  background:#182131;
+  overflow:hidden;
+}
+
+.strength-fill{
+  width:0%;
+  height:100%;
+  background:var(--green);
+  transition:.25s;
+}
+
+/* QR */
+
+.qr-box{
+  min-height:230px;
+  display:grid;
+  place-items:center;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:15px;
+  margin-top:14px;
+  background:#080d15;
+}
+
+#qrcode img{
+  padding:10px;
+  background:white;
+  border-radius:8px;
+}
+
+/* CALCULATOR */
+
+.calculator{
+  max-width:390px;
+  margin:auto;
+}
+
+.calc-display{
+  padding:18px;
+  min-height:95px;
+  border-radius:16px;
+  background:#050a11;
+  border:1px solid var(--border);
+  margin-bottom:12px;
+  text-align:right;
+  overflow:hidden;
+}
+
+.calc-expression{
+  color:var(--muted);
+  min-height:22px;
+  font-size:14px;
+}
+
+.calc-result{
+  font-size:34px;
+  font-weight:700;
+  font-family:"JetBrains Mono",monospace;
+  margin-top:8px;
+  overflow-x:auto;
+}
+
+.calc-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.calc-btn{
+  min-height:58px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:#111b2b;
+  color:var(--text);
+  font-size:18px;
+  font-weight:700;
+}
+
+.calc-btn:hover{
+  background:#19263a;
+}
+
+.calc-btn.operator{
+  color:var(--green);
+}
+
+.calc-btn.equals{
+  color:#00150b;
+  background:var(--green);
+}
+
+/* STOPWATCH */
+
+.stopwatch{
+  text-align:center;
+  padding:15px 0;
+}
+
+.time{
+  font-family:"JetBrains Mono",monospace;
+  font-size:48px;
+  font-weight:700;
+  letter-spacing:2px;
+  margin:10px 0 20px;
+}
+
+.laps{
+  max-height:150px;
+  overflow:auto;
+  margin-top:15px;
+}
+
+.lap{
+  display:flex;
+  justify-content:space-between;
+  padding:9px 5px;
+  border-bottom:1px solid var(--border);
+  color:var(--muted);
+}
+
+/* PROFILE */
+
+.profile-big{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:25px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--panel);
+  margin-bottom:18px;
+}
+
+.profile-big .avatar{
+  width:90px;
+  height:90px;
+}
+
+.profile-title{
+  font-size:26px;
+  font-weight:800;
+}
+
+.profile-sub{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.avatar-preview{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid var(--green);
+  display:block;
+  margin-bottom:12px;
+}
+
+/* TOAST */
 
 .toast{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#00ff88;
-color:#000;
-padding:14px 20px;
-border-radius:8px;
-font-weight:bold;
-transform:translateY(100px);
-transition:.3s;
-z-index:99;
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  padding:13px 17px;
+  border-radius:13px;
+  background:#101a28;
+  border:1px solid rgba(0,255,136,.25);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  transform:translateY(100px);
+  opacity:0;
+  transition:.25s;
+  z-index:100;
 }
 
 .toast.show{
-transform:translateY(0);
+  transform:translateY(0);
+  opacity:1;
 }
 
-footer{
-text-align:center;
-padding:40px 20px;
-color:#777;
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.sidebar{
+  transform:translateX(-100%);
+  transition:.25s;
 }
 
-@media(max-width:600px){
-.hero h1{
-font-size:32px;
+.sidebar.open{
+  transform:translateX(0);
 }
 
-.container{
-padding:12px;
+.main{
+  width:100%;
+  margin-left:0;
+  padding:15px;
 }
+
+.mobile-menu{
+  display:block;
 }
+
+.stats{
+  grid-template-columns:1fr 1fr;
+}
+
+.grid{
+  grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:550px){
+
+.hero{
+  padding:24px;
+}
+
+.stats{
+  grid-template-columns:1fr 1fr;
+}
+
+.row{
+  flex-direction:column;
+}
+
+.checks{
+  grid-template-columns:1fr;
+}
+
+.time{
+  font-size:37px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<header>
-<nav>
-<div class="logo">⚡ Termux Hub</div>
+<div class="app">
 
-<button onclick="toggleTheme()">
-🌙 / ☀️
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+<div class="brand">
+<div class="brand-icon">⚡</div>
+<div class="brand-text">Termux <span>Hub</span></div>
+</div>
+
+<div class="profile-mini">
+
+<img
+id="sideAvatar"
+class="avatar"
+src="https://i.imgur.com/6VBx3io.png"
+>
+
+<div class="profile-mini-name">
+<strong id="sideName">Guest</strong>
+<small>Użytkownik</small>
+</div>
+
+</div>
+
+<div class="menu">
+
+<button
+class="active"
+onclick="showPage('home',this)"
+>
+🏠 Dashboard
 </button>
-</nav>
-</header>
 
-<div class="container">
+<button
+onclick="showPage('tools',this)"
+>
+🛠️ Narzędzia
+</button>
 
-<section class="hero">
-<h1>TERMUX HUB 4.0</h1>
-<p>Twoje centrum narzędzi, terminala i mini-gier.</p>
-</section>
+<button
+onclick="showPage('profile',this)"
+>
+👤 Profil
+</button>
+
+</div>
+
+<div class="sidebar-bottom">
+
+<button
+class="theme-btn"
+style="width:100%"
+onclick="toggleTheme()"
+>
+🌙 Zmień motyw
+</button>
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="topbar">
+
+<button
+class="theme-btn mobile-menu"
+onclick="toggleSidebar()"
+>
+☰ Menu
+</button>
+
+<div></div>
+
+<button
+class="theme-btn"
+onclick="toggleTheme()"
+>
+☀️ / 🌙
+</button>
+
+</div>
+
+
+<!-- HOME -->
+
+<section
+class="page active"
+id="page-home"
+>
+
+<div class="hero">
+
+<div class="eyebrow">
+TERMUX HUB / 5.0
+</div>
+
+<h1>
+Twoje narzędzia.<br>
+Jeden panel.
+</h1>
+
+<p>
+Nowa wersja Termux Hub z nowoczesnym wyglądem,
+generatorem haseł, QR, kalkulatorem i stoperem.
+</p>
+
+<div class="stats">
+
+<div class="stat-card">
+<span>Narzędzia</span>
+<strong>4</strong>
+</div>
+
+<div class="stat-card">
+<span>Profil</span>
+<strong id="homeName">Guest</strong>
+</div>
+
+<div class="stat-card">
+<span>Motyw</span>
+<strong id="themeStatus">Dark</strong>
+</div>
+
+<div class="stat-card">
+<span>Wersja</span>
+<strong>5.0</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section-title">
+⚡ Szybki dostęp
+</div>
 
 <div class="grid">
 
-<!-- PROFIL -->
-
 <div class="card">
-<h2>👤 Profil</h2>
 
-<input
-id="profileName"
-placeholder="Twoja nazwa"
->
+<h2>🔐 Generator haseł</h2>
+
+<p class="card-sub">
+Twórz mocne, losowe hasła.
+</p>
 
 <button
-class="action"
-onclick="saveProfile()"
+class="btn btn-primary"
+onclick="showPageByName('tools')"
 >
-Zapisz profil
+Otwórz narzędzia →
 </button>
 
-<p style="margin-top:15px">
-Witaj:
-<strong id="userName">Guest</strong>
-</p>
 </div>
 
-
-<!-- XP -->
 
 <div class="card">
-<h2>⭐ Poziom</h2>
 
-<div class="stat">
-<span id="level">1</span>
+<h2>👤 Twój profil</h2>
+
+<p class="card-sub">
+Ustaw nazwę i zdjęcie profilowe.
+</p>
+
+<button
+class="btn btn-primary"
+onclick="showPageByName('profile')"
+>
+Otwórz profil →
+</button>
+
 </div>
+
+</div>
+
+</section>
+
+
+<!-- TOOLS -->
+
+<section
+class="page"
+id="page-tools"
+>
+
+<div class="hero">
+
+<div class="eyebrow">
+TOOLS / 5.0
+</div>
+
+<h1>
+Narzędzia
+</h1>
 
 <p>
-XP:
-<span id="xp">0</span>
-/
-<span id="nextXP">100</span>
+Wszystko, czego potrzebujesz, w jednym miejscu.
 </p>
 
-<div class="output">
-<div
-id="xpBar"
-style="height:10px;background:#00ff88;width:0%;border-radius:5px"
-></div>
-</div>
 </div>
 
 
-<!-- HASŁO -->
+<div class="grid">
+
+
+<!-- PASSWORD -->
 
 <div class="card">
-<h2>🔐 Generator hasła</h2>
+
+<h2>🔐 Generator haseł</h2>
+
+<p class="card-sub">
+Ustaw długość i wybierz znaki.
+</p>
+
+<div class="range-row">
 
 <input
 id="passwordLength"
-type="number"
+class="range"
+type="range"
 min="4"
 max="50"
 value="16"
+oninput="updatePasswordLength()"
 >
-
-<button
-class="action"
-onclick="generatePassword()"
->
-Generuj
-</button>
 
 <div
-class="output"
-id="passwordOutput"
+class="length-value"
+id="lengthValue"
 >
--
+16
 </div>
 
+</div>
+
+<div class="checks">
+
+<label class="check">
+<input
+type="checkbox"
+id="lowercase"
+checked
+>
+Małe litery
+</label>
+
+<label class="check">
+<input
+type="checkbox"
+id="uppercase"
+checked
+>
+Wielkie litery
+</label>
+
+<label class="check">
+<input
+type="checkbox"
+id="numbers"
+checked
+>
+Cyfry
+</label>
+
+<label class="check">
+<input
+type="checkbox"
+id="symbols"
+checked
+>
+Symbole
+</label>
+
+</div>
+
+<div class="row">
+
 <button
-class="action"
+class="btn btn-primary"
+onclick="generatePassword()"
+>
+⚡ Generuj
+</button>
+
+<button
+class="btn btn-secondary"
 onclick="copyPassword()"
 >
 📋 Kopiuj
 </button>
+
 </div>
-
-
-<!-- LOSOWA LICZBA -->
-
-<div class="card">
-<h2>🎲 Losowa liczba</h2>
-
-<input
-id="minNumber"
-type="number"
-value="1"
-placeholder="MIN"
->
-
-<input
-id="maxNumber"
-type="number"
-value="100"
-placeholder="MAX"
->
-
-<button
-class="action"
-onclick="randomNumber()"
->
-Losuj
-</button>
 
 <div
-class="output"
-id="randomOutput"
+class="password-output"
+id="passwordOutput"
 >
+Kliknij „Generuj”
+</div>
+
+<div class="strength">
+
+<div class="strength-top">
+
+<span>Siła hasła</span>
+
+<strong id="strengthText">
 -
+</strong>
+
 </div>
-</div>
 
-
-<!-- KALKULATOR -->
-
-<div class="card">
-<h2>🧮 Kalkulator</h2>
-
-<input
-id="calcInput"
-placeholder="np. 2+2*5"
->
-
-<button
-class="action"
-onclick="calculate()"
->
-Oblicz
-</button>
+<div class="strength-bar">
 
 <div
-class="output"
-id="calcOutput"
->
--
+class="strength-fill"
+id="strengthFill"
+></div>
+
 </div>
+
 </div>
 
-
-<!-- BASE64 -->
-
-<div class="card">
-<h2>🔤 Base64</h2>
-
-<textarea
-id="base64Input"
-placeholder="Tekst..."
-></textarea>
-
-<button
-class="action"
-onclick="encodeBase64()"
->
-Encode
-</button>
-
-<button
-class="action"
-onclick="decodeBase64()"
->
-Decode
-</button>
-
-<div
-class="output"
-id="base64Output"
->
--
-</div>
 </div>
 
 
 <!-- QR -->
 
 <div class="card">
-<h2>📱 QR Generator</h2>
+
+<h2>📱 Generator QR</h2>
+
+<p class="card-sub">
+Wpisz tekst albo link i wygeneruj kod.
+</p>
 
 <input
+class="input"
 id="qrText"
-placeholder="Tekst lub link"
+placeholder="https://example.com"
 >
 
+<div class="row" style="margin-top:10px">
+
 <button
-class="action"
+class="btn btn-primary"
 onclick="generateQR()"
 >
 Generuj QR
 </button>
 
-<div id="qrcode"></div>
-</div>
-
-
-<!-- ZEGAR -->
-
-<div class="card">
-<h2>🕐 Zegar</h2>
-
-<div
-class="stat"
-id="clock"
->
-00:00:00
-</div>
-
-<p id="date"></p>
-</div>
-
-
-<!-- DEVICE -->
-
-<div class="card">
-<h2>📱 Informacje</h2>
-
-<div
-class="output"
-id="deviceInfo"
->
-Ładowanie...
-</div>
-
 <button
-class="action"
-onclick="showDeviceInfo()"
+class="btn btn-secondary"
+onclick="clearQR()"
 >
-Odśwież
-</button>
-</div>
-
-
-<!-- TERMINAL -->
-
-<div class="card">
-<h2>💻 Terminal</h2>
-
-<div class="terminal">
-
-<div
-class="terminal-output"
-id="terminalOutput"
->
-<div>Termux Hub Terminal</div>
-<div>Wpisz <b>help</b></div>
-</div>
-
-<input
-id="terminalInput"
-placeholder="komenda..."
-onkeydown="terminalKey(event)"
->
-
-</div>
-</div>
-
-
-<!-- GRA -->
-
-<div class="card">
-<h2>🎮 Reflex Game</h2>
-
-<p>
-Kliknij pole 10 razy.
-</p>
-
-<button
-class="action"
-id="gameBtn"
-onclick="startGame()"
->
-START
+Wyczyść
 </button>
 
-<div
-class="game-area"
-id="gameArea"
->
-<span id="gameText">
-Kliknij START
+</div>
+
+<div class="qr-box">
+
+<div id="qrcode">
+<span style="color:#64748b">
+QR pojawi się tutaj
 </span>
 </div>
 
-<p style="margin-top:10px">
-Wynik:
-<strong id="score">0</strong>
-</p>
+</div>
+
 </div>
 
 
-<!-- CHAT -->
+<!-- CALCULATOR -->
 
 <div class="card">
-<h2>💬 Chat lokalny</h2>
+
+<h2>🧮 Kalkulator</h2>
+
+<p class="card-sub">
+Nowoczesny kalkulator z historią.
+</p>
+
+<div class="calculator">
+
+<div class="calc-display">
 
 <div
-class="chat"
-id="chat"
+class="calc-expression"
+id="calcExpression"
+>
+</div>
+
+<div
+class="calc-result"
+id="calcResult"
+>
+0
+</div>
+
+</div>
+
+<div class="calc-grid">
+
+<button
+class="calc-btn operator"
+onclick="calcClear()"
+>
+AC
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcBack()"
+>
+⌫
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcInput('%')"
+>
+%
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcInput('/')"
+>
+÷
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('7')"
+>
+7
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('8')"
+>
+8
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('9')"
+>
+9
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcInput('*')"
+>
+×
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('4')"
+>
+4
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('5')"
+>
+5
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('6')"
+>
+6
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcInput('-')"
+>
+−
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('1')"
+>
+1
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('2')"
+>
+2
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('3')"
+>
+3
+</button>
+
+<button
+class="calc-btn operator"
+onclick="calcInput('+')"
+>
++
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('0')"
+>
+0
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('.')"
+>
+.
+</button>
+
+<button
+class="calc-btn"
+onclick="calcInput('(')"
+>
+(
+</button>
+
+<button
+class="calc-btn equals"
+onclick="calcCalculate()"
+>
+=
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- STOPWATCH -->
+
+<div class="card">
+
+<h2>⏱️ Stoper</h2>
+
+<p class="card-sub">
+Mierz czas i zapisuj okrążenia.
+</p>
+
+<div class="stopwatch">
+
+<div
+class="time"
+id="stopwatchTime"
+>
+00:00.00
+</div>
+
+<div class="row">
+
+<button
+class="btn btn-primary"
+onclick="startStopwatch()"
+>
+▶ Start
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="pauseStopwatch()"
+>
+Ⅱ Pauza
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="resetStopwatch()"
+>
+↻ Reset
+</button>
+
+</div>
+
+<button
+class="btn btn-secondary"
+style="margin-top:9px;width:100%"
+onclick="lapStopwatch()"
+>
+🏁 Okrążenie
+</button>
+
+<div
+class="laps"
+id="laps"
 ></div>
 
-<input
-id="chatInput"
-placeholder="Napisz wiadomość..."
-onkeydown="chatKey(event)"
->
-
-<button
-class="action"
-onclick="sendChat()"
->
-Wyślij
-</button>
 </div>
 
-
-<!-- ACHIEVEMENTS -->
-
-<div class="card">
-<h2>🏆 Osiągnięcia</h2>
-
-<div
-class="achievement"
-id="achProfile"
->
-👤 Utwórz profil
 </div>
 
-<div
-class="achievement"
-id="achPassword"
->
-🔐 Wygeneruj hasło
 </div>
 
-<div
-class="achievement"
-id="achQR"
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+class="page"
+id="page-profile"
 >
-📱 Wygeneruj QR
+
+<div class="hero">
+
+<div class="eyebrow">
+PROFILE / 5.0
 </div>
 
-<div
-class="achievement"
-id="achGame"
->
-🎮 Wygraj grę
-</div>
+<h1>
+Twój profil
+</h1>
 
-<p style="margin-top:10px">
-Odblokowane:
-<strong id="achievementCount">0</strong>
+<p>
+Ustaw nazwę oraz zdjęcie, które będzie widoczne w panelu.
 </p>
+
 </div>
 
+<div class="profile-big">
 
-<!-- KONTAKT -->
+<img
+id="profileAvatar"
+class="avatar"
+src="https://i.imgur.com/6VBx3io.png"
+>
+
+<div>
+
+<div
+class="profile-title"
+id="profileTitle"
+>
+Guest
+</div>
+
+<div class="profile-sub">
+Twój profil Termux Hub
+</div>
+
+</div>
+
+</div>
+
+<div class="grid">
 
 <div class="card">
-<h2>📨 Kontakt</h2>
 
-<form
-action="https://formsubmit.co/TWOJ_EMAIL"
-method="POST"
->
+<h2>👤 Nazwa</h2>
 
-<input
-type="hidden"
-name="_subject"
-value="Wiadomość z Termux Hub"
->
+<p class="card-sub">
+Jak mamy Cię wyświetlać?
+</p>
 
 <input
-type="hidden"
-name="_captcha"
-value="false"
+class="input"
+id="profileName"
+placeholder="np. Filip"
+maxlength="25"
 >
+
+</div>
+
+
+<div class="card">
+
+<h2>🖼️ Profilowe</h2>
+
+<p class="card-sub">
+Wklej bezpośredni link do obrazka.
+</p>
 
 <input
-name="name"
-placeholder="Imię"
-required
+class="input"
+id="avatarUrl"
+placeholder="https://..."
 >
 
-<input
-name="email"
-type="email"
-placeholder="Email"
-required
->
+</div>
 
-<textarea
-name="message"
-placeholder="Wiadomość"
-required
-></textarea>
+</div>
 
 <button
-class="action"
-type="submit"
+class="btn btn-primary"
+style="margin-top:16px"
+onclick="saveProfile()"
 >
-Wyślij
+💾 Zapisz profil
 </button>
 
-</form>
-</div>
+</section>
+
+</main>
 
 </div>
 
-</div>
 
 <div
 class="toast"
@@ -695,745 +1438,969 @@ id="toast"
 Gotowe!
 </div>
 
-<footer>
-Termux Hub 4.0 ⚡
-</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
+/* =========================
+   TERMUX HUB 5.0
+   JAVASCRIPT
+========================= */
 
-let xp = Number(localStorage.getItem("xp")) || 0;
 
-let achievements =
-JSON.parse(
-localStorage.getItem("achievements") || "[]"
-);
-
+/* ---------- TOAST ---------- */
 
 function toast(message){
 
-const box =
-document.getElementById("toast");
+  const box = document.getElementById("toast");
 
-box.textContent = message;
+  box.textContent = message;
 
-box.classList.add("show");
+  box.classList.add("show");
 
-setTimeout(function(){
+  setTimeout(function(){
 
-box.classList.remove("show");
+    box.classList.remove("show");
 
-},2500);
-
-}
-
-
-function updateXP(){
-
-let level =
-Math.floor(xp / 100) + 1;
-
-let current =
-xp % 100;
-
-document.getElementById("xp").textContent = xp;
-
-document.getElementById("level").textContent = level;
-
-document.getElementById("nextXP").textContent = 100;
-
-document.getElementById("xpBar").style.width =
-current + "%";
-
-localStorage.setItem("xp",xp);
+  },2200);
 
 }
 
 
-function addXP(amount){
+/* ---------- SIDEBAR ---------- */
 
-xp += amount;
+function toggleSidebar(){
 
-updateXP();
-
-}
-
-
-function unlockAchievement(name){
-
-if(!achievements.includes(name)){
-
-achievements.push(name);
-
-localStorage.setItem(
-"achievements",
-JSON.stringify(achievements)
-);
-
-}
-
-updateAchievements();
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
 
-function updateAchievements(){
+/* ---------- PAGES ---------- */
 
-const ids = {
+function showPage(page,button){
 
-profile:"achProfile",
+  document
+    .querySelectorAll(".page")
+    .forEach(function(item){
 
-password:"achPassword",
+      item.classList.remove("active");
 
-qr:"achQR",
+    });
 
-game:"achGame"
+  const selected =
+    document.getElementById("page-"+page);
 
-};
+  if(selected){
 
-achievements.forEach(function(item){
+    selected.classList.add("active");
 
-const element =
-document.getElementById(ids[item]);
+  }
 
-if(element){
+  document
+    .querySelectorAll(".menu button")
+    .forEach(function(item){
 
-element.classList.add("active");
+      item.classList.remove("active");
+
+    });
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
-});
 
-document.getElementById(
-"achievementCount"
-).textContent =
-achievements.length;
+function showPageByName(page){
+
+  const buttons =
+    document.querySelectorAll(".menu button");
+
+  let foundButton = null;
+
+  buttons.forEach(function(button){
+
+    if(
+      button.getAttribute("onclick") &&
+      button.getAttribute("onclick").includes(
+        "'" + page + "'"
+      )
+    ){
+
+      foundButton = button;
+
+    }
+
+  });
+
+  showPage(page,foundButton);
+
+}
+
+
+/* ---------- THEME ---------- */
+
+function toggleTheme(){
+
+  document.body.classList.toggle("light");
+
+  const isLight =
+    document.body.classList.contains("light");
+
+  localStorage.setItem(
+    "theme",
+    isLight ? "light" : "dark"
+  );
+
+  document.getElementById(
+    "themeStatus"
+  ).textContent =
+    isLight ? "Light" : "Dark";
+
+  toast(
+    isLight
+      ? "☀️ Tryb jasny"
+      : "🌙 Tryb ciemny"
+  );
+
+}
+
+
+/* ---------- PROFILE ---------- */
+
+const defaultAvatar =
+"https://i.imgur.com/6VBx3io.png";
+
+
+function loadProfile(){
+
+  const name =
+    localStorage.getItem("profileName")
+    || "Guest";
+
+  const avatar =
+    localStorage.getItem("profileAvatar")
+    || defaultAvatar;
+
+
+  document.getElementById(
+    "sideName"
+  ).textContent = name;
+
+
+  document.getElementById(
+    "homeName"
+  ).textContent = name;
+
+
+  document.getElementById(
+    "profileTitle"
+  ).textContent = name;
+
+
+  document.getElementById(
+    "profileName"
+  ).value =
+    name === "Guest" ? "" : name;
+
+
+  document.getElementById(
+    "avatarUrl"
+  ).value =
+    avatar === defaultAvatar
+      ? ""
+      : avatar;
+
+
+  document.getElementById(
+    "sideAvatar"
+  ).src = avatar;
+
+
+  document.getElementById(
+    "profileAvatar"
+  ).src = avatar;
+
+}
+
+
+function saveProfile(){
+
+  let name =
+    document.getElementById(
+      "profileName"
+    ).value.trim();
+
+
+  let avatar =
+    document.getElementById(
+      "avatarUrl"
+    ).value.trim();
+
+
+  if(!name){
+
+    name = "Guest";
+
+  }
+
+
+  if(!avatar){
+
+    avatar = defaultAvatar;
+
+  }
+
+
+  localStorage.setItem(
+    "profileName",
+    name
+  );
+
+
+  localStorage.setItem(
+    "profileAvatar",
+    avatar
+  );
+
+
+  loadProfile();
+
+  toast("✅ Profil zapisany!");
+
+}
+
+
+/* ---------- PASSWORD ---------- */
+
+function updatePasswordLength(){
+
+  const slider =
+    document.getElementById(
+      "passwordLength"
+    );
+
+  const value =
+    document.getElementById(
+      "lengthValue"
+    );
+
+  value.textContent =
+    slider.value;
 
 }
 
 
 function generatePassword(){
 
-const length =
-Number(
-document.getElementById(
-"passwordLength"
-).value
-);
+  const length =
+    Number(
+      document.getElementById(
+        "passwordLength"
+      ).value
+    );
 
-const chars =
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
 
-let password = "";
+  let chars = "";
 
-for(let i=0;i<length;i++){
 
-password +=
-chars.charAt(
-Math.floor(
-Math.random()*chars.length
-)
-);
+  if(
+    document.getElementById(
+      "lowercase"
+    ).checked
+  ){
+
+    chars +=
+      "abcdefghijklmnopqrstuvwxyz";
+
+  }
+
+
+  if(
+    document.getElementById(
+      "uppercase"
+    ).checked
+  ){
+
+    chars +=
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  }
+
+
+  if(
+    document.getElementById(
+      "numbers"
+    ).checked
+  ){
+
+    chars +=
+      "0123456789";
+
+  }
+
+
+  if(
+    document.getElementById(
+      "symbols"
+    ).checked
+  ){
+
+    chars +=
+      "!@#$%^&*()_+-=[]{}<>?";
+
+  }
+
+
+  if(!chars){
+
+    toast(
+      "⚠️ Wybierz przynajmniej jeden typ znaków!"
+    );
+
+    return;
+
+  }
+
+
+  let password = "";
+
+
+  for(
+    let i=0;
+    i<length;
+    i++
+  ){
+
+    password +=
+      chars.charAt(
+        Math.floor(
+          Math.random()*chars.length
+        )
+      );
+
+  }
+
+
+  document.getElementById(
+    "passwordOutput"
+  ).textContent =
+    password;
+
+
+  updateStrength(password);
+
+
+  toast("🔐 Hasło wygenerowane!");
 
 }
 
-document.getElementById(
-"passwordOutput"
-).textContent =
-password;
 
-addXP(10);
+function updateStrength(password){
 
-unlockAchievement("password");
+  let score = 0;
 
-toast("Hasło wygenerowane!");
+
+  if(password.length >= 8){
+
+    score++;
+
+  }
+
+
+  if(password.length >= 14){
+
+    score++;
+
+  }
+
+
+  if(/[a-z]/.test(password)){
+
+    score++;
+
+  }
+
+
+  if(/[A-Z]/.test(password)){
+
+    score++;
+
+  }
+
+
+  if(/[0-9]/.test(password)){
+
+    score++;
+
+  }
+
+
+  if(/[^A-Za-z0-9]/.test(password)){
+
+    score++;
+
+  }
+
+
+  const fill =
+    document.getElementById(
+      "strengthFill"
+    );
+
+
+  const text =
+    document.getElementById(
+      "strengthText"
+    );
+
+
+  let width = 0;
+
+  let label = "Bardzo słabe";
+
+
+  if(score <= 2){
+
+    width = 25;
+
+    label = "Słabe";
+
+  }
+
+  else if(score <= 3){
+
+    width = 50;
+
+    label = "Średnie";
+
+  }
+
+  else if(score <= 4){
+
+    width = 75;
+
+    label = "Mocne";
+
+  }
+
+  else{
+
+    width = 100;
+
+    label = "Bardzo mocne";
+
+  }
+
+
+  fill.style.width =
+    width + "%";
+
+
+  text.textContent =
+    label;
 
 }
 
 
 function copyPassword(){
 
-const text =
-document.getElementById(
-"passwordOutput"
-).textContent;
-
-if(text === "-"){
-
-toast("Najpierw wygeneruj hasło!");
-
-return;
-
-}
-
-navigator.clipboard.writeText(text);
-
-toast("Skopiowano!");
-
-}
+  const password =
+    document.getElementById(
+      "passwordOutput"
+    ).textContent;
 
 
-function randomNumber(){
+  if(
+    !password ||
+    password === "Kliknij „Generuj”"
+  ){
 
-const min =
-Number(
-document.getElementById(
-"minNumber"
-).value
-);
+    toast(
+      "Najpierw wygeneruj hasło!"
+    );
 
-const max =
-Number(
-document.getElementById(
-"maxNumber"
-).value
-);
+    return;
 
-if(min > max){
+  }
 
-toast("MIN nie może być większe od MAX!");
 
-return;
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
 
-}
+    navigator.clipboard.writeText(
+      password
+    );
 
-const result =
-Math.floor(
-Math.random()*(max-min+1)
-)+min;
+    toast("📋 Skopiowano!");
 
-document.getElementById(
-"randomOutput"
-).textContent =
-result;
-
-addXP(5);
+  }
 
 }
 
 
-function calculate(){
-
-const input =
-document.getElementById(
-"calcInput"
-).value;
-
-try{
-
-const result =
-Function(
-'"use strict";return (' +
-input +
-')'
-)();
-
-document.getElementById(
-"calcOutput"
-).textContent =
-result;
-
-addXP(5);
-
-}catch(e){
-
-document.getElementById(
-"calcOutput"
-).textContent =
-"Błąd";
-
-}
-
-}
-
-
-function encodeBase64(){
-
-const input =
-document.getElementById(
-"base64Input"
-).value;
-
-try{
-
-document.getElementById(
-"base64Output"
-).textContent =
-btoa(
-unescape(
-encodeURIComponent(input)
-)
-);
-
-}catch(e){
-
-toast("Błąd!");
-
-}
-
-}
-
-
-function decodeBase64(){
-
-const input =
-document.getElementById(
-"base64Input"
-).value;
-
-try{
-
-document.getElementById(
-"base64Output"
-).textContent =
-decodeURIComponent(
-escape(atob(input))
-);
-
-}catch(e){
-
-toast("Nieprawidłowy Base64!");
-
-}
-
-}
-
+/* ---------- QR ---------- */
 
 function generateQR(){
 
-const text =
-document.getElementById(
-"qrText"
-).value.trim();
-
-const box =
-document.getElementById("qrcode");
-
-if(!text){
-
-toast("Wpisz tekst lub link!");
-
-return;
-
-}
-
-box.innerHTML = "";
-
-if(typeof QRCode === "undefined"){
-
-toast("QR niedostępny — brak internetu.");
-
-return;
-
-}
-
-new QRCode(box,{
-
-text:text,
-
-width:200,
-
-height:200
-
-});
-
-addXP(10);
-
-unlockAchievement("qr");
-
-toast("QR wygenerowany!");
-
-}
+  const text =
+    document.getElementById(
+      "qrText"
+    ).value.trim();
 
 
-function updateClock(){
+  const box =
+    document.getElementById(
+      "qrcode"
+    );
 
-const now =
-new Date();
 
-document.getElementById(
-"clock"
-).textContent =
-now.toLocaleTimeString("pl-PL");
+  if(!text){
 
-document.getElementById(
-"date"
-).textContent =
-now.toLocaleDateString("pl-PL");
+    toast(
+      "Wpisz tekst lub link!"
+    );
+
+    return;
+
+  }
+
+
+  box.innerHTML = "";
+
+
+  if(
+    typeof QRCode === "undefined"
+  ){
+
+    box.innerHTML =
+      "<span style='color:#64748b'>Brak biblioteki QR. Sprawdź internet.</span>";
+
+    return;
+
+  }
+
+
+  new QRCode(
+    box,
+    {
+      text:text,
+      width:190,
+      height:190
+    }
+  );
+
+
+  toast("📱 QR wygenerowany!");
 
 }
 
 
-setInterval(updateClock,1000);
+function clearQR(){
 
-updateClock();
-function saveProfile(){
+  document.getElementById(
+    "qrText"
+  ).value = "";
 
-const name =
-document.getElementById("profileName").value.trim();
 
-if(!name){
-
-toast("Wpisz nazwę!");
-
-return;
-
-}
-
-localStorage.setItem(
-"profileName",
-name
-);
-
-document.getElementById(
-"userName"
-).textContent = name;
-
-addXP(10);
-
-unlockAchievement("profile");
-
-toast("Profil zapisany!");
+  document.getElementById(
+    "qrcode"
+  ).innerHTML =
+    "<span style='color:#64748b'>QR pojawi się tutaj</span>";
 
 }
 
 
-function loadProfile(){
+/* ---------- CALCULATOR ---------- */
 
-const name =
-localStorage.getItem("profileName");
-
-if(name){
-
-document.getElementById(
-"profileName"
-).value = name;
-
-document.getElementById(
-"userName"
-).textContent = name;
-
-}
-
-}
+let calcValue = "";
 
 
-function toggleTheme(){
+function calcInput(value){
 
-document.body.classList.toggle("light");
+  calcValue += value;
 
-const light =
-document.body.classList.contains("light");
+  document.getElementById(
+    "calcExpression"
+  ).textContent =
+    calcValue;
 
-localStorage.setItem(
-"theme",
-light ? "light" : "dark"
-);
 
-toast(
-light
-? "Tryb jasny"
-: "Tryb ciemny"
-);
+  document.getElementById(
+    "calcResult"
+  ).textContent =
+    calcValue || "0";
 
 }
 
+
+function calcClear(){
+
+  calcValue = "";
+
+
+  document.getElementById(
+    "calcExpression"
+  ).textContent =
+    "";
+
+
+  document.getElementById(
+    "calcResult"
+  ).textContent =
+    "0";
+
+}
+
+
+function calcBack(){
+
+  calcValue =
+    calcValue.slice(0,-1);
+
+
+  document.getElementById(
+    "calcExpression"
+  ).textContent =
+    calcValue;
+
+
+  document.getElementById(
+    "calcResult"
+  ).textContent =
+    calcValue || "0";
+
+}
+
+
+function calcCalculate(){
+
+  if(!calcValue){
+
+    return;
+
+  }
+
+
+  try{
+
+    let expression =
+      calcValue.replace(
+        /%/g,
+        "/100"
+      );
+
+
+    let result =
+      Function(
+        "return (" +
+        expression +
+        ")"
+      )();
+
+
+    if(
+      !Number.isFinite(result)
+    ){
+
+      throw new Error();
+
+    }
+
+
+    document.getElementById(
+      "calcExpression"
+    ).textContent =
+      calcValue + " =";
+
+
+    document.getElementById(
+      "calcResult"
+    ).textContent =
+      Number(result.toFixed(10));
+
+
+    calcValue =
+      String(
+        Number(result.toFixed(10))
+      );
+
+
+  }
+  catch(error){
+
+    document.getElementById(
+      "calcResult"
+    ).textContent =
+      "Błąd";
+
+
+    toast(
+      "❌ Nieprawidłowe działanie"
+    );
+
+  }
+
+}
+
+
+/* ---------- STOPWATCH ---------- */
+
+let stopwatchRunning = false;
+
+let stopwatchStart = 0;
+
+let stopwatchElapsed = 0;
+
+let stopwatchTimer = null;
+
+let lapNumber = 0;
+
+
+function formatStopwatch(ms){
+
+  const minutes =
+    Math.floor(
+      ms / 60000
+    );
+
+
+  const seconds =
+    Math.floor(
+      (ms % 60000) / 1000
+    );
+
+
+  const hundredths =
+    Math.floor(
+      (ms % 1000) / 10
+    );
+
+
+  return (
+    String(minutes).padStart(2,"0")
+    + ":" +
+    String(seconds).padStart(2,"0")
+    + "." +
+    String(hundredths).padStart(2,"0")
+  );
+
+}
+
+
+function updateStopwatch(){
+
+  if(!stopwatchRunning){
+
+    return;
+
+  }
+
+
+  const now =
+    Date.now();
+
+
+  stopwatchElapsed =
+    now - stopwatchStart;
+
+
+  document.getElementById(
+    "stopwatchTime"
+  ).textContent =
+    formatStopwatch(
+      stopwatchElapsed
+    );
+
+}
+
+
+function startStopwatch(){
+
+  if(stopwatchRunning){
+
+    return;
+
+  }
+
+
+  stopwatchRunning = true;
+
+
+  stopwatchStart =
+    Date.now() -
+    stopwatchElapsed;
+
+
+  stopwatchTimer =
+    setInterval(
+      updateStopwatch,
+      10
+    );
+
+
+  toast("▶ Stoper wystartował!");
+
+}
+
+
+function pauseStopwatch(){
+
+  if(!stopwatchRunning){
+
+    return;
+
+  }
+
+
+  stopwatchRunning = false;
+
+
+  clearInterval(
+    stopwatchTimer
+  );
+
+
+  updateStopwatch();
+
+
+  toast("Ⅱ Stoper zatrzymany");
+
+}
+
+
+function resetStopwatch(){
+
+  stopwatchRunning = false;
+
+
+  clearInterval(
+    stopwatchTimer
+  );
+
+
+  stopwatchElapsed = 0;
+
+  lapNumber = 0;
+
+
+  document.getElementById(
+    "stopwatchTime"
+  ).textContent =
+    "00:00.00";
+
+
+  document.getElementById(
+    "laps"
+  ).innerHTML = "";
+
+
+  toast("↻ Stoper wyzerowany");
+
+}
+
+
+function lapStopwatch(){
+
+  if(
+    !stopwatchRunning
+  ){
+
+    toast(
+      "Najpierw uruchom stoper!"
+    );
+
+    return;
+
+  }
+
+
+  lapNumber++;
+
+
+  const lap =
+    document.createElement(
+      "div"
+    );
+
+
+  lap.className =
+    "lap";
+
+
+  lap.innerHTML =
+    "<span>Okrążenie " +
+    lapNumber +
+    "</span>" +
+    "<strong>" +
+    formatStopwatch(
+      stopwatchElapsed
+    ) +
+    "</strong>";
+
+
+  document.getElementById(
+    "laps"
+  ).prepend(lap);
+
+}
+
+
+/* ---------- LOAD ---------- */
 
 function loadTheme(){
 
-if(
-localStorage.getItem("theme")
-=== "light"
-){
-
-document.body.classList.add("light");
-
-}
-
-}
+  const saved =
+    localStorage.getItem(
+      "theme"
+    );
 
 
-function showDeviceInfo(){
+  if(saved === "light"){
 
-const info =
-document.getElementById(
-"deviceInfo"
-);
+    document.body.classList.add(
+      "light"
+    );
 
-info.innerHTML =
-"📱 Urządzenie: " +
-navigator.userAgent +
-"<br><br>" +
+    document.getElementById(
+      "themeStatus"
+    ).textContent =
+      "Light";
 
-"🌐 Język: " +
-navigator.language +
-"<br><br>" +
+  }
+  else{
 
-"🖥️ Ekran: " +
-screen.width +
-" × " +
-screen.height;
+    document.getElementById(
+      "themeStatus"
+    ).textContent =
+      "Dark";
+
+  }
 
 }
 
-
-function terminalKey(event){
-
-if(event.key !== "Enter") return;
-
-terminalCommand();
-
-}
-
-
-function terminalCommand(){
-
-const input =
-document.getElementById(
-"terminalInput"
-);
-
-const output =
-document.getElementById(
-"terminalOutput"
-);
-
-const command =
-input.value.trim().toLowerCase();
-
-if(!command) return;
-
-let result = "";
-
-if(command === "help"){
-
-result =
-"Komendy: help, date, whoami, ls, pwd, about, xp, clear";
-
-}
-
-else if(command === "date"){
-
-result =
-new Date().toLocaleString("pl-PL");
-
-}
-
-else if(command === "whoami"){
-
-result =
-localStorage.getItem("profileName")
-|| "guest";
-
-}
-
-else if(command === "ls"){
-
-result =
-"index.html tools games profile";
-
-}
-
-else if(command === "pwd"){
-
-result =
-"/home/termux-hub";
-
-}
-
-else if(command === "about"){
-
-result =
-"Termux Hub 4.0";
-
-}
-
-else if(command === "xp"){
-
-result =
-"XP: " + xp;
-
-}
-
-else if(command === "clear"){
-
-output.innerHTML = "";
-
-input.value = "";
-
-return;
-
-}
-
-else{
-
-result =
-"Nieznana komenda. Wpisz help";
-
-}
-
-output.innerHTML +=
-"<div>$ " +
-command +
-"</div>" +
-"<div>" +
-result +
-"</div>";
-
-input.value = "";
-
-output.scrollTop =
-output.scrollHeight;
-
-}
-
-
-function chatKey(event){
-
-if(event.key === "Enter"){
-
-sendChat();
-
-}
-
-}
-
-
-function sendChat(){
-
-const input =
-document.getElementById(
-"chatInput"
-);
-
-const chat =
-document.getElementById(
-"chat"
-);
-
-const text =
-input.value.trim();
-
-if(!text) return;
-
-const message =
-document.createElement("div");
-
-message.className =
-"chat-message";
-
-message.textContent =
-"👤 Ty: " + text;
-
-chat.appendChild(message);
-
-input.value = "";
-
-localStorage.setItem(
-"chat",
-chat.innerHTML
-);
-
-chat.scrollTop =
-chat.scrollHeight;
-
-addXP(2);
-
-}
-
-
-function loadChat(){
-
-const saved =
-localStorage.getItem("chat");
-
-if(saved){
-
-document.getElementById(
-"chat"
-).innerHTML = saved;
-
-}
-
-}
-
-
-let score = 0;
-
-let gameRunning = false;
-
-
-function startGame(){
-
-score = 0;
-
-gameRunning = true;
-
-document.getElementById(
-"score"
-).textContent = score;
-
-document.getElementById(
-"gameText"
-).textContent =
-"💥 KLIKNI MNIE!";
-
-document.getElementById(
-"gameBtn"
-).textContent =
-"RESET";
-
-}
-
-
-document.getElementById(
-"gameArea"
-).onclick = function(){
-
-if(!gameRunning) return;
-
-score++;
-
-document.getElementById(
-"score"
-).textContent =
-score;
-
-if(score >= 10){
-
-gameRunning = false;
-
-document.getElementById(
-"gameText"
-).textContent =
-"🏆 WYGRAŁEŚ!";
-
-document.getElementById(
-"gameBtn"
-).textContent =
-"START";
-
-addXP(50);
-
-unlockAchievement("game");
-
-toast("🏆 Wygrałeś!");
-
-}
-
-};
-
-
-loadProfile();
-
-loadChat();
 
 loadTheme();
 
-updateXP();
+loadProfile();
 
-showDeviceInfo();
-
-updateAchievements();
+updatePasswordLength();
 
 </script>
 
