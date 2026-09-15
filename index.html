@@ -42,7 +42,56 @@ body{
   overflow-x:hidden;
 }
 
+body.light{
+  --bg:#f1f5f9;
+  --panel:rgba(255,255,255,.88);
+  --panel2:#ffffff;
+  --border:rgba(15,23,42,.10);
+  --text:#0f172a;
+  --muted:#64748b;
+  --shadow:0 20px 60px rgba(15,23,42,.12);
+}
+
+body.light .sidebar{
+  background:rgba(255,255,255,.95);
+}
+
+body.light .topbar{
+  background:rgba(255,255,255,.85);
+}
+
+body.light .card,
+body.light .hero,
+body.light .stat-card{
+  background:#ffffff;
+  border-color:rgba(15,23,42,.10);
+}
+
+body.light .input,
+body.light .password-output,
+body.light .calc-display,
+body.light .qr-box{
+  background:#ffffff;
+  color:#0f172a;
+  border-color:rgba(15,23,42,.12);
+}
+
+body.light .calc-btn{
+  background:#e9eef5;
+  color:#0f172a;
+}
+
+body.light .menu button{
+  color:#475569;
+}
+
+body.light .menu button:hover{
+  background:#e2e8f0;
+  color:#0f172a;
+}
+
 body::before{
+
   content:"";
   position:fixed;
   inset:0;
