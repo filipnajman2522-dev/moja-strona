@@ -1,24 +1,25 @@
-6<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Termux Hub 5.0</title>
+<title>Filipekkk052 — Grafiki & Social Media</title>
+
+<meta name="description" content="Tworzę grafiki, posty i materiały promocyjne dla Facebooka i Instagrama.">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --bg:#070b12;
-  --panel:rgba(15,23,35,.78);
-  --panel2:#111b2b;
-  --border:rgba(255,255,255,.08);
-  --text:#f5f7fa;
-  --muted:#8b98aa;
-  --green:#00ff88;
-  --green2:#00c96b;
-  --shadow:0 20px 60px rgba(0,0,0,.35);
+  --bg:#050505;
+  --card:#0d0d0d;
+  --card2:#111;
+  --border:#222;
+  --text:#f5f5f5;
+  --muted:#999;
+  --accent:#fff;
+  --radius:24px;
 }
 
 *{
@@ -32,2434 +33,878 @@ html{
 }
 
 body{
-  min-height:100vh;
-  font-family:Inter,Arial,sans-serif;
-  color:var(--text);
   background:
-    radial-gradient(circle at 15% 10%,rgba(0,255,136,.10),transparent 28%),
-    radial-gradient(circle at 85% 20%,rgba(0,180,255,.08),transparent 30%),
+    radial-gradient(circle at 50% -10%,#242424 0%,transparent 35%),
     var(--bg);
-  overflow-x:hidden;
-}
-
-body.light{
-  --bg:#f1f5f9;
-  --panel:rgba(255,255,255,.88);
-  --panel2:#ffffff;
-  --border:rgba(15,23,42,.10);
-  --text:#0f172a;
-  --muted:#64748b;
-  --shadow:0 20px 60px rgba(15,23,42,.12);
-}
-
-body.light .sidebar{
-  background:rgba(255,255,255,.95);
-}
-
-body.light .topbar{
-  background:rgba(255,255,255,.85);
-}
-
-body.light .card,
-body.light .hero,
-body.light .stat-card{
-  background:#ffffff;
-  border-color:rgba(15,23,42,.10);
-}
-
-body.light .input,
-body.light .password-output,
-body.light .calc-display,
-body.light .qr-box{
-  background:#ffffff;
-  color:#0f172a;
-  border-color:rgba(15,23,42,.12);
-}
-
-body.light .calc-btn{
-  background:#e9eef5;
-  color:#0f172a;
-}
-
-body.light .menu button{
-  color:#475569;
-}
-
-body.light .menu button:hover{
-  background:#e2e8f0;
-  color:#0f172a;
-}
-
-body::before{
-
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.25;
-  background-image:
-    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:40px 40px;
-  mask-image:linear-gradient(to bottom,black,transparent);
-}
-
-button,
-input,
-textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.app{
-  display:flex;
-  min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-  width:250px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  padding:22px 16px;
-  background:rgba(7,11,18,.88);
-  backdrop-filter:blur(18px);
-  border-right:1px solid var(--border);
-  z-index:50;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:8px 10px 25px;
-}
-
-.brand-icon{
-  width:40px;
-  height:40px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  color:#00150b;
-  background:var(--green);
-  box-shadow:0 0 25px rgba(0,255,136,.25);
-  font-size:20px;
-  font-weight:800;
-}
-
-.brand-text{
-  font-size:19px;
-  font-weight:800;
-}
-
-.brand-text span{
-  color:var(--green);
-}
-
-.profile-mini{
-  padding:14px;
-  margin-bottom:20px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  object-fit:cover;
-  background:#172235;
-  border:2px solid rgba(0,255,136,.45);
-}
-
-.profile-mini-name{
-  min-width:0;
-}
-
-.profile-mini-name strong{
-  display:block;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.profile-mini-name small{
-  color:var(--muted);
-}
-
-.menu{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-
-.menu button{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid transparent;
-  border-radius:12px;
-  background:transparent;
-  color:var(--muted);
-  text-align:left;
-  transition:.2s;
-}
-
-.menu button:hover,
-.menu button.active{
   color:var(--text);
-  background:rgba(0,255,136,.08);
-  border-color:rgba(0,255,136,.12);
+  font-family:Inter,Arial,sans-serif;
+  line-height:1.6;
 }
 
-.menu button.active{
-  color:var(--green);
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
-.sidebar-bottom{
-  position:absolute;
-  left:16px;
-  right:16px;
-  bottom:20px;
+.container{
+  width:min(1100px,92%);
+  margin:auto;
 }
 
-/* MAIN */
+/* NAV */
 
-.main{
-  width:calc(100% - 250px);
-  margin-left:250px;
-  padding:25px;
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:100;
+  background:rgba(5,5,5,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
 
-.topbar{
-  max-width:1250px;
-  margin:0 auto 24px;
+.nav-inner{
+  width:min(1100px,92%);
+  margin:auto;
+  height:72px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
 }
 
-.mobile-menu{
+.logo{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.logo span{
+  color:#888;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+  font-size:13px;
+  color:#aaa;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.menu-btn{
   display:none;
+  background:none;
+  border:0;
+  color:#fff;
+  font-size:25px;
 }
 
-.theme-btn{
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--text);
-  padding:11px 14px;
-  border-radius:12px;
-}
-
-.page{
-  display:none;
-  max-width:1250px;
-  margin:auto;
-  animation:fade .3s ease;
-}
-
-.page.active{
-  display:block;
-}
-
-@keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* DASHBOARD */
+/* HERO */
 
 .hero{
-  position:relative;
-  overflow:hidden;
-  padding:32px;
-  border:1px solid var(--border);
-  border-radius:26px;
-  background:
-    linear-gradient(135deg,rgba(0,255,136,.10),rgba(0,130,255,.06)),
-    var(--panel);
-  backdrop-filter:blur(18px);
-  box-shadow:var(--shadow);
-  margin-bottom:20px;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  text-align:center;
+  padding:120px 0 70px;
 }
 
-.hero::after{
-  content:"";
-  position:absolute;
-  width:230px;
-  height:230px;
-  border-radius:50%;
-  background:rgba(0,255,136,.08);
-  filter:blur(40px);
-  right:-70px;
-  top:-90px;
+.hero-content{
+  width:min(850px,100%);
+  margin:auto;
 }
 
-.eyebrow{
-  color:var(--green);
-  font-family:"JetBrains Mono",monospace;
-  font-size:13px;
-  margin-bottom:10px;
+.badge{
+  display:inline-flex;
+  padding:8px 15px;
+  border:1px solid #292929;
+  border-radius:50px;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:25px;
+  background:#0b0b0b;
 }
 
 .hero h1{
-  font-size:clamp(30px,5vw,52px);
-  line-height:1.05;
-  margin-bottom:12px;
+  font-size:clamp(42px,8vw,78px);
+  line-height:1;
+  letter-spacing:-4px;
+  margin-bottom:25px;
+}
+
+.hero h1 span{
+  color:#777;
 }
 
 .hero p{
-  color:var(--muted);
   max-width:650px;
-  line-height:1.7;
+  margin:auto;
+  color:#aaa;
+  font-size:17px;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-top:24px;
-}
-
-.stat-card{
-  padding:18px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:rgba(255,255,255,.035);
-}
-
-.stat-card span{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.stat-card strong{
-  display:block;
-  font-size:28px;
-  margin-top:7px;
-}
-
-/* CARDS */
-
-.section-title{
-  margin:28px 0 14px;
-  font-size:20px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
-
-.card{
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-  background:var(--panel);
-  backdrop-filter:blur(15px);
-  box-shadow:0 12px 40px rgba(0,0,0,.18);
-}
-
-.card:hover{
-  border-color:rgba(0,255,136,.18);
-}
-
-.card h2{
-  font-size:18px;
-  margin-bottom:5px;
-}
-
-.card-sub{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:18px;
-}
-
-/* INPUTS */
-
-.input{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  outline:none;
-  color:var(--text);
-  background:#080e18;
-}
-
-.input:focus{
-  border-color:rgba(0,255,136,.5);
-  box-shadow:0 0 0 3px rgba(0,255,136,.06);
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:35px;
+  flex-wrap:wrap;
 }
 
 .btn{
-  border:0;
-  border-radius:12px;
-  padding:12px 15px;
+  padding:14px 22px;
+  border-radius:14px;
   font-weight:700;
+  font-size:14px;
   transition:.2s;
 }
 
 .btn-primary{
-  color:#00150b;
-  background:var(--green);
+  background:#fff;
+  color:#000;
 }
 
 .btn-primary:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 25px rgba(0,255,136,.2);
+  transform:translateY(-2px);
+  background:#ddd;
 }
 
 .btn-secondary{
-  color:var(--text);
-  background:#172235;
-  border:1px solid var(--border);
+  border:1px solid #333;
+  background:#101010;
 }
 
-.row{
-  display:flex;
-  gap:9px;
+.btn-secondary:hover{
+  border-color:#777;
 }
 
-.row>*{
-  flex:1;
+/* SECTIONS */
+
+section{
+  padding:90px 0;
 }
 
-/* PASSWORD */
-
-.password-output{
-  margin-top:15px;
-  padding:15px;
-  border-radius:13px;
-  background:#050a11;
-  border:1px solid var(--border);
-  font-family:"JetBrains Mono",monospace;
-  word-break:break-all;
-  min-height:48px;
+.section-title{
+  margin-bottom:35px;
 }
 
-.range-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin:14px 0;
+.section-title small{
+  color:#777;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:11px;
 }
 
-.range{
-  flex:1;
-  accent-color:var(--green);
+.section-title h2{
+  font-size:36px;
+  letter-spacing:-1.5px;
+  margin-top:7px;
 }
 
-.length-value{
-  min-width:38px;
-  text-align:center;
-  color:var(--green);
-  font-weight:800;
-}
+/* OFFER */
 
-.checks{
+.offer-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:14px;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
-.check{
-  padding:10px;
+.card{
+  background:linear-gradient(145deg,#111,#090909);
   border:1px solid var(--border);
-  border-radius:11px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.check input{
-  accent-color:var(--green);
-  margin-right:6px;
-}
-
-/* STRENGTH */
-
-.strength{
-  margin-top:12px;
-}
-
-.strength-top{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:6px;
-}
-
-.strength-bar{
-  height:7px;
-  border-radius:10px;
-  background:#182131;
-  overflow:hidden;
-}
-
-.strength-fill{
-  width:0%;
-  height:100%;
-  background:var(--green);
+  border-radius:var(--radius);
+  padding:28px;
   transition:.25s;
 }
 
-/* QR */
-
-.qr-box{
-  min-height:230px;
-  display:grid;
-  place-items:center;
-  border:1px dashed rgba(255,255,255,.12);
-  border-radius:15px;
-  margin-top:14px;
-  background:#080d15;
+.card:hover{
+  transform:translateY(-5px);
+  border-color:#444;
 }
 
-#qrcode img{
-  padding:10px;
-  background:white;
-  border-radius:8px;
+.card-icon{
+  font-size:30px;
+  margin-bottom:20px;
 }
 
-/* CALCULATOR */
-
-.calculator{
-  max-width:390px;
-  margin:auto;
+.card h3{
+  font-size:18px;
+  margin-bottom:9px;
 }
 
-.calc-display{
-  padding:18px;
-  min-height:95px;
-  border-radius:16px;
-  background:#050a11;
-  border:1px solid var(--border);
-  margin-bottom:12px;
-  text-align:right;
-  overflow:hidden;
-}
-
-.calc-expression{
-  color:var(--muted);
-  min-height:22px;
+.card p{
+  color:#888;
   font-size:14px;
 }
 
-.calc-result{
-  font-size:34px;
-  font-weight:700;
-  font-family:"JetBrains Mono",monospace;
-  margin-top:8px;
-  overflow-x:auto;
-}
+/* SERVICES */
 
-.calc-grid{
+.services{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
 }
 
-.calc-btn{
-  min-height:58px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:#111b2b;
-  color:var(--text);
-  font-size:18px;
-  font-weight:700;
-}
-
-.calc-btn:hover{
-  background:#19263a;
-}
-
-.calc-btn.operator{
-  color:var(--green);
-}
-
-.calc-btn.equals{
-  color:#00150b;
-  background:var(--green);
-}
-
-/* STOPWATCH */
-
-.stopwatch{
-  text-align:center;
-  padding:15px 0;
-}
-
-.time{
-  font-family:"JetBrains Mono",monospace;
-  font-size:48px;
-  font-weight:700;
-  letter-spacing:2px;
-  margin:10px 0 20px;
-}
-
-.laps{
-  max-height:150px;
-  overflow:auto;
-  margin-top:15px;
-}
-
-.lap{
+.service{
   display:flex;
-  justify-content:space-between;
-  padding:9px 5px;
-  border-bottom:1px solid var(--border);
-  color:var(--muted);
+  gap:18px;
+  padding:23px;
+  border:1px solid #1d1d1d;
+  border-radius:18px;
+  background:#0b0b0b;
 }
 
-/* PROFILE */
+.check{
+  width:32px;
+  height:32px;
+  min-width:32px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#171717;
+  font-size:16px;
+}
 
-.profile-big{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:25px;
+.service h3{
+  font-size:15px;
+  margin-bottom:4px;
+}
+
+.service p{
+  color:#777;
+  font-size:13px;
+}
+
+/* PORTFOLIO */
+
+.portfolio{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.work{
+  aspect-ratio:1/1;
   border-radius:20px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  margin-bottom:18px;
+  border:1px solid #222;
+  background:
+    linear-gradient(135deg,#181818,#080808);
+  display:flex;
+  align-items:flex-end;
+  padding:22px;
+  overflow:hidden;
+  position:relative;
 }
 
-.profile-big .avatar{
-  width:90px;
-  height:90px;
+.work::before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:#292929;
+  filter:blur(45px);
+  top:-60px;
+  right:-50px;
 }
 
-.profile-title{
-  font-size:26px;
-  font-weight:800;
+.work-content{
+  position:relative;
+  z-index:2;
 }
 
-.profile-sub{
-  color:var(--muted);
+.work small{
+  color:#777;
+}
+
+.work h3{
   margin-top:5px;
 }
 
-.avatar-preview{
-  width:100px;
-  height:100px;
-  object-fit:cover;
-  border-radius:50%;
-  border:3px solid var(--green);
-  display:block;
-  margin-bottom:12px;
+/* PRICING */
+
+.pricing{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
-/* TOAST */
-
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  padding:13px 17px;
-  border-radius:13px;
-  background:#101a28;
-  border:1px solid rgba(0,255,136,.25);
-  color:var(--text);
-  box-shadow:var(--shadow);
-  transform:translateY(100px);
-  opacity:0;
-  transition:.25s;
-  z-index:100;
+.price{
+  text-align:center;
 }
 
-.toast.show{
-  transform:translateY(0);
-  opacity:1;
+.price.featured{
+  border-color:#555;
 }
 
-/* RESPONSIVE */
-
-@media(max-width:900px){
-
-.sidebar{
-  transform:translateX(-100%);
-  transition:.25s;
+.price h3{
+  font-size:18px;
 }
 
-.sidebar.open{
-  transform:translateX(0);
+.price-value{
+  font-size:35px;
+  font-weight:800;
+  margin:15px 0;
 }
 
-.main{
-  width:100%;
-  margin-left:0;
-  padding:15px;
+.price-value span{
+  font-size:13px;
+  color:#777;
+  font-weight:400;
 }
 
-.mobile-menu{
-  display:block;
+.price ul{
+  list-style:none;
+  color:#888;
+  font-size:13px;
+  margin-bottom:22px;
 }
 
-.stats{
+.price li{
+  padding:5px;
+}
+
+/* ABOUT */
+
+.about{
+  display:grid;
   grid-template-columns:1fr 1fr;
+  gap:20px;
+  align-items:stretch;
 }
 
-.grid{
-  grid-template-columns:1fr;
+.about-main{
+  padding:35px;
+  border:1px solid #222;
+  border-radius:var(--radius);
+  background:#0c0c0c;
 }
 
+.about-main h2{
+  font-size:30px;
+  margin-bottom:15px;
 }
 
-@media(max-width:550px){
-
-.hero{
-  padding:24px;
+.about-main p{
+  color:#999;
+  font-size:14px;
 }
 
-.stats{
-  grid-template-columns:1fr 1fr;
-}
-
-.row{
+.about-box{
+  display:flex;
   flex-direction:column;
+  gap:15px;
 }
 
-.checks{
-  grid-template-columns:1fr;
+.about-stat{
+  flex:1;
+  border:1px solid #222;
+  border-radius:20px;
+  padding:25px;
+  background:#0c0c0c;
 }
 
-.time{
-  font-size:37px;
+.about-stat strong{
+  display:block;
+  font-size:25px;
 }
 
+.about-stat span{
+  color:#777;
+  font-size:12px;
 }
 
-body.light .app{background:#f1f5f9!important;}
-body.light .main{background:#f1f5f9!important;}
-body.light .content{background:#f1f5f9!important;}
-body.light .sidebar{background:#ffffff!important;color:#0f172a!important;}
-body.light .topbar{background:#ffffff!important;color:#0f172a!important;}
-body.light .card,body.light .hero,body.light .stat-card,body.light .tool-card{background:#ffffff!important;color:#0f172a!important;border-color:#dbe3ec!important;}
-body.light input,body.light textarea{background:#ffffff!important;color:#0f172a!important;border-color:#cbd5e1!important;}
-body.light .calc-btn{background:#e2e8f0!important;color:#0f172a!important;}
-body.light .menu button{color:#334155!important;}
-body.light .menu button:hover,body.light .menu button.active{background:#e2e8f0!important;color:#0f172a!important;}
+/* CONTACT */
+
+.contact{
+  text-align:center;
+  border:1px solid #222;
+  border-radius:30px;
+  padding:60px 25px;
+  background:
+    radial-gradient(circle at 50% 0%,#202020,transparent 45%),
+    #0b0b0b;
+}
+
+.contact h2{
+  font-size:40px;
+  letter-spacing:-1.5px;
+}
+
+.contact p{
+  color:#888;
+  max-width:550px;
+  margin:12px auto 25px;
+}
+
+.instagram{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:14px 20px;
+  border:1px solid #333;
+  border-radius:14px;
+  background:#111;
+  font-weight:700;
+}
+
+.instagram:hover{
+  border-color:#777;
+}
+
+/* FOOTER */
+
+footer{
+  padding:35px 0;
+  text-align:center;
+  color:#555;
+  font-size:12px;
+}
+
+/* ANIMATIONS */
+
+.reveal{
+  opacity:0;
+  transform:translateY(25px);
+  transition:.7s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:72px;
+    left:0;
+    width:100%;
+    background:#080808;
+    padding:20px;
+    flex-direction:column;
+    text-align:center;
+    border-bottom:1px solid #222;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .hero h1{
+    letter-spacing:-2.5px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .offer-grid,
+  .portfolio,
+  .pricing{
+    grid-template-columns:1fr;
+  }
+
+  .services,
+  .about{
+    grid-template-columns:1fr;
+  }
+
+  section{
+    padding:65px 0;
+  }
+
+  .section-title h2{
+    font-size:30px;
+  }
+
+  .contact h2{
+    font-size:31px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<nav>
+  <div class="nav-inner">
 
-<!-- SIDEBAR -->
+    <a href="#start" class="logo">
+      filip<span>ekkk052</span>
+    </a>
 
-<aside class="sidebar" id="sidebar">
+    <div class="nav-links" id="navLinks">
+      <a href="#oferta">Oferta</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#cennik">Cennik</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
 
-<div class="brand">
-<div class="brand-icon">⚡</div>
-<div class="brand-text">Termux <span>Hub</span></div>
-</div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-<div class="profile-mini">
+  </div>
+</nav>
 
-<img
-id="sideAvatar"
-class="avatar"
-src="https://i.imgur.com/6VBx3io.png"
->
+<main>
 
-<div class="profile-mini-name">
-<strong id="sideName">Guest</strong>
-<small>Użytkownik</small>
-</div>
+<section class="hero" id="start">
+  <div class="hero-content reveal">
 
-</div>
+    <div class="badge">
+      📱 Grafiki • Social Media • Promocja
+    </div>
 
-<div class="menu">
+    <h1>
+      Tworzę grafiki,<br>
+      które <span>przyciągają.</span>
+    </h1>
 
-<button
-class="active"
-onclick="showPage('home',this)"
->
-🏠 Dashboard
-</button>
+    <p>
+      Pomagam małym firmom, sklepom, salonom i restauracjom
+      wyglądać lepiej w internecie.
+      Tworzę estetyczne posty, grafiki i materiały promocyjne.
+    </p>
 
-<button
-onclick="showPage('tools',this)"
->
-🛠️ Narzędzia
-</button>
+    <div class="buttons">
+      <a href="#kontakt" class="btn btn-primary">
+        💬 Napisz do mnie
+      </a>
 
-<button
-onclick="showPage('profile',this)"
->
-👤 Profil
-</button>
+      <a href="#portfolio" class="btn btn-secondary">
+        🖼️ Zobacz portfolio
+      </a>
+    </div>
 
-</div>
-
-<div class="sidebar-bottom">
-
-<button
-class="theme-btn"
-style="width:100%"
-onclick="toggleTheme()"
->
-🌙 Zmień motyw
-</button>
-
-</div>
-
-</aside>
-
-
-<!-- MAIN -->
-
-<main class="main">
-
-<div class="topbar">
-
-<button
-class="theme-btn mobile-menu"
-onclick="toggleSidebar()"
->
-☰ Menu
-</button>
-
-<div></div>
-
-<button
-class="theme-btn"
-onclick="toggleTheme()"
->
-☀️ / 🌙
-</button>
-
-</div>
-
-
-<!-- HOME -->
-
-<section
-class="page active"
-id="page-home"
->
-
-<div class="hero">
-
-<div class="eyebrow">
-TERMUX HUB / 5.0
-</div>
-
-<h1>
-Twoje narzędzia.<br>
-Jeden panel.
-</h1>
-
-<p>
-Nowa wersja Termux Hub z nowoczesnym wyglądem,
-generatorem haseł, QR, kalkulatorem i stoperem.
-</p>
-
-<div class="stats">
-
-<div class="stat-card">
-<span>Narzędzia</span>
-<strong>4</strong>
-</div>
-
-<div class="stat-card">
-<span>Profil</span>
-<strong id="homeName">Guest</strong>
-</div>
-
-<div class="stat-card">
-<span>Motyw</span>
-<strong id="themeStatus">Dark</strong>
-</div>
-
-<div class="stat-card">
-<span>Wersja</span>
-<strong>5.0</strong>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-⚡ Szybki dostęp
-</div>
-
-<div class="grid">
-
-<div class="card">
-
-<h2>🔐 Generator haseł</h2>
-
-<p class="card-sub">
-Twórz mocne, losowe hasła.
-</p>
-
-<button
-class="btn btn-primary"
-onclick="showPageByName('tools')"
->
-Otwórz narzędzia →
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h2>👤 Twój profil</h2>
-
-<p class="card-sub">
-Ustaw nazwę i zdjęcie profilowe.
-</p>
-
-<button
-class="btn btn-primary"
-onclick="showPageByName('profile')"
->
-Otwórz profil →
-</button>
-
-</div>
-
-</div>
-
+  </div>
 </section>
 
+<section id="oferta">
+<div class="container">
 
-<!-- TOOLS -->
+  <div class="section-title reveal">
+    <small>Co robię</small>
+    <h2>Oferta</h2>
+  </div>
 
-<section
-class="page"
-id="page-tools"
->
+  <div class="offer-grid">
 
-<div class="hero">
+    <div class="card reveal">
+      <div class="card-icon">🎨</div>
+      <h3>Grafiki</h3>
+      <p>
+        Estetyczne grafiki dopasowane do Twojej marki,
+        produktu lub usługi.
+      </p>
+    </div>
 
-<div class="eyebrow">
-TOOLS / 5.0
-</div>
+    <div class="card reveal">
+      <div class="card-icon">📱</div>
+      <h3>Social Media</h3>
+      <p>
+        Posty przygotowane z myślą o Instagramie
+        i Facebooku.
+      </p>
+    </div>
 
-<h1>
-Narzędzia
-</h1>
+    <div class="card reveal">
+      <div class="card-icon">📢</div>
+      <h3>Promocja</h3>
+      <p>
+        Materiały reklamowe, promocje, oferty
+        i proste kampanie wizualne.
+      </p>
+    </div>
 
-<p>
-Wszystko, czego potrzebujesz, w jednym miejscu.
-</p>
-
-</div>
-
-
-<div class="grid">
-
-
-<!-- PASSWORD -->
-
-<div class="card">
-
-<h2>🔐 Generator haseł</h2>
-
-<p class="card-sub">
-Ustaw długość i wybierz znaki.
-</p>
-
-<div class="range-row">
-
-<input
-id="passwordLength"
-class="range"
-type="range"
-min="4"
-max="50"
-value="16"
-oninput="updatePasswordLength()"
->
-
-<div
-class="length-value"
-id="lengthValue"
->
-16
-</div>
+  </div>
 
 </div>
-
-<div class="checks">
-
-<label class="check">
-<input
-type="checkbox"
-id="lowercase"
-checked
->
-Małe litery
-</label>
-
-<label class="check">
-<input
-type="checkbox"
-id="uppercase"
-checked
->
-Wielkie litery
-</label>
-
-<label class="check">
-<input
-type="checkbox"
-id="numbers"
-checked
->
-Cyfry
-</label>
-
-<label class="check">
-<input
-type="checkbox"
-id="symbols"
-checked
->
-Symbole
-</label>
-
-</div>
-
-<div class="row">
-
-<button
-class="btn btn-primary"
-onclick="generatePassword()"
->
-⚡ Generuj
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="copyPassword()"
->
-📋 Kopiuj
-</button>
-
-</div>
-
-<div
-class="password-output"
-id="passwordOutput"
->
-Kliknij „Generuj”
-</div>
-
-<div class="strength">
-
-<div class="strength-top">
-
-<span>Siła hasła</span>
-
-<strong id="strengthText">
--
-</strong>
-
-</div>
-
-<div class="strength-bar">
-
-<div
-class="strength-fill"
-id="strengthFill"
-></div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- QR -->
-
-<div class="card">
-
-<h2>📱 Generator QR</h2>
-
-<p class="card-sub">
-Wpisz tekst albo link i wygeneruj kod.
-</p>
-
-<input
-class="input"
-id="qrText"
-placeholder="https://example.com"
->
-
-<div class="row" style="margin-top:10px">
-
-<button
-class="btn btn-primary"
-onclick="generateQR()"
->
-Generuj QR
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="clearQR()"
->
-Wyczyść
-</button>
-
-</div>
-
-<div class="qr-box">
-
-<div id="qrcode">
-<span style="color:#64748b">
-QR pojawi się tutaj
-</span>
-</div>
-
-</div>
-
-</div>
-
-
-<!-- CALCULATOR -->
-
-<div class="card">
-
-<h2>🧮 Kalkulator</h2>
-
-<p class="card-sub">
-Nowoczesny kalkulator z historią.
-</p>
-
-<div class="calculator">
-
-<div class="calc-display">
-
-<div
-class="calc-expression"
-id="calcExpression"
->
-</div>
-
-<div
-class="calc-result"
-id="calcResult"
->
-0
-</div>
-
-</div>
-
-<div class="calc-grid">
-
-<button
-class="calc-btn operator"
-onclick="calcClear()"
->
-AC
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcBack()"
->
-⌫
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcInput('%')"
->
-%
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcInput('/')"
->
-÷
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('7')"
->
-7
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('8')"
->
-8
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('9')"
->
-9
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcInput('*')"
->
-×
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('4')"
->
-4
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('5')"
->
-5
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('6')"
->
-6
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcInput('-')"
->
-−
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('1')"
->
-1
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('2')"
->
-2
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('3')"
->
-3
-</button>
-
-<button
-class="calc-btn operator"
-onclick="calcInput('+')"
->
-+
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('0')"
->
-0
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('.')"
->
-.
-</button>
-
-<button
-class="calc-btn"
-onclick="calcInput('(')"
->
-(
-</button>
-
-<button
-class="calc-btn equals"
-onclick="calcCalculate()"
->
-=
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- STOPWATCH -->
-
-<div class="card">
-
-<h2>⏱️ Stoper</h2>
-
-<p class="card-sub">
-Mierz czas i zapisuj okrążenia.
-</p>
-
-<div class="stopwatch">
-
-<div
-class="time"
-id="stopwatchTime"
->
-00:00.00
-</div>
-
-<div class="row">
-
-<button
-class="btn btn-primary"
-onclick="startStopwatch()"
->
-▶ Start
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="pauseStopwatch()"
->
-Ⅱ Pauza
-</button>
-
-<button
-class="btn btn-secondary"
-onclick="resetStopwatch()"
->
-↻ Reset
-</button>
-
-</div>
-
-<button
-class="btn btn-secondary"
-style="margin-top:9px;width:100%"
-onclick="lapStopwatch()"
->
-🏁 Okrążenie
-</button>
-
-<div
-class="laps"
-id="laps"
-></div>
-
-</div>
-
-</div>
-
-</div>
-
 </section>
 
+<section>
+<div class="container">
 
-<!-- PROFILE -->
+  <div class="section-title reveal">
+    <small>Możesz zamówić</small>
+    <h2>Co przygotuję?</h2>
+  </div>
 
-<section
-class="page"
-id="page-profile"
->
+  <div class="services">
 
-<div class="hero">
+    <div class="service reveal">
+      <div class="check">✓</div>
+      <div>
+        <h3>Post na Instagram</h3>
+        <p>Gotowa grafika przygotowana pod publikację.</p>
+      </div>
+    </div>
 
-<div class="eyebrow">
-PROFILE / 5.0
-</div>
+    <div class="service reveal">
+      <div class="check">✓</div>
+      <div>
+        <h3>Post na Facebook</h3>
+        <p>Grafika dopasowana do formatu Facebooka.</p>
+      </div>
+    </div>
 
-<h1>
-Twój profil
-</h1>
+    <div class="service reveal">
+      <div class="check">✓</div>
+      <div>
+        <h3>Tekst do posta</h3>
+        <p>Krótki, konkretny tekst pasujący do grafiki.</p>
+      </div>
+    </div>
 
-<p>
-Ustaw nazwę oraz zdjęcie, które będzie widoczne w panelu.
-</p>
+    <div class="service reveal">
+      <div class="check">✓</div>
+      <div>
+        <h3>Oferta / reklama</h3>
+        <p>Materiał promocyjny dla Twojej firmy.</p>
+      </div>
+    </div>
 
-</div>
-
-<div class="profile-big">
-
-<img
-id="profileAvatar"
-class="avatar"
-src="https://i.imgur.com/6VBx3io.png"
->
-
-<div>
-
-<div
-class="profile-title"
-id="profileTitle"
->
-Guest
-</div>
-
-<div class="profile-sub">
-Twój profil Termux Hub
-</div>
-
-</div>
+  </div>
 
 </div>
+</section>
 
-<div class="grid">
+<section id="portfolio">
+<div class="container">
 
-<div class="card">
+  <div class="section-title reveal">
+    <small>Moje prace</small>
+    <h2>Portfolio</h2>
+  </div>
 
-<h2>👤 Nazwa</h2>
+  <div class="portfolio">
 
-<p class="card-sub">
-Jak mamy Cię wyświetlać?
-</p>
+    <div class="work reveal">
+      <div class="work-content">
+        <small>01 / SOCIAL MEDIA</small>
+        <h3>Post promocyjny</h3>
+      </div>
+    </div>
 
-<input
-class="input"
-id="profileName"
-placeholder="np. Filip"
-maxlength="25"
->
+    <div class="work reveal">
+      <div class="work-content">
+        <small>02 / BRANDING</small>
+        <h3>Grafika dla firmy</h3>
+      </div>
+    </div>
 
-</div>
+    <div class="work reveal">
+      <div class="work-content">
+        <small>03 / INSTAGRAM</small>
+        <h3>Post produktowy</h3>
+      </div>
+    </div>
 
-
-<div class="card">
-
-<h2>🖼️ Profilowe</h2>
-
-<p class="card-sub">
-Wklej bezpośredni link do obrazka.
-</p>
-
-<input
-class="input"
-id="avatarUrl"
-placeholder="https://..."
->
-
-</div>
+  </div>
 
 </div>
+</section>	
+<section id="cennik">
+<div class="container">
 
-<button
-class="btn btn-primary"
-style="margin-top:16px"
-onclick="saveProfile()"
->
-💾 Zapisz profil
-</button>
+  <div class="section-title reveal">
+    <small>Na start</small>
+    <h2>Cennik</h2>
+  </div>
 
+  <div class="pricing">
+
+    <div class="card price reveal">
+      <h3>1 grafika</h3>
+      <div class="price-value">10 zł</div>
+      <ul>
+        <li>✓ 1 grafika</li>
+        <li>✓ Format social media</li>
+        <li>✓ Prosty projekt</li>
+      </ul>
+      <a href="#kontakt" class="btn btn-secondary">Zamów</a>
+    </div>
+
+    <div class="card price featured reveal">
+      <h3>Pakiet 5</h3>
+      <div class="price-value">40 zł</div>
+      <ul>
+        <li>✓ 5 grafik</li>
+        <li>✓ Instagram / Facebook</li>
+        <li>✓ Spójny wygląd</li>
+      </ul>
+      <a href="#kontakt" class="btn btn-primary">Wybieram</a>
+    </div>
+
+    <div class="card price reveal">
+      <h3>Pakiet 10</h3>
+      <div class="price-value">70 zł</div>
+      <ul>
+        <li>✓ 10 grafik</li>
+        <li>✓ Social Media</li>
+        <li>✓ Materiały promocyjne</li>
+      </ul>
+      <a href="#kontakt" class="btn btn-secondary">Zamów</a>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<section>
+<div class="container">
+
+  <div class="about">
+
+    <div class="about-main reveal">
+      <div class="section-title">
+        <small>O mnie</small>
+        <h2>Prosto.<br>Estetycznie.<br>Konkretnie.</h2>
+      </div>
+
+      <p>
+        Dopiero rozwijam swoje portfolio, dlatego na początku
+        oferuję niskie ceny. Zależy mi przede wszystkim na
+        stworzeniu dobrych realizacji i zadowoleniu klienta.
+      </p>
+
+      <div class="buttons" style="justify-content:flex-start">
+        <a href="https://www.instagram.com/filipekkk052/"
+           target="_blank"
+           class="btn btn-secondary">
+          📱 Mój Instagram
+        </a>
+      </div>
+    </div>
+
+    <div class="about-box">
+
+      <div class="about-stat reveal">
+        <strong>🎨</strong>
+        <span>Grafiki dopasowane do Twojej marki</span>
+      </div>
+
+      <div class="about-stat reveal">
+        <strong>⚡</strong>
+        <span>Szybka i prosta realizacja</span>
+      </div>
+
+      <div class="about-stat reveal">
+        <strong>💰</strong>
+        <span>Niskie ceny na start</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<section id="kontakt">
+<div class="container">
+
+  <div class="contact reveal">
+
+    <div class="badge">
+      💬 Masz pomysł?
+    </div>
+
+    <h2>Napisz do mnie.</h2>
+
+    <p>
+      Prowadzisz małą firmę, sklep, salon, restaurację
+      albo profil usługowy? Napisz — możemy stworzyć
+      coś ciekawego.
+    </p>
+
+    <div class="buttons">
+
+      <a
+        href="https://www.instagram.com/filipekkk052/"
+        target="_blank"
+        class="btn btn-primary">
+        📱 Instagram @filipekkk052
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
 </section>
 
 </main>
 
-</div>
-
-
-<div
-class="toast"
-id="toast"
->
-Gotowe!
-</div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<footer>
+  © 2026 filip<span>ekkk052</span> • Grafiki & Social Media
+</footer>
 
 <script>
-/* =========================
-   TERMUX HUB 5.0
-   JAVASCRIPT
-========================= */
 
-
-/* ---------- TOAST ---------- */
-
-function toast(message){
-
-  const box = document.getElementById("toast");
-
-  box.textContent = message;
-
-  box.classList.add("show");
-
-  setTimeout(function(){
-
-    box.classList.remove("show");
-
-  },2200);
-
-}
-
-
-/* ---------- SIDEBAR ---------- */
-
-function toggleSidebar(){
+function toggleMenu(){
 
   document
-    .getElementById("sidebar")
+    .getElementById("navLinks")
     .classList.toggle("open");
 
 }
 
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(function(link){
 
-/* ---------- PAGES ---------- */
+    link.addEventListener("click",function(){
 
-function showPage(page,button){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(function(item){
-
-      item.classList.remove("active");
-
-    });
-
-  const selected =
-    document.getElementById("page-"+page);
-
-  if(selected){
-
-    selected.classList.add("active");
-
-  }
-
-  document
-    .querySelectorAll(".menu button")
-    .forEach(function(item){
-
-      item.classList.remove("active");
+      document
+        .getElementById("navLinks")
+        .classList.remove("open");
 
     });
 
-  if(button){
-
-    button.classList.add("active");
-
-  }
-
-  document
-    .getElementById("sidebar")
-    .classList.remove("open");
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
   });
 
-}
 
+const observer =
+  new IntersectionObserver(
+    function(entries){
 
-function showPageByName(page){
+      entries.forEach(function(entry){
 
-  const buttons =
-    document.querySelectorAll(".menu button");
+        if(entry.isIntersecting){
 
-  let foundButton = null;
+          entry.target.classList.add("show");
 
-  buttons.forEach(function(button){
+        }
 
-    if(
-      button.getAttribute("onclick") &&
-      button.getAttribute("onclick").includes(
-        "'" + page + "'"
-      )
-    ){
+      });
 
-      foundButton = button;
-
-    }
-
-  });
-
-  showPage(page,foundButton);
-
-}
-
-
-/* ---------- THEME ---------- */
-
-function toggleTheme(){
-
-  document.body.classList.toggle("light");
-
-  const isLight =
-    document.body.classList.contains("light");
-
-  localStorage.setItem(
-    "theme",
-    isLight ? "light" : "dark"
-  );
-
-  document.getElementById(
-    "themeStatus"
-  ).textContent =
-    isLight ? "Light" : "Dark";
-
-  toast(
-    isLight
-      ? "☀️ Tryb jasny"
-      : "🌙 Tryb ciemny"
-  );
-
-}
-
-
-/* ---------- PROFILE ---------- */
-
-const defaultAvatar =
-"https://i.imgur.com/6VBx3io.png";
-
-
-function loadProfile(){
-
-  const name =
-    localStorage.getItem("profileName")
-    || "Guest";
-
-  const avatar =
-    localStorage.getItem("profileAvatar")
-    || defaultAvatar;
-
-
-  document.getElementById(
-    "sideName"
-  ).textContent = name;
-
-
-  document.getElementById(
-    "homeName"
-  ).textContent = name;
-
-
-  document.getElementById(
-    "profileTitle"
-  ).textContent = name;
-
-
-  document.getElementById(
-    "profileName"
-  ).value =
-    name === "Guest" ? "" : name;
-
-
-  document.getElementById(
-    "avatarUrl"
-  ).value =
-    avatar === defaultAvatar
-      ? ""
-      : avatar;
-
-
-  document.getElementById(
-    "sideAvatar"
-  ).src = avatar;
-
-
-  document.getElementById(
-    "profileAvatar"
-  ).src = avatar;
-
-}
-
-
-function saveProfile(){
-
-  let name =
-    document.getElementById(
-      "profileName"
-    ).value.trim();
-
-
-  let avatar =
-    document.getElementById(
-      "avatarUrl"
-    ).value.trim();
-
-
-  if(!name){
-
-    name = "Guest";
-
-  }
-
-
-  if(!avatar){
-
-    avatar = defaultAvatar;
-
-  }
-
-
-  localStorage.setItem(
-    "profileName",
-    name
-  );
-
-
-  localStorage.setItem(
-    "profileAvatar",
-    avatar
-  );
-
-
-  loadProfile();
-
-  toast("✅ Profil zapisany!");
-
-}
-
-
-/* ---------- PASSWORD ---------- */
-
-function updatePasswordLength(){
-
-  const slider =
-    document.getElementById(
-      "passwordLength"
-    );
-
-  const value =
-    document.getElementById(
-      "lengthValue"
-    );
-
-  value.textContent =
-    slider.value;
-
-}
-
-
-function generatePassword(){
-
-  const length =
-    Number(
-      document.getElementById(
-        "passwordLength"
-      ).value
-    );
-
-
-  let chars = "";
-
-
-  if(
-    document.getElementById(
-      "lowercase"
-    ).checked
-  ){
-
-    chars +=
-      "abcdefghijklmnopqrstuvwxyz";
-
-  }
-
-
-  if(
-    document.getElementById(
-      "uppercase"
-    ).checked
-  ){
-
-    chars +=
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  }
-
-
-  if(
-    document.getElementById(
-      "numbers"
-    ).checked
-  ){
-
-    chars +=
-      "0123456789";
-
-  }
-
-
-  if(
-    document.getElementById(
-      "symbols"
-    ).checked
-  ){
-
-    chars +=
-      "!@#$%^&*()_+-=[]{}<>?";
-
-  }
-
-
-  if(!chars){
-
-    toast(
-      "⚠️ Wybierz przynajmniej jeden typ znaków!"
-    );
-
-    return;
-
-  }
-
-
-  let password = "";
-
-
-  for(
-    let i=0;
-    i<length;
-    i++
-  ){
-
-    password +=
-      chars.charAt(
-        Math.floor(
-          Math.random()*chars.length
-        )
-      );
-
-  }
-
-
-  document.getElementById(
-    "passwordOutput"
-  ).textContent =
-    password;
-
-
-  updateStrength(password);
-
-
-  toast("🔐 Hasło wygenerowane!");
-
-}
-
-
-function updateStrength(password){
-
-  let score = 0;
-
-
-  if(password.length >= 8){
-
-    score++;
-
-  }
-
-
-  if(password.length >= 14){
-
-    score++;
-
-  }
-
-
-  if(/[a-z]/.test(password)){
-
-    score++;
-
-  }
-
-
-  if(/[A-Z]/.test(password)){
-
-    score++;
-
-  }
-
-
-  if(/[0-9]/.test(password)){
-
-    score++;
-
-  }
-
-
-  if(/[^A-Za-z0-9]/.test(password)){
-
-    score++;
-
-  }
-
-
-  const fill =
-    document.getElementById(
-      "strengthFill"
-    );
-
-
-  const text =
-    document.getElementById(
-      "strengthText"
-    );
-
-
-  let width = 0;
-
-  let label = "Bardzo słabe";
-
-
-  if(score <= 2){
-
-    width = 25;
-
-    label = "Słabe";
-
-  }
-
-  else if(score <= 3){
-
-    width = 50;
-
-    label = "Średnie";
-
-  }
-
-  else if(score <= 4){
-
-    width = 75;
-
-    label = "Mocne";
-
-  }
-
-  else{
-
-    width = 100;
-
-    label = "Bardzo mocne";
-
-  }
-
-
-  fill.style.width =
-    width + "%";
-
-
-  text.textContent =
-    label;
-
-}
-
-
-function copyPassword(){
-
-  const password =
-    document.getElementById(
-      "passwordOutput"
-    ).textContent;
-
-
-  if(
-    !password ||
-    password === "Kliknij „Generuj”"
-  ){
-
-    toast(
-      "Najpierw wygeneruj hasło!"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ){
-
-    navigator.clipboard.writeText(
-      password
-    );
-
-    toast("📋 Skopiowano!");
-
-  }
-
-}
-
-
-/* ---------- QR ---------- */
-
-function generateQR(){
-
-  const text =
-    document.getElementById(
-      "qrText"
-    ).value.trim();
-
-
-  const box =
-    document.getElementById(
-      "qrcode"
-    );
-
-
-  if(!text){
-
-    toast(
-      "Wpisz tekst lub link!"
-    );
-
-    return;
-
-  }
-
-
-  box.innerHTML = "";
-
-
-  if(
-    typeof QRCode === "undefined"
-  ){
-
-    box.innerHTML =
-      "<span style='color:#64748b'>Brak biblioteki QR. Sprawdź internet.</span>";
-
-    return;
-
-  }
-
-
-  new QRCode(
-    box,
+    },
     {
-      text:text,
-      width:190,
-      height:190
+      threshold:.12
     }
   );
 
 
-  toast("📱 QR wygenerowany!");
+document
+  .querySelectorAll(".reveal")
+  .forEach(function(element){
 
-}
+    observer.observe(element);
 
+  });
 
-function clearQR(){
-
-  document.getElementById(
-    "qrText"
-  ).value = "";
-
-
-  document.getElementById(
-    "qrcode"
-  ).innerHTML =
-    "<span style='color:#64748b'>QR pojawi się tutaj</span>";
-
-}
-
-
-/* ---------- CALCULATOR ---------- */
-
-let calcValue = "";
-
-
-function calcInput(value){
-
-  calcValue += value;
-
-  document.getElementById(
-    "calcExpression"
-  ).textContent =
-    calcValue;
-
-
-  document.getElementById(
-    "calcResult"
-  ).textContent =
-    calcValue || "0";
-
-}
-
-
-function calcClear(){
-
-  calcValue = "";
-
-
-  document.getElementById(
-    "calcExpression"
-  ).textContent =
-    "";
-
-
-  document.getElementById(
-    "calcResult"
-  ).textContent =
-    "0";
-
-}
-
-
-function calcBack(){
-
-  calcValue =
-    calcValue.slice(0,-1);
-
-
-  document.getElementById(
-    "calcExpression"
-  ).textContent =
-    calcValue;
-
-
-  document.getElementById(
-    "calcResult"
-  ).textContent =
-    calcValue || "0";
-
-}
-
-
-function calcCalculate(){
-
-  if(!calcValue){
-
-    return;
-
-  }
-
-
-  try{
-
-    let expression =
-      calcValue.replace(
-        /%/g,
-        "/100"
-      );
-
-
-    let result =
-      Function(
-        "return (" +
-        expression +
-        ")"
-      )();
-
-
-    if(
-      !Number.isFinite(result)
-    ){
-
-      throw new Error();
-
-    }
-
-
-    document.getElementById(
-      "calcExpression"
-    ).textContent =
-      calcValue + " =";
-
-
-    document.getElementById(
-      "calcResult"
-    ).textContent =
-      Number(result.toFixed(10));
-
-
-    calcValue =
-      String(
-        Number(result.toFixed(10))
-      );
-
-
-  }
-  catch(error){
-
-    document.getElementById(
-      "calcResult"
-    ).textContent =
-      "Błąd";
-
-
-    toast(
-      "❌ Nieprawidłowe działanie"
-    );
-
-  }
-
-}
-
-
-/* ---------- STOPWATCH ---------- */
-
-let stopwatchRunning = false;
-
-let stopwatchStart = 0;
-
-let stopwatchElapsed = 0;
-
-let stopwatchTimer = null;
-
-let lapNumber = 0;
-
-
-function formatStopwatch(ms){
-
-  const minutes =
-    Math.floor(
-      ms / 60000
-    );
-
-
-  const seconds =
-    Math.floor(
-      (ms % 60000) / 1000
-    );
-
-
-  const hundredths =
-    Math.floor(
-      (ms % 1000) / 10
-    );
-
-
-  return (
-    String(minutes).padStart(2,"0")
-    + ":" +
-    String(seconds).padStart(2,"0")
-    + "." +
-    String(hundredths).padStart(2,"0")
-  );
-
-}
-
-
-function updateStopwatch(){
-
-  if(!stopwatchRunning){
-
-    return;
-
-  }
-
-
-  const now =
-    Date.now();
-
-
-  stopwatchElapsed =
-    now - stopwatchStart;
-
-
-  document.getElementById(
-    "stopwatchTime"
-  ).textContent =
-    formatStopwatch(
-      stopwatchElapsed
-    );
-
-}
-
-
-function startStopwatch(){
-
-  if(stopwatchRunning){
-
-    return;
-
-  }
-
-
-  stopwatchRunning = true;
-
-
-  stopwatchStart =
-    Date.now() -
-    stopwatchElapsed;
-
-
-  stopwatchTimer =
-    setInterval(
-      updateStopwatch,
-      10
-    );
-
-
-  toast("▶ Stoper wystartował!");
-
-}
-
-
-function pauseStopwatch(){
-
-  if(!stopwatchRunning){
-
-    return;
-
-  }
-
-
-  stopwatchRunning = false;
-
-
-  clearInterval(
-    stopwatchTimer
-  );
-
-
-  updateStopwatch();
-
-
-  toast("Ⅱ Stoper zatrzymany");
-
-}
-
-
-function resetStopwatch(){
-
-  stopwatchRunning = false;
-
-
-  clearInterval(
-    stopwatchTimer
-  );
-
-
-  stopwatchElapsed = 0;
-
-  lapNumber = 0;
-
-
-  document.getElementById(
-    "stopwatchTime"
-  ).textContent =
-    "00:00.00";
-
-
-  document.getElementById(
-    "laps"
-  ).innerHTML = "";
-
-
-  toast("↻ Stoper wyzerowany");
-
-}
-
-
-function lapStopwatch(){
-
-  if(
-    !stopwatchRunning
-  ){
-
-    toast(
-      "Najpierw uruchom stoper!"
-    );
-
-    return;
-
-  }
-
-
-  lapNumber++;
-
-
-  const lap =
-    document.createElement(
-      "div"
-    );
-
-
-  lap.className =
-    "lap";
-
-
-  lap.innerHTML =
-    "<span>Okrążenie " +
-    lapNumber +
-    "</span>" +
-    "<strong>" +
-    formatStopwatch(
-      stopwatchElapsed
-    ) +
-    "</strong>";
-
-
-  document.getElementById(
-    "laps"
-  ).prepend(lap);
-
-}
-
-
-/* ---------- LOAD ---------- */
-
-function loadTheme(){
-
-  const saved =
-    localStorage.getItem(
-      "theme"
-    );
-
-
-  if(saved === "light"){
-
-    document.body.classList.add(
-      "light"
-    );
-
-    document.getElementById(
-      "themeStatus"
-    ).textContent =
-      "Light";
-
-  }
-  else{
-
-    document.getElementById(
-      "themeStatus"
-    ).textContent =
-      "Dark";
-
-  }
-
-}
-
-
-loadTheme();
-
-loadProfile();
-
-updatePasswordLength();
 
 </script>
 
