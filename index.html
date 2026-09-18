@@ -4,28 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Filipekkk052 — Grafiki & Social Media</title>
+<title>Filipekkk052 — Creative Studio</title>
 
-<meta name="description" content="Tworzę grafiki, posty i materiały promocyjne dla Facebooka i Instagrama.">
+<meta name="description" content="Filipekkk052 — grafiki, social media i materiały promocyjne.">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
   --bg:#050505;
-  --card:#0d0d0d;
-  --card2:#111;
-  --border:#222;
-  --text:#f5f5f5;
-  --muted:#999;
-  --accent:#fff;
-  --radius:24px;
+  --bg2:#090909;
+  --card:#101010;
+  --card2:#151515;
+  --line:rgba(255,255,255,.09);
+  --text:#fff;
+  --muted:#8d8d8d;
+  --soft:#cfcfcf;
+  --accent:#b8ff00;
+  --accent2:#8cff00;
+  --radius:28px;
 }
 
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
 html{
@@ -33,12 +36,22 @@ html{
 }
 
 body{
-  background:
-    radial-gradient(circle at 50% -10%,#242424 0%,transparent 35%),
-    var(--bg);
+  background:var(--bg);
   color:var(--text);
   font-family:Inter,Arial,sans-serif;
-  line-height:1.6;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(184,255,0,.09),transparent 25%),
+    radial-gradient(circle at 85% 25%,rgba(120,120,255,.07),transparent 25%),
+    radial-gradient(circle at 50% 80%,rgba(184,255,0,.04),transparent 30%);
 }
 
 a{
@@ -47,57 +60,76 @@ a{
 }
 
 .container{
-  width:min(1100px,92%);
+  width:min(1150px,92%);
   margin:auto;
 }
 
 /* NAV */
 
-nav{
+.nav{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   z-index:100;
-  background:rgba(5,5,5,.78);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:18px 0;
+  transition:.3s;
+}
+
+.nav.scrolled{
+  background:rgba(5,5,5,.82);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
 }
 
 .nav-inner{
-  width:min(1100px,92%);
-  margin:auto;
-  height:72px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-.logo{
-  font-size:18px;
-  font-weight:800;
-  letter-spacing:-.5px;
+.brand{
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:-.7px;
 }
 
-.logo span{
-  color:#888;
+.brand span{
+  color:var(--accent);
 }
 
 .nav-links{
   display:flex;
-  gap:25px;
-  font-size:13px;
+  align-items:center;
+  gap:28px;
   color:#aaa;
+  font-size:13px;
+  font-weight:600;
+}
+
+.nav-links a{
+  transition:.2s;
 }
 
 .nav-links a:hover{
   color:#fff;
 }
 
-.menu-btn{
+.nav-cta{
+  padding:11px 17px;
+  border-radius:12px;
+  background:#fff;
+  color:#000!important;
+}
+
+.nav-cta:hover{
+  background:var(--accent);
+}
+
+.menu{
   display:none;
-  background:none;
   border:0;
+  background:none;
   color:#fff;
   font-size:25px;
 }
@@ -108,220 +140,367 @@ nav{
   min-height:100vh;
   display:flex;
   align-items:center;
-  text-align:center;
-  padding:120px 0 70px;
+  padding:130px 0 90px;
+  position:relative;
 }
 
-.hero-content{
-  width:min(850px,100%);
-  margin:auto;
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:50px;
+  align-items:center;
 }
 
-.badge{
+.eyebrow{
   display:inline-flex;
-  padding:8px 15px;
-  border:1px solid #292929;
-  border-radius:50px;
+  align-items:center;
+  gap:8px;
+  padding:9px 13px;
+  border:1px solid var(--line);
+  border-radius:100px;
   color:#aaa;
-  font-size:12px;
+  background:rgba(255,255,255,.025);
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
   margin-bottom:25px;
-  background:#0b0b0b;
+}
+
+.eyebrow i{
+  width:7px;
+  height:7px;
+  background:var(--accent);
+  border-radius:50%;
+  box-shadow:0 0 14px var(--accent);
 }
 
 .hero h1{
-  font-size:clamp(42px,8vw,78px);
-  line-height:1;
-  letter-spacing:-4px;
-  margin-bottom:25px;
+  font-size:clamp(50px,8vw,100px);
+  line-height:.91;
+  letter-spacing:-6px;
+  max-width:900px;
 }
 
 .hero h1 span{
-  color:#777;
+  color:var(--accent);
 }
 
-.hero p{
-  max-width:650px;
-  margin:auto;
-  color:#aaa;
-  font-size:17px;
+.hero-text{
+  color:#8c8c8c;
+  font-size:16px;
+  line-height:1.8;
+  max-width:600px;
+  margin-top:28px;
 }
 
-.buttons{
+.hero-buttons{
   display:flex;
-  justify-content:center;
   gap:12px;
-  margin-top:35px;
   flex-wrap:wrap;
+  margin-top:35px;
 }
 
 .btn{
-  padding:14px 22px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:15px 22px;
   border-radius:14px;
-  font-weight:700;
-  font-size:14px;
-  transition:.2s;
+  font-size:13px;
+  font-weight:800;
+  transition:.25s;
 }
 
-.btn-primary{
-  background:#fff;
-  color:#000;
+.btn-main{
+  background:var(--accent);
+  color:#050505;
 }
 
-.btn-primary:hover{
-  transform:translateY(-2px);
-  background:#ddd;
+.btn-main:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 35px rgba(184,255,0,.2);
 }
 
-.btn-secondary{
-  border:1px solid #333;
-  background:#101010;
+.btn-dark{
+  background:#111;
+  border:1px solid var(--line);
 }
 
-.btn-secondary:hover{
-  border-color:#777;
+.btn-dark:hover{
+  border-color:#555;
+  transform:translateY(-3px);
+}
+
+/* HERO CARD */
+
+.hero-card{
+  position:relative;
+  min-height:430px;
+  border:1px solid var(--line);
+  border-radius:35px;
+  background:
+    linear-gradient(145deg,#151515,#080808);
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+  padding:30px;
+  box-shadow:0 30px 100px rgba(0,0,0,.4);
+}
+
+.hero-card:before{
+  content:"";
+  position:absolute;
+  width:330px;
+  height:330px;
+  border-radius:50%;
+  background:var(--accent);
+  filter:blur(100px);
+  opacity:.13;
+  top:-120px;
+  right:-80px;
+}
+
+.hero-number{
+  position:absolute;
+  top:25px;
+  right:28px;
+  color:#333;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+.hero-card-content{
+  position:relative;
+  z-index:2;
+}
+
+.hero-card-content small{
+  color:var(--accent);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+.hero-card-content h2{
+  font-size:38px;
+  line-height:1;
+  letter-spacing:-2px;
+  margin-top:10px;
+}
+
+.hero-card-content p{
+  color:#777;
+  font-size:12px;
+  margin-top:12px;
+}
+
+/* MARQUEE */
+
+.marquee{
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+  white-space:nowrap;
+  padding:18px 0;
+}
+
+.marquee-track{
+  display:inline-block;
+  animation:scroll 18s linear infinite;
+  color:#555;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+.marquee-track span{
+  color:var(--accent);
+  margin:0 25px;
+}
+
+@keyframes scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
 }
 
 /* SECTIONS */
 
 section{
-  padding:90px 0;
+  padding:110px 0;
 }
 
-.section-title{
-  margin-bottom:35px;
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  margin-bottom:40px;
 }
 
-.section-title small{
-  color:#777;
-  text-transform:uppercase;
+.section-label{
+  color:var(--accent);
+  font-size:10px;
+  font-weight:800;
   letter-spacing:2px;
-  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:10px;
 }
 
-.section-title h2{
-  font-size:36px;
-  letter-spacing:-1.5px;
-  margin-top:7px;
+.section-head h2{
+  font-size:42px;
+  line-height:1;
+  letter-spacing:-2px;
 }
 
-/* OFFER */
-
-.offer-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.card{
-  background:linear-gradient(145deg,#111,#090909);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:28px;
-  transition:.25s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-  border-color:#444;
-}
-
-.card-icon{
-  font-size:30px;
-  margin-bottom:20px;
-}
-
-.card h3{
-  font-size:18px;
-  margin-bottom:9px;
-}
-
-.card p{
-  color:#888;
-  font-size:14px;
+.section-head p{
+  color:#777;
+  max-width:390px;
+  font-size:13px;
 }
 
 /* SERVICES */
 
 .services{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
 }
 
 .service{
-  display:flex;
-  gap:18px;
-  padding:23px;
-  border:1px solid #1d1d1d;
-  border-radius:18px;
-  background:#0b0b0b;
+  min-height:260px;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,#111,#0a0a0a);
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
 }
 
-.check{
-  width:32px;
-  height:32px;
-  min-width:32px;
+.service:hover{
+  transform:translateY(-7px);
+  border-color:#444;
+}
+
+.service-number{
+  position:absolute;
+  right:22px;
+  top:20px;
+  color:#333;
+  font-size:12px;
+  font-weight:800;
+}
+
+.service-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
   display:grid;
   place-items:center;
-  border-radius:10px;
-  background:#171717;
-  font-size:16px;
+  background:#181818;
+  border:1px solid var(--line);
+  font-size:21px;
+  margin-bottom:55px;
 }
 
 .service h3{
-  font-size:15px;
-  margin-bottom:4px;
+  font-size:18px;
+  margin-bottom:9px;
 }
 
 .service p{
   color:#777;
   font-size:13px;
+  line-height:1.7;
+}
+
+/* PROCESS */
+
+.process{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+
+.step{
+  padding:30px 22px;
+  border-right:1px solid var(--line);
+}
+
+.step:last-child{
+  border-right:0;
+}
+
+.step-num{
+  color:var(--accent);
+  font-size:11px;
+  font-weight:800;
+}
+
+.step h3{
+  margin-top:35px;
+  font-size:16px;
+}
+
+.step p{
+  color:#777;
+  font-size:12px;
+  margin-top:8px;
+  line-height:1.6;
 }
 
 /* PORTFOLIO */
 
 .portfolio{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:1.3fr .7fr;
   gap:15px;
 }
 
-.work{
-  aspect-ratio:1/1;
-  border-radius:20px;
-  border:1px solid #222;
-  background:
-    linear-gradient(135deg,#181818,#080808);
-  display:flex;
-  align-items:flex-end;
-  padding:22px;
+.project{
+  min-height:380px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
   overflow:hidden;
   position:relative;
+  background:
+    radial-gradient(circle at 70% 20%,#303030,transparent 25%),
+    linear-gradient(135deg,#181818,#080808);
 }
 
-.work::before{
-  content:"";
+.project.small{
+  min-height:182px;
+}
+
+.project + .project{
+  margin-top:15px;
+}
+
+.project-content{
   position:absolute;
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  background:#292929;
-  filter:blur(45px);
-  top:-60px;
-  right:-50px;
+  inset:auto 25px 23px;
 }
 
-.work-content{
-  position:relative;
-  z-index:2;
+.project-tag{
+  color:var(--accent);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
 }
 
-.work small{
+.project h3{
+  font-size:25px;
+  margin-top:6px;
+}
+
+.project p{
   color:#777;
-}
-
-.work h3{
-  margin-top:5px;
+  font-size:12px;
+  margin-top:4px;
 }
 
 /* PRICING */
@@ -329,42 +508,50 @@ section{
 .pricing{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:15px;
+  gap:14px;
+}
+
+.price-card{
+  padding:30px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:#0d0d0d;
+}
+
+.price-card.featured{
+  background:
+    linear-gradient(145deg,rgba(184,255,0,.10),#0d0d0d 60%);
+  border-color:rgba(184,255,0,.35);
+}
+
+.price-card h3{
+  font-size:17px;
 }
 
 .price{
-  text-align:center;
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:-2px;
+  margin:20px 0;
 }
 
-.price.featured{
-  border-color:#555;
+.price span{
+  color:#666;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:0;
 }
 
-.price h3{
-  font-size:18px;
-}
-
-.price-value{
-  font-size:35px;
-  font-weight:800;
-  margin:15px 0;
-}
-
-.price-value span{
-  font-size:13px;
-  color:#777;
-  font-weight:400;
-}
-
-.price ul{
+.price-list{
   list-style:none;
   color:#888;
-  font-size:13px;
-  margin-bottom:22px;
+  font-size:12px;
+  margin-bottom:25px;
 }
 
-.price li{
-  padding:5px;
+.price-list li{
+  padding:7px 0;
+  border-bottom:1px solid #191919;
 }
 
 /* ABOUT */
@@ -372,99 +559,106 @@ section{
 .about{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
-  align-items:stretch;
+  gap:15px;
 }
 
 .about-main{
-  padding:35px;
-  border:1px solid #222;
+  border:1px solid var(--line);
   border-radius:var(--radius);
+  padding:35px;
   background:#0c0c0c;
 }
 
 .about-main h2{
-  font-size:30px;
-  margin-bottom:15px;
+  font-size:38px;
+  line-height:1;
+  letter-spacing:-2px;
+  margin-bottom:22px;
 }
 
 .about-main p{
-  color:#999;
+  color:#888;
   font-size:14px;
+  line-height:1.8;
 }
 
-.about-box{
-  display:flex;
-  flex-direction:column;
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:15px;
 }
 
-.about-stat{
-  flex:1;
-  border:1px solid #222;
-  border-radius:20px;
-  padding:25px;
+.stat{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
   background:#0c0c0c;
 }
 
-.about-stat strong{
+.stat strong{
   display:block;
-  font-size:25px;
+  color:var(--accent);
+  font-size:30px;
 }
 
-.about-stat span{
+.stat span{
   color:#777;
-  font-size:12px;
+  font-size:11px;
 }
 
 /* CONTACT */
 
 .contact{
   text-align:center;
-  border:1px solid #222;
-  border-radius:30px;
-  padding:60px 25px;
+  padding:80px 25px;
+  border-radius:35px;
+  border:1px solid var(--line);
   background:
-    radial-gradient(circle at 50% 0%,#202020,transparent 45%),
+    radial-gradient(circle at 50% 0%,rgba(184,255,0,.13),transparent 38%),
     #0b0b0b;
 }
 
 .contact h2{
-  font-size:40px;
-  letter-spacing:-1.5px;
+  font-size:clamp(38px,6vw,65px);
+  letter-spacing:-4px;
 }
 
 .contact p{
-  color:#888;
-  max-width:550px;
-  margin:12px auto 25px;
+  max-width:560px;
+  margin:17px auto 30px;
+  color:#777;
+  font-size:14px;
 }
 
 .instagram{
   display:inline-flex;
   align-items:center;
-  gap:9px;
-  padding:14px 20px;
-  border:1px solid #333;
+  gap:10px;
+  padding:15px 22px;
   border-radius:14px;
-  background:#111;
-  font-weight:700;
+  background:var(--accent);
+  color:#000;
+  font-size:13px;
+  font-weight:900;
+  transition:.25s;
 }
 
 .instagram:hover{
-  border-color:#777;
+  transform:translateY(-3px);
+  box-shadow:0 12px 35px rgba(184,255,0,.2);
 }
 
 /* FOOTER */
 
 footer{
   padding:35px 0;
-  text-align:center;
+  border-top:1px solid var(--line);
   color:#555;
-  font-size:12px;
+  font-size:11px;
+  text-align:center;
 }
 
-/* ANIMATIONS */
+/* REVEAL */
 
 .reveal{
   opacity:0;
@@ -479,80 +673,135 @@ footer{
 
 /* MOBILE */
 
-@media(max-width:750px){
+@media(max-width:850px){
 
   .nav-links{
     display:none;
     position:absolute;
-    top:72px;
-    left:0;
-    width:100%;
-    background:#080808;
+    top:70px;
+    left:4%;
+    width:92%;
     padding:20px;
     flex-direction:column;
-    text-align:center;
-    border-bottom:1px solid #222;
+    background:#101010;
+    border:1px solid var(--line);
+    border-radius:18px;
   }
 
   .nav-links.open{
     display:flex;
   }
 
-  .menu-btn{
+  .menu{
     display:block;
   }
 
-  .hero h1{
-    letter-spacing:-2.5px;
+  .hero-grid{
+    grid-template-columns:1fr;
   }
 
-  .hero p{
-    font-size:15px;
+  .hero-card{
+    min-height:300px;
   }
 
-  .offer-grid,
-  .portfolio,
+  .services,
   .pricing{
     grid-template-columns:1fr;
   }
 
-  .services,
+  .process{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .step:nth-child(2){
+    border-right:0;
+  }
+
+  .portfolio,
   .about{
     grid-template-columns:1fr;
   }
 
-  section{
-    padding:65px 0;
+}
+
+@media(max-width:550px){
+
+  .hero{
+    padding-top:110px;
   }
 
-  .section-title h2{
-    font-size:30px;
+  .hero h1{
+    font-size:51px;
+    letter-spacing:-3px;
   }
 
-  .contact h2{
+  .hero-card{
+    min-height:280px;
+  }
+
+  .hero-card-content h2{
     font-size:31px;
   }
+
+  section{
+    padding:75px 0;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-head h2{
+    font-size:33px;
+  }
+
+  .section-head p{
+    margin-top:12px;
+  }
+
+  .process{
+    grid-template-columns:1fr;
+  }
+
+  .step{
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .step:last-child{
+    border-bottom:0;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .contact{
+    padding:55px 20px;
+  }
+
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="nav-inner">
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
 
-    <a href="#start" class="logo">
-      filip<span>ekkk052</span>
+    <a href="#start" class="brand">
+      FILIP<span>EKKK052</span>
     </a>
 
     <div class="nav-links" id="navLinks">
       <a href="#oferta">Oferta</a>
-      <a href="#portfolio">Portfolio</a>
+      <a href="#realizacje">Realizacje</a>
       <a href="#cennik">Cennik</a>
-      <a href="#kontakt">Kontakt</a>
+      <a href="#o-mnie">O mnie</a>
+      <a href="#kontakt" class="nav-cta">Kontakt</a>
     </div>
 
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="menu" onclick="toggleMenu()">☰</button>
 
   </div>
 </nav>
@@ -560,201 +809,116 @@ footer{
 <main>
 
 <section class="hero" id="start">
-  <div class="hero-content reveal">
+  <div class="container hero-grid">
 
-    <div class="badge">
-      📱 Grafiki • Social Media • Promocja
+    <div class="reveal">
+
+      <div class="eyebrow">
+        <i></i>
+        Creative Social Media
+      </div>
+
+      <h1>
+        TWÓRZMY<br>
+        COŚ <span>WOW.</span>
+      </h1>
+
+      <p class="hero-text">
+        Grafiki, posty i materiały promocyjne dla osób,
+        marek i małych firm, które chcą dobrze wyglądać
+        w social mediach.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#kontakt" class="btn btn-main">
+          Zacznijmy współpracę →
+        </a>
+
+        <a href="#realizacje" class="btn btn-dark">
+          Zobacz realizacje
+        </a>
+
+      </div>
+
     </div>
 
-    <h1>
-      Tworzę grafiki,<br>
-      które <span>przyciągają.</span>
-    </h1>
+    <div class="hero-card reveal">
 
-    <p>
-      Pomagam małym firmom, sklepom, salonom i restauracjom
-      wyglądać lepiej w internecie.
-      Tworzę estetyczne posty, grafiki i materiały promocyjne.
-    </p>
+      <div class="hero-number">01 / CREATIVE</div>
 
-    <div class="buttons">
-      <a href="#kontakt" class="btn btn-primary">
-        💬 Napisz do mnie
-      </a>
+      <div class="hero-card-content">
+        <small>FILIPEKKK052</small>
+        <h2>DESIGN<br>FOR SOCIAL.</h2>
+        <p>Instagram • Facebook • Promocja</p>
+      </div>
 
-      <a href="#portfolio" class="btn btn-secondary">
-        🖼️ Zobacz portfolio
-      </a>
     </div>
 
   </div>
 </section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    SOCIAL MEDIA <span>✦</span>
+    GRAPHIC DESIGN <span>✦</span>
+    INSTAGRAM <span>✦</span>
+    FACEBOOK <span>✦</span>
+    CREATIVE <span>✦</span>
+    SOCIAL MEDIA <span>✦</span>
+    GRAPHIC DESIGN <span>✦</span>
+    INSTAGRAM <span>✦</span>
+    FACEBOOK <span>✦</span>
+    CREATIVE <span>✦</span>
+  </div>
+</div>
 
 <section id="oferta">
 <div class="container">
 
-  <div class="section-title reveal">
-    <small>Co robię</small>
-    <h2>Oferta</h2>
-  </div>
-
-  <div class="offer-grid">
-
-    <div class="card reveal">
-      <div class="card-icon">🎨</div>
-      <h3>Grafiki</h3>
-      <p>
-        Estetyczne grafiki dopasowane do Twojej marki,
-        produktu lub usługi.
-      </p>
+  <div class="section-head reveal">
+    <div>
+      <div class="section-label">01 — Oferta</div>
+      <h2>Co mogę<br>dla Ciebie zrobić?</h2>
     </div>
 
-    <div class="card reveal">
-      <div class="card-icon">📱</div>
-      <h3>Social Media</h3>
-      <p>
-        Posty przygotowane z myślą o Instagramie
-        i Facebooku.
-      </p>
-    </div>
-
-    <div class="card reveal">
-      <div class="card-icon">📢</div>
-      <h3>Promocja</h3>
-      <p>
-        Materiały reklamowe, promocje, oferty
-        i proste kampanie wizualne.
-      </p>
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section>
-<div class="container">
-
-  <div class="section-title reveal">
-    <small>Możesz zamówić</small>
-    <h2>Co przygotuję?</h2>
+    <p>
+      Proste rozwiązania wizualne dla social mediów.
+      Bez zbędnego kombinowania — konkretny projekt
+      i gotowy materiał do publikacji.
+    </p>
   </div>
 
   <div class="services">
 
     <div class="service reveal">
-      <div class="check">✓</div>
-      <div>
-        <h3>Post na Instagram</h3>
-        <p>Gotowa grafika przygotowana pod publikację.</p>
-      </div>
+      <div class="service-number">01</div>
+      <div class="service-icon">🎨</div>
+      <h3>Grafiki</h3>
+      <p>
+        Estetyczne projekty dopasowane do Twojej
+        marki, produktu lub usługi.
+      </p>
     </div>
 
     <div class="service reveal">
-      <div class="check">✓</div>
-      <div>
-        <h3>Post na Facebook</h3>
-        <p>Grafika dopasowana do formatu Facebooka.</p>
-      </div>
+      <div class="service-number">02</div>
+      <div class="service-icon">📱</div>
+      <h3>Social Media</h3>
+      <p>
+        Posty przygotowane pod Instagram,
+        Facebook i inne platformy.
+      </p>
     </div>
 
     <div class="service reveal">
-      <div class="check">✓</div>
-      <div>
-        <h3>Tekst do posta</h3>
-        <p>Krótki, konkretny tekst pasujący do grafiki.</p>
-      </div>
-    </div>
-
-    <div class="service reveal">
-      <div class="check">✓</div>
-      <div>
-        <h3>Oferta / reklama</h3>
-        <p>Materiał promocyjny dla Twojej firmy.</p>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-</section>
-
-<section id="portfolio">
-<div class="container">
-
-  <div class="section-title reveal">
-    <small>Moje prace</small>
-    <h2>Portfolio</h2>
-  </div>
-
-  <div class="portfolio">
-
-    <div class="work reveal">
-      <div class="work-content">
-        <small>01 / SOCIAL MEDIA</small>
-        <h3>Post promocyjny</h3>
-      </div>
-    </div>
-
-    <div class="work reveal">
-      <div class="work-content">
-        <small>02 / BRANDING</small>
-        <h3>Grafika dla firmy</h3>
-      </div>
-    </div>
-
-    <div class="work reveal">
-      <div class="work-content">
-        <small>03 / INSTAGRAM</small>
-        <h3>Post produktowy</h3>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-</section>	
-<section id="cennik">
-<div class="container">
-
-  <div class="section-title reveal">
-    <small>Na start</small>
-    <h2>Cennik</h2>
-  </div>
-
-  <div class="pricing">
-
-    <div class="card price reveal">
-      <h3>1 grafika</h3>
-      <div class="price-value">10 zł</div>
-      <ul>
-        <li>✓ 1 grafika</li>
-        <li>✓ Format social media</li>
-        <li>✓ Prosty projekt</li>
-      </ul>
-      <a href="#kontakt" class="btn btn-secondary">Zamów</a>
-    </div>
-
-    <div class="card price featured reveal">
-      <h3>Pakiet 5</h3>
-      <div class="price-value">40 zł</div>
-      <ul>
-        <li>✓ 5 grafik</li>
-        <li>✓ Instagram / Facebook</li>
-        <li>✓ Spójny wygląd</li>
-      </ul>
-      <a href="#kontakt" class="btn btn-primary">Wybieram</a>
-    </div>
-
-    <div class="card price reveal">
-      <h3>Pakiet 10</h3>
-      <div class="price-value">70 zł</div>
-      <ul>
-        <li>✓ 10 grafik</li>
-        <li>✓ Social Media</li>
-        <li>✓ Materiały promocyjne</li>
-      </ul>
-      <a href="#kontakt" class="btn btn-secondary">Zamów</a>
+      <div class="service-number">03</div>
+      <div class="service-icon">🚀</div>
+      <h3>Promocja</h3>
+      <p>
+        Materiały reklamowe, promocje, oferty
+        i grafiki sprzedażowe.
+      </p>
     </div>
 
   </div>
@@ -765,44 +929,83 @@ footer{
 <section>
 <div class="container">
 
-  <div class="about">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-label">02 — Proces</div>
+      <h2>Od pomysłu<br>do publikacji.</h2>
+    </div>
+  </div>
 
-    <div class="about-main reveal">
-      <div class="section-title">
-        <small>O mnie</small>
-        <h2>Prosto.<br>Estetycznie.<br>Konkretnie.</h2>
-      </div>
+  <div class="process">
 
-      <p>
-        Dopiero rozwijam swoje portfolio, dlatego na początku
-        oferuję niskie ceny. Zależy mi przede wszystkim na
-        stworzeniu dobrych realizacji i zadowoleniu klienta.
-      </p>
+    <div class="step reveal">
+      <div class="step-num">01 / KONTAKT</div>
+      <h3>Piszesz do mnie</h3>
+      <p>Opowiadasz czego potrzebujesz.</p>
+    </div>
 
-      <div class="buttons" style="justify-content:flex-start">
-        <a href="https://www.instagram.com/filipekkk052/"
-           target="_blank"
-           class="btn btn-secondary">
-          📱 Mój Instagram
-        </a>
+    <div class="step reveal">
+      <div class="step-num">02 / POMYSŁ</div>
+      <h3>Ustalamy projekt</h3>
+      <p>Wybieramy styl, tekst i format.</p>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">03 / DESIGN</div>
+      <h3>Tworzę grafikę</h3>
+      <p>Przygotowuję gotowy materiał.</p>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">04 / GOTOWE</div>
+      <h3>Publikujesz</h3>
+      <p>Otrzymujesz plik gotowy do użycia.</p>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<section id="realizacje">
+<div class="container">
+
+  <div class="section-head reveal">
+    <div>
+      <div class="section-label">03 — Portfolio</div>
+      <h2>Wybrane<br>realizacje.</h2>
+    </div>
+
+    <p>
+      Miejsce na Twoje najlepsze projekty.
+      Możemy tutaj później dodać prawdziwe zdjęcia grafik.
+    </p>
+  </div>
+
+  <div class="portfolio">
+
+    <div class="project reveal">
+      <div class="project-content">
+        <div class="project-tag">SOCIAL MEDIA</div>
+        <h3>Post promocyjny</h3>
+        <p>Instagram / Facebook</p>
       </div>
     </div>
 
-    <div class="about-box">
+    <div>
 
-      <div class="about-stat reveal">
-        <strong>🎨</strong>
-        <span>Grafiki dopasowane do Twojej marki</span>
+      <div class="project small reveal">
+        <div class="project-content">
+          <div class="project-tag">BRANDING</div>
+          <h3>Grafika marki</h3>
+        </div>
       </div>
 
-      <div class="about-stat reveal">
-        <strong>⚡</strong>
-        <span>Szybka i prosta realizacja</span>
-      </div>
-
-      <div class="about-stat reveal">
-        <strong>💰</strong>
-        <span>Niskie ceny na start</span>
+      <div class="project small reveal">
+        <div class="project-content">
+          <div class="project-tag">PRODUCT</div>
+          <h3>Post produktowy</h3>
+        </div>
       </div>
 
     </div>
@@ -811,34 +1014,194 @@ footer{
 
 </div>
 </section>
+<section id="cennik">
+<div class="container">
+
+  <div class="section-head reveal">
+    <div>
+      <div class="section-label">04 — Cennik</div>
+      <h2>Prosto.<br>Bez ukrytych kosztów.</h2>
+    </div>
+
+    <p>
+      Ceny startowe — idealne dla małych firm,
+      twórców i osób, które dopiero rozwijają swoją markę.
+    </p>
+  </div>
+
+  <div class="pricing">
+
+    <div class="price-card reveal">
+      <h3>1 GRAFIKA</h3>
+
+      <div class="price">
+        10 zł <span>/ projekt</span>
+      </div>
+
+      <ul class="price-list">
+        <li>✓ 1 projekt graficzny</li>
+        <li>✓ Format pod social media</li>
+        <li>✓ Indywidualny styl</li>
+        <li>✓ Gotowy plik</li>
+      </ul>
+
+      <a href="#kontakt" class="btn btn-dark">
+        Zamów →
+      </a>
+    </div>
+
+
+    <div class="price-card featured reveal">
+
+      <h3>PAKIET 5</h3>
+
+      <div class="price">
+        40 zł <span>/ 5 grafik</span>
+      </div>
+
+      <ul class="price-list">
+        <li>✓ 5 grafik</li>
+        <li>✓ Spójny wygląd</li>
+        <li>✓ Instagram / Facebook</li>
+        <li>✓ Gotowe do publikacji</li>
+      </ul>
+
+      <a href="#kontakt" class="btn btn-main">
+        Wybieram pakiet →
+      </a>
+
+    </div>
+
+
+    <div class="price-card reveal">
+
+      <h3>PAKIET 10</h3>
+
+      <div class="price">
+        70 zł <span>/ 10 grafik</span>
+      </div>
+
+      <ul class="price-list">
+        <li>✓ 10 grafik</li>
+        <li>✓ Spójna seria</li>
+        <li>✓ Materiały social media</li>
+        <li>✓ Gotowe do publikacji</li>
+      </ul>
+
+      <a href="#kontakt" class="btn btn-dark">
+        Zamów →
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+
+<section id="o-mnie">
+<div class="container">
+
+  <div class="section-head reveal">
+    <div>
+      <div class="section-label">05 — O mnie</div>
+      <h2>Małe studio.<br>Duże pomysły.</h2>
+    </div>
+  </div>
+
+
+  <div class="about">
+
+    <div class="about-main reveal">
+
+      <h2>FILIPEKKK052</h2>
+
+      <p>
+        Tworzę proste, nowoczesne i przyciągające uwagę
+        materiały do social mediów.
+        Skupiam się na tym, żeby grafika wyglądała dobrze,
+        była czytelna i pasowała do Twojej marki.
+      </p>
+
+      <br>
+
+      <p>
+        Aktualnie rozwijam portfolio, dlatego oferuję
+        atrakcyjne ceny startowe.
+      </p>
+
+      <br>
+
+      <a
+        href="https://www.instagram.com/filipekkk052/"
+        target="_blank"
+        class="btn btn-main"
+      >
+        Instagram ↗
+      </a>
+
+    </div>
+
+
+    <div class="stats">
+
+      <div class="stat reveal">
+        <strong>🎨</strong>
+        <span>INDYWIDUALNE PROJEKTY</span>
+      </div>
+
+      <div class="stat reveal">
+        <strong>⚡</strong>
+        <span>SZYBKI KONTAKT</span>
+      </div>
+
+      <div class="stat reveal">
+        <strong>10 zł</strong>
+        <span>CENA STARTOWA</span>
+      </div>
+
+      <div class="stat reveal">
+        <strong>∞</strong>
+        <span>POMYSŁÓW NA DESIGN</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
 
 <section id="kontakt">
 <div class="container">
 
   <div class="contact reveal">
 
-    <div class="badge">
-      💬 Masz pomysł?
+    <div class="section-label">
+      06 — Kontakt
     </div>
 
-    <h2>Napisz do mnie.</h2>
+    <h2>
+      Masz pomysł?<br>
+      <span style="color:var(--accent)">Zróbmy go.</span>
+    </h2>
 
     <p>
-      Prowadzisz małą firmę, sklep, salon, restaurację
-      albo profil usługowy? Napisz — możemy stworzyć
-      coś ciekawego.
+      Napisz na Instagramie i opowiedz mi,
+      czego potrzebujesz. Ustalimy szczegóły
+      i zabieramy się do pracy.
     </p>
 
-    <div class="buttons">
-
-      <a
-        href="https://www.instagram.com/filipekkk052/"
-        target="_blank"
-        class="btn btn-primary">
-        📱 Instagram @filipekkk052
-      </a>
-
-    </div>
+    <a
+      href="https://www.instagram.com/filipekkk052/"
+      target="_blank"
+      class="instagram"
+    >
+      ◎ @filipekkk052
+      <span>↗</span>
+    </a>
 
   </div>
 
@@ -847,64 +1210,110 @@ footer{
 
 </main>
 
+
 <footer>
-  © 2026 filip<span>ekkk052</span> • Grafiki & Social Media
+  <div class="container">
+    © <span id="year"></span> FILIPEKKK052 — Creative Studio
+  </div>
 </footer>
+
 
 <script>
 
+/* MENU */
+
 function toggleMenu(){
 
-  document
-    .getElementById("navLinks")
-    .classList.toggle("open");
+  const menu = document.getElementById("navLinks");
+
+  menu.classList.toggle("open");
 
 }
 
-document
-  .querySelectorAll(".nav-links a")
-  .forEach(function(link){
 
-    link.addEventListener("click",function(){
+/* ZAMYKANIE MENU PO KLIKNIĘCIU */
 
-      document
-        .getElementById("navLinks")
-        .classList.remove("open");
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+  link.addEventListener("click", () => {
+
+    document.getElementById("navLinks")
+      .classList.remove("open");
+
+  });
+
+});
+
+
+/* NAV PRZY SCROLLU */
+
+window.addEventListener("scroll", () => {
+
+  const nav = document.getElementById("nav");
+
+  if(window.scrollY > 30){
+
+    nav.classList.add("scrolled");
+
+  }else{
+
+    nav.classList.remove("scrolled");
+
+  }
+
+});
+
+
+/* ANIMACJE */
+
+const observer = new IntersectionObserver(
+  entries => {
+
+    entries.forEach(entry => {
+
+      if(entry.isIntersecting){
+
+        entry.target.classList.add("show");
+
+      }
 
     });
 
-  });
+  },
+  {
+    threshold:.12
+  }
+);
 
 
-const observer =
-  new IntersectionObserver(
-    function(entries){
+document.querySelectorAll(".reveal").forEach(el => {
 
-      entries.forEach(function(entry){
+  observer.observe(el);
 
-        if(entry.isIntersecting){
-
-          entry.target.classList.add("show");
-
-        }
-
-      });
-
-    },
-    {
-      threshold:.12
-    }
-  );
+});
 
 
-document
-  .querySelectorAll(".reveal")
-  .forEach(function(element){
+/* ROK */
 
-    observer.observe(element);
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
-  });
 
+/* LEKKI EFEKT RUCHU HERO */
+
+document.addEventListener("mousemove", e => {
+
+  const card = document.querySelector(".hero-card");
+
+  if(!card) return;
+
+  const x = (window.innerWidth / 2 - e.clientX) / 70;
+  const y = (window.innerHeight / 2 - e.clientY) / 70;
+
+  card.style.transform =
+    `translate(${x}px,${y}px)`;
+
+});
 
 </script>
 
